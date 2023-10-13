@@ -1,4 +1,5 @@
 const getAllProducts = (req, res)=>{
+    
     let start = 0
     let limit = 20
     
@@ -9,8 +10,6 @@ const getAllProducts = (req, res)=>{
     if(req.query){
         if(req.query.start) start  = Number(req.query.start)
         if(req.query.limit) limit  = Number(req.query.limit)
-        console.log('start::', start)
-        console.log('limit::', limit)
     }
 
     const db = req.app.get('DB')
@@ -23,15 +22,31 @@ const getAllProducts = (req, res)=>{
             throw err
         }
 
-        res.json(result)
+        res.send(result)
     })  
 
+}
 
-    // user between for the limit
+const getProduct = (req, res) =>{
+    let id;
+    
+    if(req.params) id = Number(req.params.id);
+    
+    const db = req.app.get('DB');
+    
+    db.query(`select products.id, products.name, products.price, products.stocks, products.rating, products_info.description, products_info.category, products_info.img_url from products inner join products_info on products.id = products_info.product_id where products.id = ?`, [id] , (err, result) =>{
+        if(err) throw err
+        const data = result[0]
+        const parse = JSON.parse(data.img_url)
+        data.img_url = parse
+        res.json(data)
+    })
+
 }
 
 
 
 module.exports = {
-    getAllProducts
+    getAllProducts,
+    getProduct
 }

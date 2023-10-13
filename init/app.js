@@ -3,8 +3,7 @@ const axios = require('axios')
 const fs = require('fs');
 const path = require('path');
 
-
-const product_file_img = path.join(__dirname, '../', 'backend','product_img')
+const product_file_img = path.join(__dirname, '../', 'backend', 'product_img')
 
 const connection = mysql.createConnection({
     host     : '127.0.0.1',
@@ -24,20 +23,48 @@ connection.connect(function(err)  {
 });
 
 
+const productImgFolder = async (file) =>{
+    return new Promise((resolve, reject) =>{
+        fs.access(file, (err) =>{
+            if(err){
+                fs.mkdir(file, () =>{
+                    resolve(file)
+                })
+            }
+        })
+    })
+}
 
-init()
+const getAllCategories = async ()  => {
+   
+    const insertCat = async(cat) =>{
+        return new Promise((resolve, reject) =>{
+            connection.query('insert into categories(name) values (?)', [cat], (err, result)=>{
+                if(err) reject(err)
+                resolve()
+            })
+        })
+    }
 
-const createAsyncFolder = async function(index){
+    const req = await axios.get('https://dummyjson.com/products/categories')
+
+    for(let i = 0; i < req.data.length; i++){
+        console.log(req.data[i])
+        await insertCat(req.data[i])
+    }
+}
+
+// init()
+
+const createAsyncFolder = async function(parentFolder, index){
     return new Promise(function(resolve , reject){
-        const distanation = path.join(product_file_img, String(index));
+        const distanation = path.join(parentFolder, String(index));
         
         fs.mkdir(distanation, function(err, p)  {
             if(err) {
-                reject(err)
+                
             }
-            // if(err) throw err
             resolve(distanation)
-            
         })
         
         
@@ -45,36 +72,71 @@ const createAsyncFolder = async function(index){
     
 }
 
-
-function init(){
-    
-    console.log("START::")
-    axios.get('https://dummyjson.com/products?limit=0').then(function(res) {
-    
-    const products = []
-    const file = []
-    
-    res.data.products.forEach(async(product, index) =>{
-        // for each index create dir 
-        
-        // distanation = await createAsyncFolder(index)
-        createAsyncFolder(index).then(folder =>{
-            products.push(createProduct(product, folder)) 
+const getCat = async (cat) =>{
+    return new Promise((resolve, reject) =>{
+        connection.query('select id from categories where name = ? ', [cat], (err, result) =>{
+            if(err) reject(err)
+            resolve(result[0].id)
         })
+
     })
+}
+
+const init = async() => {
+    // create parent forder
+    try {
+        await getAllCategories()
+        const parentForder = await productImgFolder(product_file_img)
+        const child = await createChildFolder(parentForder)
+        
+    } catch (error) {
+        throw err
+    }
+}
+
+
+init()
+
+
+
+async function createChildFolder(parentFolder){
+ 
+    console.log("START::")
+    axios.get('https://dummyjson.com/products?limit=5').then(function(res) {
     
+    const createFolder = async () => {
+        
+        for(let i = 0; i < res.data.products.length; i++){
+            try {
+           
+                const folder = await createAsyncFolder(parentFolder, i)
+                
+                console.log(`FOLDER CREATED ${folder}`)
+                //res.data.products[i].category
+                const cat_id = await getCat(res.data.products[i].category)
+
+                const productCreated = await createProduct(res.data.products[i], folder , cat_id)
+                
+            } catch (error) {
+                throw error
+            }
+        }
+    }
+
+    createFolder()
     
-    
+
 }).catch(err => {
     console.log(err.message)
     throw err
 })
 }
 
-async function createProduct(product, distanation){
+async function createProduct(product, distanation, cat_id){
     
     return new Promise((resolve, reject) => {
-        
+        const MAX_IMG = 5;
+
         connection.beginTransaction(function(err){
             if(err) throw err
             
@@ -87,53 +149,77 @@ async function createProduct(product, distanation){
                 
                 const productID = result.insertId;
                 
-                const img_url = []
+                let img_count = MAX_IMG
                 
-                product.images.forEach((url, index) => {
-                    img_url[index] = axios.get(url, {method: 'GET', responseType: 'stream'})
-                });
+                if(product.images.length < MAX_IMG) img_count = product.images.length;
                 
-                Promise.all(img_url).then( function(result){
-                    
-                    const img_data = []
-                    
-                    result.forEach((item, index) => {
+                const requestImg = async (url) =>{
+                    return new Promise(function (resolve) {
                         
-                        const file_name = path.join(distanation, `${now}-${index}.jpg`) ;
-                        
-                        img_data[index] = saveproductImg(file_name, item)
+                            axios.get(url, {method: 'GET', responseType: 'stream'}).then((response) => resolve(response))
+                            
                     })
+                }
+                
+                const downloadImg = async (count, data) => {
                     
-                    Promise.all(img_data).then(data_result =>{
-                        const img_json_array = []
+                    const img_json_array = []
+                    
+                    for(let i = 0; i < count ; i++){
                         
-                        data_result.forEach((url, index) => {
-                            img_json_array[index] = url
-                        })
+                        try {
+                            
+                            const req = await requestImg(data[i])
+                            
+                            const file_name = path.join(distanation, `${now}-${i}.jpg`) ;
+                            
+                            const createFileImg = await saveproductImg(file_name, req)
+                            
+                            console.log(`IMAGE SAVE::: ${createFileImg}`)
+
+                            img_json_array.push(createFileImg)
                         
-                        const img_json = JSON.stringify(img_json_array)
+                        } catch (error) {
+                            throw error
+                        }
                         
-                        connection.query('insert into products_info(product_id, description, category, img_url) values(?,?,?,?)',[productID, product.description, product.category, img_json], 
+                    }
+
+                    return JSON.stringify(img_json_array)
+                }
+                
+                const insertDB = async (inserted_id, product, count, data) =>{
+                    try {
+                        
+                        const downloadedJSON = await downloadImg(count, data)
+                        connection.query('insert into products_info(product_id, description, category_id, img_url) values(?,?,?,?)',[inserted_id, product.description, cat_id, downloadedJSON], 
                         
                         function(err, result){
                             if(err) throw err 
                             connection.commit(() =>{
-                                resolve(`Product Created: ${product.title}`)
-                                console.log("inserted")
+                                console.log(`Created ${product.title}`)
+                                resolve()
                             })
                         })
                         
-                    }).catch(err => {
-                        throw err
-                    })
+                    } catch (error) {
+                        throw error
+                    }
+                }
+                
+                const init_Img = async() =>{
+                    await insertDB(productID, product, img_count, product.images)
                     
-                }).catch(err =>{
-                    throw err
-                })
+                }
+                
+                init_Img()
             })
         })
     })
 }
+
+
+
 
 
 async function saveproductImg(filename, response){

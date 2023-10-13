@@ -72,6 +72,14 @@ CREATE TABLE products_info (
     -- FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+--@block create a categories table
+CREATE TABLE categories (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (name)
+  );
+
 
 -- @block test query
 -- SELECT img_url FROM products_info WHERE product_id = 41

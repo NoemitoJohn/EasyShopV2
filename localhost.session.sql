@@ -66,13 +66,13 @@ CREATE TABLE products_info (
     id int NOT NULL AUTO_INCREMENT,
     product_id int NOT NULL,
     description text NOT NULL,
-    category varchar(225),
+    category_id INT NOT NULL,
     img_url JSON,
     PRIMARY KEY (id)
     -- FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
---@block create a categories table
+-- @block create a categories table
 CREATE TABLE categories (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,

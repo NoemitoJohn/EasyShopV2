@@ -90,7 +90,7 @@ const init = async() => {
         const child = await createChildFolder(parentForder)
         
     } catch (error) {
-        throw err
+        throw error
     }
 }
 
@@ -102,7 +102,7 @@ init()
 async function createChildFolder(parentFolder){
  
     console.log("START::")
-    axios.get('https://dummyjson.com/products?limit=5').then(function(res) {
+    axios.get('https://dummyjson.com/products?limit=0').then(function(res) {
     
     const createFolder = async () => {
         

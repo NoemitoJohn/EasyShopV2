@@ -120,10 +120,70 @@ const signup = async (req, res) =>{
     }
 }
 
+const getAddress = (req, res) =>{
+    if(!req.session.user){
+        return res.json({status: 400, message: 'Please Login'})
+    }
+    const db = req.app.get('DB');
+
+    db.query('select * from users_address where user_id = ?', [req.session.user.id], function(err, result){
+        if(err) {
+            console.log(err)
+            return res.json({status: 500, message: 'Server Error'})
+        }
+
+        res.json(result)
+    })
+}
+
+const setAddress = (req, res) =>{
+    if(!req.session.user){
+        return res.json({status: 400, message: 'Please Login'})
+    }
+
+
+    const {address_line_1, address_line_2, city, country, zipcode} = req.body
+    const db = req.app.get('DB');
+    
+    db.beginTransaction(function(err){
+        if(err) return res.json({status: 500, message: 'Server Error'})
+
+        db.query('insert into users_address(user_id, address_line_1, address_line_2, city, country, zipcode) values (?, ?, ?, ?, ?, ? )', 
+        [
+            req.session.user.id,
+            address_line_1,
+            address_line_2,
+            city,
+            country,
+            zipcode
+        ], 
+        function(err, result){
+            if(err) return res.json({status: 500, message: 'Server Error'})
+            
+            const insertId = result.insertId
+            
+            db.query('update users_info set user_address_id = ? where user_id = ?', [insertId, req.session.user.id], function(err, result){
+                if(err) return res.json({status: 500, message: 'Server Error'})
+                
+                db.commit(err =>{
+                    res.json({status: 200})
+                })
+            })
+        })
+
+
+    })
+    
+}
+
+
+
 module.exports = {
     login,
     signup,
     logout,
     isAuth,
-    getUserInfo
+    getUserInfo,
+    getAddress,
+    setAddress
 }

@@ -1,4 +1,4 @@
-const getAllProducts = (req, res)=>{
+const getProducts = (req, res)=>{
     
     let start = 0
     let limit = 20
@@ -15,14 +15,25 @@ const getAllProducts = (req, res)=>{
     const db = req.app.get('DB')
 
 
-    db.query('select * from products where id between ? and ?', [start, start + limit ], function(err ,result){
+    db.query('select products.id, name, price, stocks, rating, products_info.img_url as thumbnail from products inner join products_info on products.id = products_info.product_id where products.id between ? and ?', [start, start + limit ], function(err ,result){
+        
         if(err) 
         {
             console.log(err.message)
             throw err
         }
+        
+        const data = [];
+        
+        for (const item of result) {
+            const img_parse = JSON.parse(item.thumbnail)
+            item.thumbnail = img_parse[0]
+            data.push(item)
+        }
 
-        res.send(result)
+
+
+        res.send(data)
     })  
 
 }
@@ -34,7 +45,10 @@ const getProduct = (req, res) =>{
     
     const db = req.app.get('DB');
     
-    db.query(`select products.id, products.name, products.price, products.stocks, products.rating, products_info.description, products_info.category, products_info.img_url from products inner join products_info on products.id = products_info.product_id where products.id = ?`, [id] , (err, result) =>{
+    db.query('select products.id, products.name, products.price, products.stocks, products.rating, products_info.description as decs, categories.name as cat_name, products_info.img_url from products ' + 
+            'inner join products_info on products.id = products_info.product_id ' + 
+            'inner join categories on categories.id = products_info.category_id ' +
+            'where products.id = ?' , [id] , (err, result) =>{
         if(err) throw err
         const data = result[0]
         const parse = JSON.parse(data.img_url)
@@ -45,8 +59,47 @@ const getProduct = (req, res) =>{
 }
 
 
+const getProductByCategory = (req, res) =>{
+    
+    const db = req.app.get('DB');
+    
+    const {name} = req.params;
+
+    db.query(
+        'SELECT p.id, p.name, p.price, p.stocks, p.rating from products_info as p_i ' +
+        'inner join categories as cat on p_i.category_id = cat.id ' + 
+        'inner join products as p on p.id = p_i.id ' +
+        'where cat.name = ?'
+     , 
+    [name],
+    function(err, result){
+        if(err) {
+            res.json({status: 500, message: 'Server Error'})
+            console.log(err)
+        }
+
+        res.json({status: 200, data :result})
+        
+    })
+}
+
+const getCategories = (req, res) =>{
+    const db = req.app.get('DB');
+    db.query('select name from categories', function(err, result){
+        
+        if(err) {
+            res.json({status: 500, message: 'Server Error'})
+            console.log(err)
+        }
+
+        res.json({status: 200, data: result})
+    })
+
+}
 
 module.exports = {
-    getAllProducts,
-    getProduct
+    getProducts,
+    getProduct,
+    getProductByCategory,
+    getCategories
 }

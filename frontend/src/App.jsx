@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 
 function MyButton(){
   function handleClick(e){
-    fetch('http://127.0.0.1:3000/api/products').then((res)=>{
+    fetch('http://127.0.0.1:3000/api/user/info').then((res)=>{
       res.json().then(data =>{
         console.log(data)
       })

@@ -16,9 +16,6 @@ function Login(e){
     // console.log(formJson)
   }
 
-
-
-
   return(
     <form method="post" onSubmit={handleSubmit}>
       
@@ -28,14 +25,12 @@ function Login(e){
     </form>
   )
 
-
-
 }
 
 
 function MyButton(){
   function handleClick(e){
-    fetch('http://127.0.0.1:3000/api/products').then((res)=>{
+    fetch('http://127.0.0.1:3000/api/user/info').then((res)=>{
       res.json().then(data =>{
         console.log(data)
       })
@@ -54,7 +49,7 @@ function App() {
   return (
     <>
     <div>
-      <Login />
+      <MyButton />
     </div>
     </>
   )

@@ -9,9 +9,9 @@ const path = require('path');
 const AccountSettingsRoute = require('./routes/updateAccount')
 const categoryRoute = require('./routes/category')
 const signUpRoute = require('./routes/signup')
-const {loginRouter} = require('./routes/users')
+const {userRouter} = require('./routes/users')
 const {productRouter , productsDataArrayToObject} = require('./routes/product')
-const cartRouter = require('./routes/cart')
+const {cartRouter } = require('./routes/cart')
 const searchRouter = require('./routes/search')
 
 const bodyParser = require('body-parser')
@@ -173,9 +173,9 @@ app.get('/about', (req, res)=>{
 app.use('/api/products', productRouter)
 app.use('/category', categoryRoute.router)
 app.use('/search', searchRouter.router)
-app.use('/api/user', loginRouter )
+app.use('/api/user', userRouter )
 app.use('/signup', signUpRoute.router)
-app.use('/cart', cartRouter.router)
+app.use('/api/cart', cartRouter)
 app.use('/Account_Settings', AccountSettingsRoute.router)
 
 app.post('/logout', (req, res) => {

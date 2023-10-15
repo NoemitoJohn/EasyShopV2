@@ -33,6 +33,7 @@ CREATE TABLE users_info (
     first_name varchar(255) NOT NULL, 
     last_name varchar(255) NOT NULL, 
     mobile_number varchar(50), 
+    user_address_id INT NOT NULL
     PRIMARY KEY (id)
     -- FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -72,13 +73,22 @@ CREATE TABLE products_info (
     -- FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
---@block create a categories table
+-- @block create a categories table
 CREATE TABLE categories (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (name)
   );
+
+-- @block create a cart table
+CREATE TABLE cart (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    PRIMARY KEY (id)
+);
 
 
 -- @block test query
@@ -90,7 +100,9 @@ CREATE TABLE categories (
 
 
 -- @block 
--- SELECT * FROM users;
+ALTER TABLE users_info
+ADD user_address_id INT;
 
 -- @block 
 SHOW TABLES;
+

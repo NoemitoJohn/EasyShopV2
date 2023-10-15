@@ -15,14 +15,25 @@ const getProducts = (req, res)=>{
     const db = req.app.get('DB')
 
 
-    db.query('select * from products where id between ? and ?', [start, start + limit ], function(err ,result){
+    db.query('select products.id, name, price, stocks, rating, products_info.img_url as thumbnail from products inner join products_info on products.id = products_info.product_id where products.id between ? and ?', [start, start + limit ], function(err ,result){
+        
         if(err) 
         {
             console.log(err.message)
             throw err
         }
+        
+        const data = [];
+        
+        for (const item of result) {
+            const img_parse = JSON.parse(item.thumbnail)
+            item.thumbnail = img_parse[0]
+            data.push(item)
+        }
 
-        res.send(result)
+
+
+        res.send(data)
     })  
 
 }

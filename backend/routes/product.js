@@ -13,4 +13,6 @@ router.get('/category/:name', getProductByCategory)
 router.get('/categories', getCategories)
 router.get('/:id', getProduct)
 
+
+
 module.exports = { productRouter : router,}

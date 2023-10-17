@@ -29,7 +29,7 @@ const getUserInfo = function (req, res){
     
     const db = req.app.get('DB');
 
-    db.query('select * from users_info where user_id = ?', [req.session.user.id], function(err, data){
+    db.query('select * from users_info where userId = ?', [req.session.user.id], function(err, data){
         if(err) {
             return res.json({status: 500, message: 'Server Error'})
         }
@@ -97,7 +97,7 @@ const signup = async (req, res) =>{
 
                 const userId = result.insertId
 
-                db.query('insert into users_info (user_id, first_name, last_name, mobile_number) values (?, ?, ? ,?)',
+                db.query('insert into users_info (userId, first_name, last_name, mobile_number) values (?, ?, ? ,?)',
                     [userId, firstName, lastName, ''],
                     function (err, result)
                     {

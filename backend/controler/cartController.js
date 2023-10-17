@@ -7,7 +7,7 @@ const postCart = (req, res) => {
     
     const {product_id , quantity} = req.body
 
-    db.query('insert into cart (user_id, product_id, quantity) values(?, ?, ?)', [req.session.user.id, product_id, quantity], function(err, result){
+    db.query('insert into cart (userId, productId, quantity) values(?, ?, ?)', [req.session.user.id, product_id, quantity], function(err, result){
         
         if(err) return res.json({status: 500, message: 'Server Error'})
         
@@ -23,7 +23,7 @@ const getCart = (req, res) =>{
 
     const db = req.app.get('DB')
 
-    db.query('SELECT cart.id as cart_id, products.name, cart.quantity,  products.price FROM cart inner join products on cart.product_id = products.id where user_id = ?', [req.session.user.id], function(err, result){
+    db.query('SELECT cart.id as cart_id, products.name, cart.quantity,  products.price FROM cart inner join products on cart.productId = products.id where userId = ?', [req.session.user.id], function(err, result){
         
         if(err) 
         {

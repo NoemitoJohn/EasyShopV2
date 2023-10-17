@@ -1,4 +1,8 @@
-const getProducts = (req, res)=>{
+const DB = require('../models/DB')
+const {Op , QueryTypes, json} = require('sequelize')
+
+
+const getProducts = async (req, res) => {
     
     let start = 0
     let limit = 20
@@ -15,86 +19,129 @@ const getProducts = (req, res)=>{
     const db = req.app.get('DB')
 
 
-    db.query('select products.id, name, price, stocks, rating, products_info.img_url as thumbnail from products inner join products_info on products.id = products_info.product_id where products.id between ? and ?', [start, start + limit ], function(err ,result){
+    // db.query('select products.id, name, price, stocks, rating, products_info.img_url as thumbnail from products ' +
+    // 'inner join products_info on products.id = products_info.productId ' +
+    // 'where products.id between ? and ?', [start, start + limit ], function(err ,result){
         
-        if(err) 
-        {
-            console.log(err.message)
-            throw err
+    //     if(err) 
+    //     {
+    //         console.log(err.message)
+    //         throw err
+    //     }
+        
+    //     const data = [];
+        
+    //     for (const item of result) {
+    //         const img_parse = JSON.parse(item.thumbnail)
+    //         item.thumbnail = img_parse[0]
+    //         data.push(item)
+    //     }
+
+
+
+    //     res.send(data)
+    // })  
+
+    const products = await DB.Product.findAll({
+
+        where : {
+            id : {
+                [Op.between] : [start, limit]
+            }
         }
+
+    })
+    
+    const product = []
+    
+    for (const item of products) {
+        const productInfo = await DB.ProductInfo.findOne({
+            where :{
+                productId: item.id
+            }   
+        })
         
-        const data = [];
+        const p = JSON.stringify(item)
         
-        for (const item of result) {
-            const img_parse = JSON.parse(item.thumbnail)
-            item.thumbnail = img_parse[0]
-            data.push(item)
-        }
+        const productJSON = JSON.parse(p)
 
+        const imgs = JSON.parse(productInfo.img_url)
 
+        productJSON.thumbnail = imgs[0]
 
-        res.send(data)
-    })  
+        product.push(productJSON)
+    }
 
+    res.json(product)
 }
 
-const getProduct = (req, res) =>{
+const getProduct = async (req, res) =>{
     let id;
     
     if(req.params) id = Number(req.params.id);
     
-    const db = req.app.get('DB');
-    
-    db.query('select products.id, products.name, products.price, products.stocks, products.rating, products_info.description as decs, categories.name as cat_name, products_info.img_url from products ' + 
-            'inner join products_info on products.id = products_info.product_id ' + 
-            'inner join categories on categories.id = products_info.category_id ' +
-            'where products.id = ?' , [id] , (err, result) =>{
-        if(err) throw err
-        const data = result[0]
-        const parse = JSON.parse(data.img_url)
-        data.img_url = parse
-        res.json(data)
+    const product = await DB.ProductInfo.findOne({
+        attributes : ['description', 'img_url'], 
+        
+        where : {
+            id : id
+        }, 
+        
+        include : [
+            {
+                model : DB.Product
+            },
+            {
+                model : DB.Category,
+                attributes : ['name']
+            }
+        ]
     })
 
+
+    const productString = JSON.stringify(product)
+    
+    const productJSON = JSON.parse(productString)
+
+    const img_url =  JSON.parse(productJSON.img_url)
+
+    productJSON.img_url = img_url
+
+    res.json(productJSON)
 }
 
 
-const getProductByCategory = (req, res) =>{
+const getProductByCategory = async (req, res) =>{
     
     const db = req.app.get('DB');
     
     const {name} = req.params;
 
-    db.query(
-        'SELECT p.id, p.name, p.price, p.stocks, p.rating from products_info as p_i ' +
-        'inner join categories as cat on p_i.category_id = cat.id ' + 
+    const products = await DB.instance.query('SELECT p.id, p.name, p.price, p.stocks, p.rating, p_i.img_url as thumbnail from products_info as p_i ' +
+        'inner join categories as cat on p_i.categoryId = cat.id ' + 
         'inner join products as p on p.id = p_i.id ' +
-        'where cat.name = ?'
-     , 
-    [name],
-    function(err, result){
-        if(err) {
-            res.json({status: 500, message: 'Server Error'})
-            console.log(err)
-        }
+        'where cat.name = ?', {
+            replacements : [name],
+            type: QueryTypes.SELECT,
+            raw : true })
+    
+    const productString = JSON.stringify(products)
 
-        res.json({status: 200, data :result})
-        
-    })
+    const product = []
+    
+    for (const item of products) {
+        const imgs = JSON.parse(item.thumbnail)
+        item.thumbnail = imgs[0]
+        product.push(item)
+    }
+    
+    res.json(product)
+
 }
 
-const getCategories = (req, res) =>{
-    const db = req.app.get('DB');
-    db.query('select name from categories', function(err, result){
-        
-        if(err) {
-            res.json({status: 500, message: 'Server Error'})
-            console.log(err)
-        }
-
-        res.json({status: 200, data: result})
-    })
-
+const getCategories = async (req, res) =>{
+    const categories = await DB.Category.findAll()
+    res.json(categories)
 }
 
 module.exports = {

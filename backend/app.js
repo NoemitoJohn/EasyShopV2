@@ -5,7 +5,6 @@ const expressLayouts = require('express-ejs-layouts');
 const axios = require('axios')
 const Promise = require('promise');
 const path = require('path');
-// routes
 const AccountSettingsRoute = require('./routes/updateAccount')
 const categoryRoute = require('./routes/category')
 const signUpRoute = require('./routes/signup')
@@ -192,7 +191,6 @@ low(adapter).then(function (db) {
     app.listen(3000, () => {
         console.log(`Example app listening on port http://127.0.0.1:3000/`)
     })
-    
 })
 
 

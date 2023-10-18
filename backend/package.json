@@ -24,6 +24,7 @@
     "lowdb": "^1.0.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.2",
+    "nodemailer": "^6.9.6",
     "promise": "^8.3.0",
     "sequelize": "^6.33.0",
     "stripe": "^13.9.0",

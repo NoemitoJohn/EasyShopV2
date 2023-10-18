@@ -6,6 +6,7 @@ const Address = require('./Address')
 const Cart = require('./Cart')
 const User = require('./User')
 const UserInfo = require('./UserInfo')
+const Verified = require('./Verified')
 
 const sequelize = new Sequelize(
     'easyshopv2', // database
@@ -30,16 +31,14 @@ DB.ProductInfo = ProductInfo(sequelize);
 DB.Address = Address(sequelize);
 DB.Cart = Cart(sequelize);
 DB.User = User(sequelize);
-DB.UserInfo = UserInfo(sequelize);
+// DB.UserInfo = UserInfo(sequelize);
+DB.Verified = Verified(sequelize);
 
 DB.Category.hasMany(DB.ProductInfo)
 DB.ProductInfo.belongsTo(DB.Category)
 
 DB.Product.hasOne(DB.ProductInfo)
 DB.ProductInfo.belongsTo(DB.Product)
-
-DB.User.hasOne(DB.UserInfo)
-DB.UserInfo.belongsTo(DB.User)
 
 DB.User.hasOne(DB.Address)
 DB.Address.belongsTo(DB.User)

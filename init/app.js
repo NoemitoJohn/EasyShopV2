@@ -8,25 +8,6 @@ const DB = require('../backend/models/DB')
 
 const product_file_img = path.join(__dirname, '../', 'backend', 'product_img')
 
-// const connection = mysql.createConnection({
-//     host     : '127.0.0.1',
-//     user     : 'root',
-//     password : 'root',
-//     database : 'easyshopv2',
-// });
-
-// connection.connect(function(err)  {
-    
-//     if (err) {
-//         console.log(`Cant connect to database ${err.message}`)
-//         return
-//     }
-    
-//     console.log('MySql Connected!');
-// });
-// DB.instance.sync({force : true})
-
-
 const productImgFolder = async (file) =>{
     return new Promise((resolve, reject) =>{
         fs.access(file, (err) =>{
@@ -72,12 +53,6 @@ const getAllCategories = async ()  => {
     }
 }
 
-// getAllCategories()
-
-
-// init()
-
-
 const createAsyncFolder = async function(parentFolder, index){
     return new Promise(function(resolve , reject){
         const distanation = path.join(parentFolder, String(index));
@@ -117,16 +92,11 @@ const getCat = async (cat) =>{
         }
 
         run(cat)
-        // connection.query('select id from categories where name = ? ', [cat], (err, result) =>{
-        //     if(err) reject(err)
-        //     resolve(result[0].id)
-        // })
 
     })
 }
 
 const init = async() => {
-    // create parent forder
     try {
         
         await DB.instance.sync({force : true})

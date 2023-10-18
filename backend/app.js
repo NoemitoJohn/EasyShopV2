@@ -5,31 +5,22 @@ const expressLayouts = require('express-ejs-layouts');
 const axios = require('axios')
 const Promise = require('promise');
 const path = require('path');
+const productController = require ('./controler/productControler')
 // routes
-const AccountSettingsRoute = require('./routes/updateAccount')
-const categoryRoute = require('./routes/category')
-const signUpRoute = require('./routes/signup')
-const {userRouter} = require('./routes/users')
-const {productRouter , productsDataArrayToObject} = require('./routes/product')
-const {cartRouter } = require('./routes/cart')
-const searchRouter = require('./routes/search')
 
 const bodyParser = require('body-parser')
 const app = express();
 const session = require('express-session');
 const cors = require('cors')
-const low = require('lowdb')
-const FileAsync = require('lowdb/adapters/FileAsync')
-const adapter = new FileAsync('db.json')
-
-app.set('view engine', 'ejs');
 app.set('layout', 'layouts/layout');
 
 app.use(expressLayouts);
 
 app.use(cors({
-    // credentials : true,
-    // allowedHeaders: ['Content-Type', 'Authorization']
+   //this is the only line you will change the domain name
+origin: ["https://www.ecshopping.online"],
+methods: ["POST", "GET"],
+credentials: true    
 }
 ))
 
@@ -47,13 +38,14 @@ app.use(session({
 }))
 
 
+
 const dbConnection = (req, res, next) =>{
     
     const connection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : 'root',
-        database : 'easyshopv2',
+        host     : 'sql12.freesqldatabase.com',
+        user     : 'sql12653918',
+        password : 'e8EnMbdWJ3',
+        database : 'sql12653918',
     });
     
     connection.connect((err) => {
@@ -72,6 +64,9 @@ const dbConnection = (req, res, next) =>{
 
 
 app.use(dbConnection)
+
+
+
 
 
 // const endpointSecret = "whsec_6afb0d281c9bad3ec7ab1267a13b333576d2db499e638e0e8adc7225e21ab6cd";
@@ -103,54 +98,10 @@ app.use(dbConnection)
 //     // Return a 200 response to acknowledge receipt of the event
 //     res.send().end();
 // })
-
-app.get('/' , (req, res) => {
-
-    // connection.query('SELECT * FROM product', function (error, results, fields) {
-    //     // error will be an Error if one occurred during the query
-    //     // results will contain the results of the query
-    //     // fields will contain information about the returned results fields (if any)
-    //     if(Array.isArray(results)){
-    //         console.log(results)
-    //     }
-    //     res.send().end()
-    //   });
-    
-    Promise.all([
-     axios.get('https://dummyjson.com/products?limit=0'),
-     axios.get('https://dummyjson.com/products/categories')])
-
-        .then(function(result){    
-            
-            const productsResult = result[0].data;
-            const categoriesResult = result[1].data
-
-            app.set('categories', categoriesResult)
-            app.set('products', productsResult)
-            
-            const featured = []
-
-            for (const product of productsResult.products) {
-            
-                if(product.rating > 4.8){
-                    featured.push(product)
-                }
-            }
-            
-            const userEmail = req.session.userEmail
-            app.set('userEmail', userEmail)
-            const fetureProducts =  productsDataArrayToObject(featured);
-            
-            
-            const cartCount = cartRouter.getCartCount(req.app, req.session.user)
-
-            
-
-            
-            res.render('index', {products: fetureProducts, categories : categoriesResult , userEmail: userEmail, cartItems: cartCount});
-        })
- 
+app.get('/',(req, res)=>{
+    res.json("Hello");
 });
+app.get('/products' , productController.getProducts);
     
 app.get('/shipping', (req, res) => {
     
@@ -166,33 +117,10 @@ app.get('/shipping', (req, res) => {
     res.render('shippinginfo', {categories : categoriesResult , userEmail: userEmail});
 });
 
-app.get('/about', (req, res)=>{
-    res.send("About")
-})
-
-app.use('/api/products', productRouter)
-app.use('/category', categoryRoute.router)
-app.use('/search', searchRouter.router)
-app.use('/api/user', userRouter )
-app.use('/signup', signUpRoute.router)
-app.use('/api/cart', cartRouter)
-app.use('/Account_Settings', AccountSettingsRoute.router)
-
-app.post('/logout', (req, res) => {
-    req.session.destroy(function(err) {
-        res.redirect('/')
-    })
-})
 
 
-
-low(adapter).then(function (db) {
-    
-}).then(function (){
     app.listen(3000, () => {
         console.log(`Example app listening on port http://127.0.0.1:3000/`)
     })
-    
-})
 
 

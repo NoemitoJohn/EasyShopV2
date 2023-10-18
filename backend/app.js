@@ -16,8 +16,10 @@ const session = require('express-session');
 const cors = require('cors')
 
 app.use(cors({
-    // credentials : true,
-    // allowedHeaders: ['Content-Type', 'Authorization']
+   //this is the only line you will change the domain name
+origin: ["https://www.ecshopping.online"],
+methods: ["POST", "GET"],
+credentials: true    
 }
 ))
 
@@ -33,6 +35,37 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
+
+
+const dbConnection = (req, res, next) =>{
+    
+    const connection = mysql.createConnection({
+        host     : 'sql12.freesqldatabase.com',
+        user     : 'sql12653918',
+        password : 'e8EnMbdWJ3',
+        database : 'sql12653918',
+    });
+    
+    connection.connect((err) => {
+        if (err) {
+            console.log('Cant connect to database')
+            res.json({error : err.message})
+            return
+        }
+        
+        console.log('MySql Connected!') 
+        req.app.set('DB', connection)
+        next()
+    });
+    
+}
+
+
+app.use(dbConnection)
+
+
+
 
 DB.User.hasOne(DB.Verified, {
     foreignKey: 'user_id'

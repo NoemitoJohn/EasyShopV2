@@ -1,12 +1,12 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, Outlet, Link } from "react-router-dom"
 import logo from "../logo2.png"
 
-function Navbar() {
+export default function RootLayout() {
   return (
     <>
         <nav className="flex bg-black flex-col ">
         <div className="flex bg-darkgray justify-center h-10 ">
-            <div className="flex  justify-center basis-4/6 item-center">
+            <nav className="flex  justify-center basis-4/6 item-center">
                 <ul className="flex text-white basis-1/2 h-full items-center  ">
                     <NavLink className="mr-4 Linkhover"  to='/'>Home</NavLink>
                     <NavLink className="mr-4 Linkhover" to='/products'>All Products</NavLink>
@@ -17,7 +17,7 @@ function Navbar() {
                     <NavLink className="mr-4 Linkhover" to='/login'>Log in</NavLink>
                 </ul>
         
-            </div>
+            </nav>
         </div>
         <div className="flex justify-center">
             <div className="flex basis-4/6 justify-center py-4">
@@ -30,17 +30,18 @@ function Navbar() {
                         </form>
                     </div>
                     <div className="flex justify-center items-center basis-1/4  text-white font-semibold  ">
-                        <button className="bg-red px-4 py-2 h-10 rounded-sm">CART</button>
+                        <Link to='/cart' className="bg-red px-4 py-2 h-10 rounded-sm">CART</Link>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+    <main>
+        <Outlet/>
+    </main>
 
 
 
     </>
   )
 }
-
-export default Navbar

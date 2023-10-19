@@ -23,6 +23,10 @@
   .Log-Input{
       @apply   ring-gray-400 h-10 p-5 mb-5 bg-gray-100 border-b-4 
   }
+  .XHover{
+      @apply   hover:scale-125 hover:border-red hover:border-1
+
+  }
 } 
 
 
@@ -30,3 +34,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+nav a.active{
+  color: gray;
+
+}
+body{
+  background-color: #f1f1f1;
+}

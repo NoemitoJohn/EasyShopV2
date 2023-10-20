@@ -8,14 +8,31 @@ const User = require('./User')
 const UserInfo = require('./UserInfo')
 const Verified = require('./Verified')
 
+// ### Production 
 const sequelize = new Sequelize(
-    'easyshopv2', // database
-    'root', // username
-    'root', // password 
+    process.env.DB_DATABASE, // database
+    process.env.DB_USERNAME, // username
+    process.env.DB_PASSWORD, // password 
     {
-        dialect : 'mysql'
+        host :  process.env.DB_HOST,
+        port : process.env.DB_PORT,
+        dialect : 'mysql',
+        logging: false
     }
 )
+
+// ### Development
+// const sequelize = new Sequelize(
+//     'easyshopv2', // database
+//     'root', // username
+//     'root', // password 
+//     {
+//         // host : 'e-p.h.filess.io',
+//         // port : 3307,
+//         dialect : 'mysql',
+//         // logging: false
+//     }
+// )
 
     
 const DB = {}
@@ -58,6 +75,18 @@ DB.Verified.belongsTo(DB.User, {foreignKey: 'user_id'})
 // DB.Cart.sync({force : true})
 
 // DB.instance.sync({force: true})
+const init = async () => {
+
+    try {
+        await DB.instance.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+
+}
+
+init()
 
 
 

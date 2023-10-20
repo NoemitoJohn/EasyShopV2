@@ -15,7 +15,6 @@ const ProductInfo = (sequelize) =>{
         }
     },
     { 
-        timestamps: false,
         freezeTableName: true
     }
     );

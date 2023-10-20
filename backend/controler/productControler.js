@@ -16,39 +16,15 @@ const getProducts = async (req, res) => {
         if(req.query.limit) limit  = Number(req.query.limit)
     }
 
-    const db = req.app.get('DB')
-
-
-    // db.query('select products.id, name, price, stocks, rating, products_info.img_url as thumbnail from products ' +
-    // 'inner join products_info on products.id = products_info.productId ' +
-    // 'where products.id between ? and ?', [start, start + limit ], function(err ,result){
-        
-    //     if(err) 
-    //     {
-    //         console.log(err.message)
-    //         throw err
-    //     }
-        
-    //     const data = [];
-        
-    //     for (const item of result) {
-    //         const img_parse = JSON.parse(item.thumbnail)
-    //         item.thumbnail = img_parse[0]
-    //         data.push(item)
-    //     }
-
-
-
-    //     res.send(data)
-    // })  
-
+    
     const products = await DB.Product.findAll({
 
         where : {
             id : {
                 [Op.between] : [start, limit]
             }
-        }
+        }, 
+        attributes: { exclude : ['createdAt', 'updatedAt']}
 
     })
     
@@ -84,7 +60,7 @@ const getProduct = async (req, res) =>{
         attributes : ['description', 'img_url'], 
         
         where : {
-            id : id
+            product_id : id
         }, 
         
         include : [
@@ -105,7 +81,7 @@ const getProduct = async (req, res) =>{
 
     const img_url =  JSON.parse(productJSON.img_url)
 
-    productJSON.img_url = img_url
+     productJSON.img_url = img_url
 
     res.json(productJSON)
 }

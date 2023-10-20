@@ -7,7 +7,6 @@ const UserInfo = (sequelize) =>{
        
     },
     {
-        timestamps: false,
         freezeTableName: true
     })
 

@@ -20,7 +20,7 @@ const Product = (sequelize) =>{
             allowNull: false
         }
     },
-    { timestamps: false, freezeTableName: true }
+    { freezeTableName: true }
     );
     
     return Product;

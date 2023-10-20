@@ -261,6 +261,5 @@ async function saveproductImg(filename, response){
         
     })
 }
-init()
 
 module.exports = init

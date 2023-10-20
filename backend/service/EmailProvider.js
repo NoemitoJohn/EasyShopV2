@@ -8,7 +8,6 @@ const sendValidationEmail = async (name, email_to , link) => {
         // // host: 'localhost',
         // port: 1025,
         
-        
         host: "smtp-relay.brevo.com",
         port: 587,
         secure: false,

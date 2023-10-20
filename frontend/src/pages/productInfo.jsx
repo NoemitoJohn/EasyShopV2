@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 export default function productInfo() {
     const { id } = useParams()
     const productInfo = useLoaderData()
+    console.log(productInfo)
     return (
     <div className="grid justify-items-stretch pt-10">
         <div className="flex justify-self-center space-x-4 w-4/6  p-5">
@@ -11,16 +12,16 @@ export default function productInfo() {
                
                 <div className="flex justify-center items-center w-full h-full bg-gray-300 rounded text-4xl text-gray-500 font-bold">Product Image</div>
             </div>
-
+            
 
             <div className="flex flex-col w-1/2 bg-white rounded p-10 shadow-lg ">
-                <div className="w-full text-2xl font-semibold">{productInfo.name} </div>
-                <div className="mt-2">Ratings: {productInfo.rating} </div>
-                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.stocks} </div>
-                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {productInfo.price}.00</div>
+                <div className="w-full text-2xl font-semibold">{productInfo.product.name} </div>
+                <div className="mt-2">Ratings: {productInfo.product.rating} </div>
+                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.product.stocks} </div>
+                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {productInfo.product.price}.00</div>
 
                 <div className="flex w-full space-x-4">
-                    <input className="w-1/2 rounded border-2  pl-4 pr-2" id="qty_input" type="number"  value="1" max="<%= product.stock %>" id="quantity" name="quantity" />
+                    <input className="w-1/2 rounded border-2  pl-4 pr-2"  type="number"  value="1" max="<%= product.stock %>" id="quantity" name="quantity" />
                     <div className="w-1/2"><button className="bg-red rounded text-white font-semibold w-full py-1">Add To Cart</button></div>
                 </div>
                 
@@ -50,8 +51,9 @@ export default function productInfo() {
 export const productInfoLoader = async ({params}) =>{
     const { id } = params
     
-    const res = await fetch(`http://localhost:3000/product/` + id )  
+    const res = await fetch(`http://localhost:3000/api/products/` + id )  
     // const res = await fetch(`https://demolive-api.vercel.app/product/` + id  )
 
     return res.json()
+
 }

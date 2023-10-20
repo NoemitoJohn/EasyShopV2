@@ -2,14 +2,10 @@ require('dotenv').config()
 const {sendValidationEmail} = require('./service/EmailProvider')
 const express = require('express')
 const DB = require('./models/DB')
-
-
-
 const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
 const {checkoutRouter } = require('./routes/checkout')
-const searchRouter = require('./routes/search')
 
 const bodyParser = require('body-parser')
 const app = express();
@@ -113,7 +109,6 @@ app.get('/about', (req, res)=>{
 })
 
 app.use('/api/products', productRouter)
-app.use('/search', searchRouter.router)
 app.use('/api/user', userRouter )
 app.use('/api/cart', cartRouter)
 app.use('/api/checkout', checkoutRouter)

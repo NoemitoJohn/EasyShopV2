@@ -44,7 +44,7 @@ export default function products() {
 export const productLoader = async ()=>{
   //dont change the api link even if the domain is replace
 //  const res = axios.get('https://demolive-api.vercel.app/products')
-  const res = await fetch('http://localhost:3000/products')
+  const res = await fetch('http://localhost:3000/api/products')
   // const res = await fetch('https://demolive-api.vercel.app/products') 
     return res.json()
 }

@@ -8,6 +8,7 @@ const signUpRoute = require('./routes/signup')
 const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
+const {checkoutRouter } = require('./routes/checkout')
 const searchRouter = require('./routes/search')
 
 const bodyParser = require('body-parser')
@@ -17,11 +18,12 @@ const cors = require('cors')
 
 app.use(cors({
    //this is the only line you will change the domain name
-origin: ["https://www.ecshopping.online"],
-methods: ["POST", "GET"],
-credentials: true    
+     origin: "http://localhost:5173",
+// methods: ["POST", "GET"],
+// credentials: true    
 }
 ))
+// http://localhost:5173/products
 
 app.use(express.static('public'))
 app.use('/api/product/static', express.static('product_img'))
@@ -37,39 +39,6 @@ app.use(session({
 }))
 
 
-
-const dbConnection = (req, res, next) =>{
-    
-    const connection = mysql.createConnection({
-        host     : 'sql12.freesqldatabase.com',
-        user     : 'sql12653918',
-        password : 'e8EnMbdWJ3',
-        database : 'sql12653918',
-    });
-    
-    connection.connect((err) => {
-        if (err) {
-            console.log('Cant connect to database')
-            res.json({error : err.message})
-            return
-        }
-        
-        console.log('MySql Connected!') 
-        req.app.set('DB', connection)
-        next()
-    });
-    
-}
-
-
-app.use(dbConnection)
-
-
-
-
-DB.User.hasOne(DB.Verified, {
-    foreignKey: 'user_id'
-})
 
 
 
@@ -144,11 +113,10 @@ app.get('/about', (req, res)=>{
 })
 
 app.use('/api/products', productRouter)
-app.use('/category', categoryRoute.router)
 app.use('/search', searchRouter.router)
 app.use('/api/user', userRouter )
-app.use('/signup', signUpRoute.router)
 app.use('/api/cart', cartRouter)
+app.use('/api/checkout', checkoutRouter)
 app.use('/Account_Settings', AccountSettingsRoute.router)
 
 app.post('/logout', (req, res) => {
@@ -157,10 +125,12 @@ app.post('/logout', (req, res) => {
     })
 })
 
-
-app.listen(3000, () => {
-    console.log(`Example app listening on port http://127.0.0.1:3000/`)})
+const startServer = async () =>{
     
+    app.listen(3000, () => {console.log(`Example app listening on port http://127.0.0.1:3000/`)})
+}
+
+startServer()
     
     
     

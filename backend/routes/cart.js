@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const {postCart, getCart, delCart} = require('../controler/cartController')
+const {postCart, getCart, deleteCart, updateCart} = require('../controler/cartController')
 
 
 router.post('/checkout', async (req, res) =>{
@@ -120,7 +120,8 @@ router.post('/checkout', async (req, res) =>{
 
 router.get('/', getCart)
 router.post('/', postCart)
-router.delete('/', delCart)
+router.delete('/', deleteCart)
+router.patch('/', updateCart)
 
 module.exports = { cartRouter : router}
 

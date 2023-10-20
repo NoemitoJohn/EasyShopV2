@@ -57,7 +57,7 @@ const getProducts = async (req, res) => {
     for (const item of products) {
         const productInfo = await DB.ProductInfo.findOne({
             where :{
-                productId: item.id
+                product_id: item.id
             }   
         })
         

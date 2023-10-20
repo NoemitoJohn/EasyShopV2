@@ -8,7 +8,8 @@ const {
     isAuth,
     getUserInfo,
     getAddress,
-    setAddress
+    setAddress,
+    verifyUser
 } = require('../controler/userController')
 
 router.post('/login', login)
@@ -20,6 +21,6 @@ router.get('/info',getUserInfo)
 
 router.get('/address', getAddress)
 router.post('/address', setAddress)
-
+router.get('/verify/:token', verifyUser)
 
 module.exports  = { userRouter : router}

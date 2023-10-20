@@ -5,7 +5,7 @@ const {
     getProduct,
     getProductByCategory,
     getCategories
-} = require('../controler/productControler')
+} = require('../controller/productControler')
 
 
 router.get('/', getProducts)

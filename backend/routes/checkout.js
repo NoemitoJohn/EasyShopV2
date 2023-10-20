@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const {checkout, webhook} = require('../controler/checkoutController')
+const {checkout, webhook} = require('../controller/checkoutController')
 
 
 router.post('/', checkout)

@@ -10,7 +10,7 @@ const {
     getAddress,
     setAddress,
     verifyUser
-} = require('../controler/userController')
+} = require('../controller/userController')
 
 router.post('/login', login)
 router.post('/signup', signup)

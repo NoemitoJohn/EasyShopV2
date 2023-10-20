@@ -2,9 +2,9 @@ require('dotenv').config()
 const {sendValidationEmail} = require('./service/EmailProvider')
 const express = require('express')
 const DB = require('./models/DB')
-const AccountSettingsRoute = require('./routes/updateAccount')
-const categoryRoute = require('./routes/category')
-const signUpRoute = require('./routes/signup')
+
+
+
 const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
@@ -117,7 +117,6 @@ app.use('/search', searchRouter.router)
 app.use('/api/user', userRouter )
 app.use('/api/cart', cartRouter)
 app.use('/api/checkout', checkoutRouter)
-app.use('/Account_Settings', AccountSettingsRoute.router)
 
 app.post('/logout', (req, res) => {
     req.session.destroy(function(err) {

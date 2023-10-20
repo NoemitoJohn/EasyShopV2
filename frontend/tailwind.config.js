@@ -8,8 +8,7 @@ export default {
         'red': '#AF1B3F',
         'black': '#0F0F0F',
         'darkgray': '#1E1E24',
-        // 'body': '#FBFBFB',
-      
+        'backgray': '#d3d3d3',
       },
       boxShadow:{
           'Custom1':  '4px 4px 4px #d6d6c2',

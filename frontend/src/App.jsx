@@ -3,33 +3,51 @@ import { useState } from 'react'
 // import viteLogo from '/vite.svg'
 // import './App.css'\
 import Home from "./pages/home"
-import Products from "./pages/products"
+import Products, { productLoader } from "./pages/products"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
+import Cart from './pages/cart'
+import ProductInfo, { productInfoLoader } from './pages/productInfo'
 import './index.css'
-import Navbar from './components/Navbar'
-import {createBrowserRouter, BrowserRouter, Routes, Route, Link, NavLink} from 'react-router-dom'
+import RootLayout from './layouts/RootLayout'
 
+
+import {createBrowserRouter, 
+    BrowserRouter, 
+    Route, 
+    createRoutesFromElements
+} from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
+import NotFound from './pages/NotFound'
+
+
+
+
+const router = createBrowserRouter(
+    createRoutesFromElements(
+
+            <Route path="/" element={<RootLayout />}>
+                <Route index element={<Home/>}></Route>
+                <Route path="products" element={<Products/>} loader={productLoader} ></Route>
+                <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
+                <Route path="login" element={<Login/>}></Route>
+                <Route path="signup" element={<Signup/>}></Route>
+                <Route path="cart" element={<Cart/>}></Route>
+
+                <Route path="*" element={<NotFound />}></Route>
+
+            </Route>
+        
+    )
+)
 
 function App(){
 
 
   return(
-      <BrowserRouter>
-      <header>
-          <nav className='bg-gray-900'>
-               <Navbar/>
-          </nav>
-      </header>
-          <Routes>
-              <Route path="/" element={<Home/>}></Route>
-              <Route path="/products" element={<Products/>}></Route>
-              <Route path="/login" element={<Login/>}></Route>
-              <Route path="/signup" element={<Signup/>}></Route>
-          </Routes>
-      </BrowserRouter>
-  )
 
+     <RouterProvider router={router}/>
+  )
 }
 
 export default App

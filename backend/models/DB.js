@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
         host :  process.env.DB_HOST,
         port : process.env.DB_PORT,
         dialect : 'mysql',
-        logging: false
+        // logging: 
     }
 )
 
@@ -27,8 +27,7 @@ const sequelize = new Sequelize(
 //     'root', // username
 //     'root', // password 
 //     {
-//         // host : 'e-p.h.filess.io',
-//         // port : 3307,
+//  
 //         dialect : 'mysql',
 //         // logging: false
 //     }

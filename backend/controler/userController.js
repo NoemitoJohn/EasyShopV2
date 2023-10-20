@@ -3,8 +3,6 @@ const DB = require('../models/DB')
 const jwt = require('jsonwebtoken')
 const { sendValidationEmail } = require('../service/EmailProvider') 
 
-
-
 const creteToken = async (_id, _email) =>{
     return await jwt.sign({id : _id, email : _email }, 'secret', {expiresIn: '1d'})
 }

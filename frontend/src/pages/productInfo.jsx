@@ -1,5 +1,5 @@
 import { useLoaderData, useParams } from "react-router-dom"
-import Footer from "../components/Footer"
+
 
 export default function productInfo() {
     const { id } = useParams()
@@ -20,7 +20,7 @@ export default function productInfo() {
                 <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {productInfo.price}.00</div>
 
                 <div className="flex w-full space-x-4">
-                    <input className="w-1/2 rounded border-2  pl-4 pr-2" id="qty_input" type="number"  value="1" max="<%= product.stock %>" id="quantity" name="quantity" />
+                    <input className="w-1/2 rounded border-2  pl-4 pr-2"  type="number"  value="1" max="<%= product.stock %>" id="quantity" name="quantity" />
                     <div className="w-1/2"><button className="bg-red rounded text-white font-semibold w-full py-1">Add To Cart</button></div>
                 </div>
                 
@@ -39,19 +39,8 @@ export default function productInfo() {
             <div className="">{productInfo.decs}</div>
             <div className="">{productInfo.cat_name}</div> */}
         </div>
-        <Footer />
         
     </div>
    
   )
-}
-
-
-export const productInfoLoader = async ({params}) =>{
-    const { id } = params
-    
-    const res = await fetch(`http://localhost:3000/product/` + id )  
-    // const res = await fetch(`https://demolive-api.vercel.app/product/` + id  )
-
-    return res.json()
 }

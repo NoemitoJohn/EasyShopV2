@@ -1,0 +1,1128 @@
+
+body{
+	margin: 0;
+	padding: 0;
+	background-color: white!important;	
+	min-width: 280px;
+}
+ 
+:root{
+    --black: #0F0F0F;
+    --darkgray: #1E1E24;
+    --red:  #AF1B3F;
+}
+
+.MainContainer{
+	width: 100% !important;	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.GlobalContentBox{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-top: 220px;
+}
+.HeaderContainer{
+	width: 100%;
+	position: fixed;
+	display: flex;
+	top: 0;
+	z-index: 3;
+	flex-direction: column;
+}
+.TopContainer {
+	width: 100%;
+	height: 30px;
+	background-color: var(--darkgray);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.TopConInnerCon{
+	width: 70%;
+	min-width: 900px;
+	display: flex;
+	align-items: center;
+	align-self: center;
+}
+
+.TopLeft{
+	width: 85%;
+	height: 100%;
+	display: flex;
+}
+
+.TopRight{
+	width: 20%;
+	min-width: 150px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.MyAccountDropDown{
+	padding-top: 0;
+	padding-bottom: 0;
+	border-radius: 0;
+	width: 250px;
+	text-align: left;
+}
+.MyAccountDropDown a:hover{
+	font-weight: bold;
+}
+
+.UserName{
+	background: var(--red);
+	width: 100%;
+	color: white;
+	padding: 10px 20px;
+	font-weight: bold;
+}
+
+.LogoutBut{
+	width: 100%;
+	height: 40px;
+	background: none;
+	border: none;
+	border-top: 1px solid gray;
+	text-align:left;
+	padding-left: 20px;
+}
+.LogoutBut:hover{
+	background: var(--red);
+	color: white;
+	font-weight: bold;
+}
+
+.logoutmodal{
+	margin-top: 300px;
+}
+.fade {
+	z-index: 2;
+}
+.closeLogout{
+	width: 40%;
+	border-radius: 0;
+	float: right;
+}
+.ConfirmLogoutBut{
+	width: 40%;
+	background-color: var(--red);
+	border-radius: 0;
+	float: left;
+	color: white;
+}
+.ConfirmLogoutBut:hover {
+	scale: 1.1;
+	background-color: var(--red);
+	color: white;
+}
+.closeLogout:hover {
+	scale: 1.1;
+}
+
+.modal-body p{
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.MenuCon {
+	margin-right: 20px;
+}
+
+.MenuCon a {
+	text-decoration: none;
+	color: white;
+	line-height: 3em;
+}
+.MenuCon a:hover {
+	color: var(--red);
+}
+.MenuName {
+	width: 100%;
+	height: 100%;
+	
+}
+
+
+.SignupBut, .LoginBut{
+	width: 50%;
+	text-align: end;
+}
+
+
+.SignupBut a, .LoginBut a{
+	text-decoration: none;
+	color: white;
+}
+
+.SignupBut a:hover, .LoginBut a:hover{
+	color: var(--red);
+}
+/* END   OF   HEADER ___________________________*/
+
+.LogoSearchCartCon {
+	width: 100%;
+	font-family: "Arial", Helvetica, sans-serif;
+	font-size: 40px;
+	background-color: var(--black);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	
+}
+.LogoSearchCartInnerCon{
+	width: 70%;
+	min-width: 900px;
+	display: flex;
+	align-items: center;
+	align-self: center;
+	
+}
+.LogoImg {
+	width: 15%;
+	height: 100%;
+	line-height: 2.5em;
+	flex:1;
+}
+
+.LogoImg img{
+	width: 90%;
+	min-width:200px;
+
+}
+
+.SearchCartBox {
+	width: 100%;
+	height: 100%;
+	font-size: 15px;
+	display: flex;
+	flex-wrap: nowrap !important;
+	align-items: center;
+	flex: 5;
+	padding-left:100px;
+}
+
+
+.SearchInputBox{
+	flex: 8;
+	display: flex;
+	margin-right: 100px;
+}
+
+.SearchInputBox2{
+	flex: 8;
+	display: flex;
+}
+
+.SearchInput {
+	flex: 5;
+	height: 45px;
+	border-radius: 0;
+	border: none;
+}
+.SearchInput2{
+
+	border: 2px solid var(--red);
+	border-radius: 0;
+}
+.SearchBut {
+	flex: 1;
+	background-color: var(--red);
+	color: white;
+	font-weight: bold;
+	border: none;
+	border-radius: 0;
+}
+.SearchBut2 {
+	flex: 1;
+	background-color: white;
+	color: var(--red);
+	font-weight: bold;
+	border: none;
+	border-radius: 0;
+	border: 2px solid var(--red);
+}
+.SearchButIcoBox{
+	display: none;
+}
+.SearchButIcoBox:hover{
+}
+.SearchButIco{
+	
+	color: white;
+}
+.SearchButIco:hover{
+	color: white;
+	
+	background-color: var(--red);
+}
+.ListBut{
+	display: none;
+}
+.HomeIcoBox{
+	display: none;
+}
+.CartNotifBut{
+	background: none;
+	border: none;
+	flex: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.CartNotif{
+	display: flex;
+	flex-wrap: wrap;
+	align-self: center;
+	border: 2px solid white;
+}
+
+.CartNotif:hover, .HomeIcoBox:hover {
+	background: none;
+	color: white !important;
+	font-weight: bold;
+	background-color: var(--red);
+	border-color:var(--red);
+}
+
+.bi-cart-fill{
+	width: 35px;
+	font-size: 27px;
+	font-weight: bold;
+	color: white;
+}
+
+
+.CategListBut, .HomeIcoBox{
+	display: none;
+}
+
+.CategBut{
+	border: 2px solid white;
+	margin-left: 15%;
+	font-family: "Arial", Helvetica, sans-serif !important;
+	font-weight: bold !important;
+	font-size: 20px;
+	border-radius: 0 !important; 
+	background: none;
+}
+.btn {
+	font-weight: bold;
+	display: inline-block;
+	
+}
+.DropdownCategory{
+	width: 100%;
+	margin-top: 23px !important;
+	padding: 20px;
+	border-radius: 0;
+	background-color: var(--red);
+	font-weight: bolder;
+	scrollbar-gutter: auto;
+}
+.DropdownSearch{
+	width: 100%;
+	margin-top: 23px !important;
+	padding: 20px;
+	border-radius: 0;
+	background-color: var(--red);
+	font-weight: bolder;
+}
+
+.categoryMenu{
+	width:  150px;
+	display: inline-block;
+	color: white !important;
+}
+.categoryMenu:hover {
+	background: none;
+	color: var(--black) !important;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+/* END   OF   LOGO SEARCH CON ___________________________*/
+.NavMenuMainBox{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: var(--black);
+}
+
+.NavMenu{
+	width: 19%;
+	height: 100%;
+	display: inline-block;
+	
+}
+
+.CarouselNavBox{
+	width: 80%;
+	min-width: 900px;
+	display: flex;
+	align-items: center;
+	height: 60px;
+	align-self: center;
+}
+
+.NavMenuInnerBox{
+	width: 100%;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.MenuCompressBox{
+	width: 90%;
+	min-width: 950px;
+	height: 60px;
+	align-self: center;
+}
+.NavLinkBox{
+	width: 100%;
+}
+.LinkBox{
+	float: left;
+	margin-left: 40px;
+	text-align: left;
+	margin-top: 20px !important;
+	
+}
+
+.NavLink{
+	color: white;
+	text-decoration: none;
+	text-transform: capitalize;
+}
+
+.NavBut{
+	margin-top:-13px;
+}
+.prev{
+	width: 30px;
+	height: 30px;
+	display: none;
+	color: var(--red) !important;
+	margin-top:20px;
+}
+
+.next{
+	width: 30px;
+	height: 30px;
+	display: none;
+	margin-top:20px;
+}
+
+.NavLink:hover{
+	color: var(--red) !important;
+}
+
+.NavMenuMainBox:hover .next,.NavMenuMainBox:hover .prev {
+	display: inline-block;
+	color: var(--red) !important;
+	font-size: 30px;
+	opacity: 100%;
+}
+
+.SliderContainer{
+	height: 24.8vw;
+	width: 70%;
+	margin-left: 15%;
+	margin-bottom: 50px;
+}
+
+.d-block{
+	height: 24vw !important;
+	min-height: 240px;
+} 
+
+.CartInfo {
+	width: 48%;
+	height: 100%;
+	line-height: 4em;
+	color:  #33ff33;
+	float: right;
+	font-family: "Arial", Gadget, sans-serif;
+	font-size: 12px;
+}
+.SliderLeft{
+	width: 100%;
+	height: 100%;
+	float: left;
+	padding: 5px;
+	border: 1px solid #ccccb3;
+	box-shadow: 4px 4px 4px #d6d6c2;
+}
+
+#Menu3{
+	width: 96%;
+	height: 31.5%;
+	margin: 10px auto;
+	padding: 4px;
+	border: 1px solid #ccccb3;
+	box-shadow: 4px 4px 4px #d6d6c2;
+}
+#Menu1:hover, #Menu2:hover, #Menu3:hover{
+	transform: scale(0.9);
+}
+
+.TitleCon{
+	width: 100%;
+	font-family: "Arial" ,Helvetica, sans-serif;
+	font-weight: bolder;
+	color: var(--black);
+	padding-bottom: 5px;
+	text-align: justify;
+	text-transform:uppercase;
+	font-weight: bold;
+	font-size: 25px; 
+	text-align: center;
+}
+
+.ContentInnerCon{
+	width: 60%;
+	align-self: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.ContentContainer{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: self-end;
+	align-items: center;
+}
+
+
+
+.InnerCon{
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	justify-content: center;
+	align-items: center;
+}
+.CartMainBox{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+.CartBox{
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	height: 440px;
+	margin-bottom: 50px;
+	padding: 10px;
+	border: 1px solid gray;
+}
+.CartBox:hover{
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border: 2px solid var(--red);
+	/* transform: scale(1.1); */
+}
+
+.CartImgBox{
+	display: flex;
+	justify-content: center;
+	width: 100% !important;
+	height: 270px;
+	padding: 5px;
+}
+.CartImgBox a{
+	width: 100%;
+	height: 270px;
+}
+/* 
+.CartImgBox:hover{
+	transform: scale(1.2);
+} */
+
+.CartImg {
+	width: 100%;
+	height: 100%;
+	background: #cccccc;
+}
+.CartImg img {
+	width: 100%;
+	height: 270px;
+}
+.ProductName {
+	height: 150px;
+	padding: 3px;
+	width: 100%;
+	margin-top: 15px;
+	font-family: "Arial" ,Helvetica, sans-serif;
+	font-size: 13px;
+	color: #4d4d4d;
+}
+.Ptitle{
+	width: 100%;
+	height: 150px;
+}
+.ProductCartDetails{
+	display: flex;
+	width: 100%;
+}
+.ProductPrice {
+	padding: 2px;
+	width: 50%;
+	font-family: "Arial" ,Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: var(--red);
+}
+.ProductRating{
+	width: 45%;
+	text-align: end;
+	margin-right: 10px;
+}
+
+.CartButCon {
+	float: left;
+	width: 100%;
+	height: 50px;
+}
+
+.CartBut {
+	float: right;
+	padding: 10px 20px;
+	border-radius: 2px;
+	margin-right: 5px;
+	font-weight: bold;
+	background: var(--red);
+	color: white;
+}
+
+.CartBut:hover, #WishBut:hover, #DetailsBut:hover {
+	border: 1px solid white;
+	
+}
+.CartBut:hover {
+	background: gray;
+	color: white;
+}
+
+
+#WishBut, #DetailsBut{
+	background: #d9d9d9;
+}
+
+
+.footer{
+	width: 100%;
+	background: #1a1a1a ;
+	display: flex;
+	justify-content: center;
+}
+
+.FooterContent{
+	width: 70%;
+	height: 100%;
+	display: flex;
+	margin-left: 5%;
+	flex-direction: column;
+}
+
+.UseFullCon{
+	height: 100%;
+	display: flex;
+	justify-content: space-evenly;
+}
+.FooterCopyright{
+	color: white;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	padding-bottom: 15px;
+	font-style: italic;
+}
+.FooterBrand{
+	display: flex;
+	font-weight: bold;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 50px;
+	font-style: italic;
+	color: var(--red);
+	width: 100%;
+	justify-content: center;
+	margin-bottom: -10px;
+}
+
+.FooterLinks {
+	width: 40%;
+	color: white;
+	padding:  20px;
+	font-family: "Arial", Helvetica,sans-serif;
+	font-weight: bold;
+	display:flex;
+	flex-direction: column ;
+} 
+
+.FooterContact {
+	color: white;
+	padding:  20px;
+	font-family: "Arial", Helvetica,sans-serif;
+	font-weight: bold;
+	display:flex;
+	flex-direction: column ;
+} 
+.FooterContact strong{
+	margin-left: 30px;
+}
+
+.UseFullCon a {
+	text-decoration: none;
+}
+
+.Links{
+	color: white;
+	margin-left: 10%;
+	padding: 10px;
+}	
+.FooterLinks i{
+	color: var(--red);
+	font-size: 30px;
+}	
+.FooterLinks a{
+	display: flex;
+}
+.ContactInfoCon{
+	width: 40%;
+	display: flex;
+}
+.ContactInfo {
+	color: white;
+	font-family: "Arial" ,Helvetica, sans-serif;
+	padding: 10px;
+	padding-left: 0;
+	margin-left: 30px;
+	font-size: 15px;
+	border-bottom: 1px dotted gray;
+}
+
+.SubBut{
+	width: 100px;
+	height: 30px;
+	margin-left: 40px;
+	margin-top: 10px;
+	border-radius: 5px;
+	background: #00d1ea;
+	border: none;
+	color: #1d1d1d;
+	font-weight: bold;
+}
+
+.SubBut:hover {
+	background: gray;
+	color: white;
+	
+}
+
+/* PRODUCT DETAILS CAROUSEL  WITH THUMBNAILS */
+
+@media only screen and (max-width: 1230px) {
+	
+	.CarouselNavBox{
+		width: 90%;
+	}
+
+		
+	.MenuCompressBox{
+		width: 100%;
+	}
+	
+}
+
+@media only screen and (max-width: 1450px) {
+
+	
+	.InnerCon{
+		width: 85%;
+	}
+
+}
+
+.container{
+	margin: 50px;
+}
+
+@media only screen and (max-width: 1180px) {
+		
+	.FooterContent{
+		width: 90%;
+	}
+
+
+	.CartBox{
+		height: 420px;
+	}
+}
+@media only screen and (max-width: 1100px) {
+	
+	.GlobalContentBox{
+		margin-top: 150px;
+	}
+
+	.InnerCon{
+		width: 90%;
+	}
+	
+
+	.CarouselNavBox{
+		width: 98%;
+		display: none;
+	}
+		
+	.SearchCartBox {
+		display: flex;
+		width: 100%;
+		height: 100%;
+	}
+	.CategListBut{
+		display: flex;
+		color: white;
+		font-weight: bold;
+		font-size: 20px;
+		border: none;
+		background-color: var(--red);
+	}
+	
+	.CategBut{
+		margin: 0;
+		margin-right: 8px;
+	}
+	.ListBut{
+		display: flex;
+		
+	}
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+	.GlobalContentBox{
+		margin-top: 130px;
+	}
+
+	.SearchCartBox {
+		height: 100%;
+		font-size: 15px;
+		display: flex;
+		flex-wrap: nowrap !important;
+		align-items: center;
+		width: 300px;
+		padding-left:0 !important;
+	}
+	
+	.MainContainer{
+		width: 100% !important;
+	}
+	.InnerCon{
+		width: 100%;
+	}
+	.CartBox{
+		height: 440px;
+	}
+	.TopConInnerCon{
+		width: 100%;
+		padding: 0 20px;
+	}
+	.SearchInputBox{	
+		display: none !important;
+	}
+	.TopConInnerCon{
+		min-width: 400px;
+	}
+	.SearchButIcoBox{
+		display: inline;
+	}
+	.LogoSearchCartInnerCon{
+		min-width: 400px;
+	}
+	.SearchButIco{
+		border: 2px solid white;
+		margin-right: 8px;
+		font-family: "Arial", Helvetica, sans-serif !important;
+		font-weight: bold !important;
+		font-size: 20px;
+		border-radius: 0 !important; 
+		background: none;
+			
+	}
+	.SearchCartBox{
+		width:100%;
+		display: flex;
+		align-items: end !important;
+		justify-content: end;
+	}
+	.SliderContainer{
+		width: 100%;
+		margin-left: 0;
+		height: 34vw;
+	}
+	.carousel-item img{
+		height: 38vw !important; 
+	}
+	.SliderLeft{
+		padding: 0;
+		background: none;
+		box-shadow: none;
+		border: none;
+		min-height: 150px;
+		min-width: 150px !important;
+	}
+	.LogoSearchCartInnerCon{
+		width: 100%;
+		padding: 0 5%;
+	}
+	
+}
+
+
+@media only screen and (max-width: 800px) {
+	
+	.InnerCon{
+		width: 100%;
+	}
+		
+	.CartImgBox{
+		padding: 0;
+	}
+	.CartImgBox a{
+		width: 100%;
+		height: 120px;
+	}
+	.CartBox{
+		width: 150px;
+		height: 280px;
+		padding: 10px;
+		padding: 3px !important;
+		border: 1px solid gray;
+	}
+
+	.CartImg img {
+		height: 120px;
+	}
+	.ProductName {
+		height: 100px;
+		padding: 3px;
+		width: 100%;
+		margin-top: 5px;
+	}
+	/* .Ptitle{
+		width: 100%;
+		height: 150px;
+	} */
+	.ProductCartDetails{
+		width: 100%;
+	}
+	.ProductPrice {
+		padding: 2px;
+		width: 100%;
+	}
+	.ProductRating{
+		width: 100%;
+		text-align: end;
+		margin-right: 10px;
+	}
+	
+	.CartButCon {
+		width: 100%;
+		height: 30px;
+	}
+	
+	.CartBut {
+		width: 100%;
+		height: 30px;
+		border-radius: 2px;
+		margin: 0;
+		text-align: center;
+		padding: 3px 3px;
+	}
+	
+	.CartBut:hover, #WishBut:hover, #DetailsBut:hover {
+		border: 1px solid white;
+		
+	}
+	.CartBut:hover {
+		background: gray;
+		color: white;
+	}
+		
+	.ProductCartDetails{
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+	.ProductPrice {
+		width: 50%;
+	}
+	.ProductRating{
+		width: 100%;
+		text-align: left;
+	}
+		
+	.TitleCon{
+		font-size: 20px;
+		margin-bottom: 20px;
+	}
+	.ProductName {
+		text-align: center;
+	}
+	
+	.FooterLinks{
+		width: 20%;
+	}
+	.Links{
+		display: none;
+	}
+	.ContactInfoCon{
+		width: 70%;
+	}
+}
+@media only screen and (max-width: 600px) {
+	
+	.FooterBrand{
+		font-size: 30px;
+	}
+	.FooterContent{
+		width: 100%;
+	}
+
+	.d-block{
+		height: 24vw !important;
+		min-height: 150px;
+	} 
+	
+	.FooterContent{
+		width: 100%;
+	}
+
+
+}
+
+@media only screen and (max-width: 550px) {
+    
+    .LoginCon, .SignupCon{
+        padding: 0;
+    }
+    .LoginFormCon, .SignUpFormCon{
+        width: 100%;
+        min-width: 300px;
+    }
+    .TopContainer{
+        min-width: 380px;
+    }
+}
+@media only screen and (max-width: 500px) {
+	.FooterLinks{
+		width: 10%;
+	}
+
+}
+
+@media only screen and (max-width: 450px) {
+
+	.LogoSearchCartInnerCon{
+		flex-direction: column !important;
+		padding: 0;
+	}
+
+	.SearchCartBox {
+		width: 100%;
+		height: 100%;
+		font-size: 15px;
+		display: flex;
+		flex: 1;
+		flex-wrap: nowrap !important;
+		align-items: center;
+		justify-content: space-evenly;
+		padding: 0;
+	}
+	.HomeIcoBox{
+		display: flex;
+		color: white;
+	}
+	
+	.HomeIcoBox a{
+		font-size: 20px;
+		color: white;
+	}
+	.CartNotif, .SearchButIco, .CategBut{
+		border: none;
+	}
+	/* .CartNotifBut{
+	
+	}
+	.CategBut{
+		
+	}
+	
+	.SearchBut {
+	
+	} */
+	.LogoImg {
+		width: 100%;
+		height: 100%;
+		flex:1;
+		line-height: 0;
+		display: flex;
+		justify-content: center;
+	}
+
+	.LogoImg img{
+		width: 60%;
+
+	}
+	
+	.DropdownCategory{
+		margin-top: -5px !important;
+	}
+	.DropdownSearch{
+		margin-top: -5px !important;
+		padding: 5px;
+	}
+	.HeaderHomeBut{
+		display: none;
+	}
+
+	.TopLeft,.TopRight{
+		justify-content: center;
+	}
+	.TopRight{
+		width: 100%;
+		text-align: center;
+	}
+	.LoginBut, .SignupBut{
+		text-align: left;
+	}
+}
+
+@media only screen and (max-width: 300px) {
+	
+	.ContentContainer{
+		margin-top: 30px;
+	}
+}

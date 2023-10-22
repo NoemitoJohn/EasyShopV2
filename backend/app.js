@@ -6,19 +6,22 @@ const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
 const {checkoutRouter } = require('./routes/checkout')
-
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const app = express();
 const session = require('express-session');
 const cors = require('cors')
 
+
 app.use(cors({
-   //this is the only line you will change the domain name
-     origin: "http://localhost:5173",
-// methods: ["POST", "GET"],
-// credentials: true    
+    //this is the only line you will change the domain name
+    origin: "http://localhost:5173",
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true,
+    optionsSuccessStatus: 200,
 }
 ))
+// app.use(cookieParser())
 // http://localhost:5173/products
 
 app.use(express.static('public'))
@@ -31,7 +34,10 @@ app.use(bodyParser.json())
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie : {
+        expires : 60 * 60 * 24,
+    }
 }))
 
 
@@ -91,6 +97,8 @@ app.use(session({
 
 
 app.get('/shipping', (req, res) => {
+
+    
     
     if(!req.session.user){
         res.redirect('/login')

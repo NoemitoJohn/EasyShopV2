@@ -1,7 +1,37 @@
-
+import { useEffect } from "react"
 import Footer from "../components/Footer"
+import axios from "axios"
+import { useUserAuthContext } from "../hooks/useUserAuthContext"
+import { useNavigate } from "react-router-dom"
 
 export default function cart() {
+  
+  const {user} = useUserAuthContext()
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    
+    async function fecthData(){
+      
+      const { data } = await axios.get('http://127.0.0.1:3000/api/cart/', {
+          headers : {
+            'Authorization': `Bearer ${user.token}`
+          }
+      })
+      console.log(data)
+    }
+
+    if(user){
+      fecthData()
+    }else{
+      navigate('/login')
+    }
+
+
+  },[user])
+
+
+
   return (
     <div className="grid justify-items-stretch">  
         <div className="flex justify-self-center mt-10 w-4/6 space-x-3 ">
@@ -68,7 +98,7 @@ export default function cart() {
             </div>
 
         </div>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }

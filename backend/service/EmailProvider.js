@@ -5,16 +5,16 @@ const sendValidationEmail = async (name, email_to , link) => {
     
     let transporter = nodemailer.createTransport({
         
-        // // host: 'localhost',
-        // port: 1025,
+        host: 'localhost',
+        port: 1025,
         
-        host: "smtp-relay.brevo.com",
-        port: 587,
-        secure: false,
-        auth : {
-            user: 'noemito211@gmail.com',
-            pass : 'afwHSF6rj93hR7pb'
-        }
+        // host: "smtp-relay.brevo.com",
+        // port: 587,
+        // secure: false,
+        // auth : {
+        //     user: 'noemito211@gmail.com',
+        //     pass : 'afwHSF6rj93hR7pb'
+        // }
     });
 
     let info = await transporter.sendMail({

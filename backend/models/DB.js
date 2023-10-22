@@ -51,7 +51,7 @@ DB.Cart = Cart(sequelize);
 // DB.UserInfo = UserInfo(sequelize);
 DB.Verified = Verified(sequelize);
 
-DB.Category.hasMany(DB.ProductInfo, {foreignKey: 'category_id'})
+DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
 DB.ProductInfo.belongsTo(DB.Category, {foreignKey: 'category_id'})
 
 DB.Product.hasOne(DB.ProductInfo, {foreignKey: 'product_id'})

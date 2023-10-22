@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import { NavLink, useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -10,26 +10,36 @@ function signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPass] = useState('')
+  const [isRegistered, setRegistered] = useState(false)
 
   const navigate = useNavigate()
 
   function handleSubmit(event){
       event.preventDefault()
-      axios.post('http://localhost:3000/signup', {firstName, lastName, email, password, repeatPassword})
+      
+      axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword}, {withCredentials: true })
       // axios.post('https://demolive-api.vercel.app/signup', {firstName, lastName, email, password, repeatPassword})
       .then(res=>{
-        console.log(res)
-        navigate('/')
+        
+        if(res.data.status == 200) { setRegistered(true) }
+        else { console.log(res.data.message)}
+
       }).catch(err =>{
         console.log(err)
       })
-  }
 
-
+      
+ }
 
   return (
     <>
-
+        {isRegistered ? (
+          <div>
+          
+            <p>Before proceeding, please check your email {email} for the verification link .</p>
+          
+          </div>
+        ) : (
         <div className="flex justify-center w-full mt-20 ">    
                 <div className="flex w-1/3  py-5 px-10 bg-white shadow-lg">
                     <form onSubmit={handleSubmit} className="flex flex-col  w-full ">
@@ -44,7 +54,8 @@ function signup() {
                     </form>
                 </div>
         </div>   
-        <Footer/> 
+        )}
+        {/* <Footer/>  */}
     </>
   )
 }

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Footer from "../components/Footer"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 
@@ -12,7 +11,7 @@ function login() {
   function handleSubmit(event){
     event.preventDefault()
 
-    axios.post('http://localhost:3000/login', {email, password})
+    axios.post('http://localhost:3000/api/login', {email, password})
     // axios.post('https://demolive-api.vercel.app/login', {email, password}) 
     .then(res=>{
       console.log(res)
@@ -37,7 +36,6 @@ function login() {
                     </form>
                 </div>
         </div>    
-        <Footer />
     </>
   )
 }

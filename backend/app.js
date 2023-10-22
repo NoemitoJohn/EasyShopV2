@@ -1,31 +1,30 @@
 require('dotenv').config()
+const {sendValidationEmail} = require('./service/EmailProvider')
 const express = require('express')
-const mysql = require('mysql')
-const session = require('express-session')
-const cors = require('cors')
+const DB = require('./models/DB')
+
+
+
+const {userRouter} = require('./routes/users')
+const {productRouter} = require('./routes/product')
+const {cartRouter } = require('./routes/cart')
+const {checkoutRouter } = require('./routes/checkout')
+const searchRouter = require('./routes/search')
+
 const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
-
-
-//Impoert Controllers
-const productsController = require('./controller/productController')
-const usersController = require('./controller/userController')
-
-
-const app = express()
-
+const app = express();
+const session = require('express-session');
+const cors = require('cors')
 
 app.use(cors({
-    //this is the only line you will change the domain name
-//  origin: ["https://www.ecshopping.online"],
-//  methods: ["POST", "GET"],
- credentials: true    
- }
- ))
-
- 
-app.set('view engine', 'ejs');
-app.set('layout', 'layouts/layout');
+   //this is the only line you will change the domain name
+     origin: "http://localhost:5173",
+    // origin: ["https://www.ecshopping.online"],
+    methods: ["POST", "GET"],
+    credentials: true    
+}
+))
+// http://localhost:5173/products
 
 
 app.use(express.static('public'))
@@ -42,57 +41,98 @@ app.use(session({
 }))
 
 
- 
-const dbConnection = (req, res, next) =>{
-    
-    const connection = mysql.createConnection({
-        // host     : 'sql12.freesqldatabase.com',
-        // user     : 'sql12653918',
-        // password : 'e8EnMbdWJ3',
-        // database : 'sql12653918',
-        host     : 'localhost',
-        user     : 'root',
-        password : '',
-        database : 'easyshopv2',
-    });
-    
-    connection.connect((err) => {
-        if (err) {
-            console.log('Cant connect to database')
-            res.json({error : err.message})
-            return
-        }
-        
-        console.log('MySql Connected!') 
-        req.app.set('DB', connection)
-        next()
-    });
-    
-}
 
-app.use(dbConnection)
 
-app.get('/' , (req, res) => {
-    "HELLO"
- 
+
+// const send = async () =>{
+//     try{
+//         const emailInfo = await sendValidationEmail('mercysweetsuarin@gmail.com')
+//         console.log(emailInfo)
+
+//     } catch(err){
+//         throw err
+//     }
+
+// }
+
+
+// send()
+// DB.Verified.belongsTo(DB.User)
+
+
+// DB.User.sync({force : true})
+// DB.Verified.sync({force : true})
+
+// const endpointSecret = "whsec_6afb0d281c9bad3ec7ab1267a13b333576d2db499e638e0e8adc7225e21ab6cd";
+
+// app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req , res)=>{
+
+//     const sig = req.headers['stripe-signature'];
+//     console.log('recieve something')
+//     let event;
+
+//     try {
+//         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+//     } catch (err) {
+//         res.status(400).send(`Webhook Error: ${err.message}`);
+//         return;
+//     }
+
+//     // Handle the event
+//     switch (event.type) {
+//         case 'payment_intent.succeeded':
+//         const paymentIntentSucceeded = event.data.object;
+//         // Then define and call a function to handle the event payment_intent.succeeded
+//         break;
+//         // ... handle other event types
+//         default:
+//         console.log(`Unhandled event type ${event.type}`);
+//     }
+
+//     // Return a 200 response to acknowledge receipt of the event
+//     res.send().end();
+// })
+
+
+
+
+app.get('/shipping', (req, res) => {
+    
+    if(!req.session.user){
+        res.redirect('/login')
+        return
+    }
+    
+    categoriesResult = app.get('categories')
+    userEmail = app.get('userEmail')
+    req.session.cart = req.query
+    
+    res.render('shippinginfo', {categories : categoriesResult , userEmail: userEmail});
 });
 
-app.post('/login', usersController.login)
-app.post('/signup', usersController.signup)
-app.get('/products', productsController.getAllProducts)
-app.get('/product/:id', productsController.getProduct)
-app.get('/cart')
-
-
-
-
-app.listen(3000, ()=>{
-    console.log(`Listening at PORT 3000`)
+app.get('/about', (req, res)=>{
+    res.send("About")
 })
 
+app.use('/api/products', productRouter)
+app.use('/search', searchRouter.router)
+app.use('/api/user', userRouter )
+app.use('/api/cart', cartRouter)
+app.use('/api/checkout', checkoutRouter)
 
+app.post('/logout', (req, res) => {
+    req.session.destroy(function(err) {
+        res.redirect('/')
+    })
+})
 
+const startServer = async () =>{
+    
+    app.listen(3000, () => {console.log(`Example app listening on port http://127.0.0.1:3000/`)})
+}
 
-
-
-
+startServer()
+    
+    
+    
+    

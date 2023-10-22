@@ -7,11 +7,12 @@ const Cart = require('./Cart')
 const User = require('./User')
 const UserInfo = require('./UserInfo')
 const Verified = require('./Verified')
+const Admin = require ('./Admin')
 
 const sequelize = new Sequelize(
     'easyshopv2', // database
     'root', // username
-    'root', // password 
+    '', //password
     {
         dialect : 'mysql'
     }
@@ -31,6 +32,7 @@ DB.ProductInfo = ProductInfo(sequelize);
 DB.Address = Address(sequelize);
 DB.Cart = Cart(sequelize);
 DB.User = User(sequelize);
+DB.Admin = Admin(sequelize);
 // DB.UserInfo = UserInfo(sequelize);
 DB.Verified = Verified(sequelize);
 

@@ -3,6 +3,7 @@ const {sendValidationEmail} = require('./service/EmailProvider')
 const express = require('express')
 const DB = require('./models/DB')
 const AccountSettingsRoute = require('./routes/updateAccount')
+const adminRoutes = require('./routes/admin');
 const categoryRoute = require('./routes/category')
 const signUpRoute = require('./routes/signup')
 const {userRouter} = require('./routes/users')
@@ -110,6 +111,7 @@ app.get('/about', (req, res)=>{
     res.send("About")
 })
 
+app.use('/admin', adminRoutes.adminRouter);
 app.use('/api/products', productRouter)
 app.use('/category', categoryRoute.router)
 app.use('/search', searchRouter.router)

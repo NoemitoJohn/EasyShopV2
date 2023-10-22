@@ -33,20 +33,6 @@ export default function products() {
         }
         </div>
      </div>
-    
-            {/* <Footer /> */}
     </>
   )
 }
-
-//loader function
-export const productLoader = async ()=>{
-  //dont change the api link even if the domain is replace
-//  const res = axios.get('https://demolive-api.vercel.app/products')
-  const res = await fetch('http://localhost:3000/api/products')
-  // const res = await fetch('https://demolive-api.vercel.app/products') 
-    return res.json()
-}
-// axios.get('http://localhost:3000/products')
-// .then(res => setProducts(res.data))
-// .catch(err => console.log(err))

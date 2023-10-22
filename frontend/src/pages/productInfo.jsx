@@ -102,14 +102,3 @@ export default function productInfo() {
    
   )
 }
-
-
-export const productInfoLoader = async ({params}) =>{
-    const { id } = params
-    
-    const res = await fetch(`http://localhost:3000/api/products/` + id )  
-    // const res = await fetch(`https://demolive-api.vercel.app/product/` + id  )
-
-    return res.json()
-
-}

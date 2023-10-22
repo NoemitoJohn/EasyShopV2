@@ -1,5 +1,4 @@
 import { useLoaderData, useNavigate, useParams } from "react-router-dom"
-import Footer from "../components/Footer"
 import { useEffect, useState } from "react"
 import {useUserAuthContext}   from "../hooks/useUserAuthContext"
 import axios from "axios"

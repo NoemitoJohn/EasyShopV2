@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import Footer from "../components/Footer"
+
 import axios from "axios"
 import { useUserAuthContext } from "../hooks/useUserAuthContext"
 import { useNavigate } from "react-router-dom"

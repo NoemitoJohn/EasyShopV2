@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react"
-import Footer from "../components/Footer"
 import { NavLink, useNavigate } from "react-router-dom"
 import axios from "axios"
 

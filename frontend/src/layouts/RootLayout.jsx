@@ -1,7 +1,6 @@
 import { NavLink, Outlet, Link } from "react-router-dom"
 import logo from "../logo2.png"
 import { useEffect } from "react"
-import Footer from "../components/Footer"
 import { useUserAuthContext } from "../hooks/useUserAuthContext"
 
 export default function RootLayout() {

@@ -53,9 +53,8 @@ function signup() {
                         <button className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>
                     </form>
                 </div>
-        </div>   
-        )}
-        {/* <Footer/>  */}
+        </div> 
+        )}  
     </>
   )
 }

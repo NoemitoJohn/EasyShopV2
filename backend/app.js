@@ -97,8 +97,6 @@ app.use(session({
 
 
 app.get('/shipping', (req, res) => {
-
-    
     
     if(!req.session.user){
         res.redirect('/login')

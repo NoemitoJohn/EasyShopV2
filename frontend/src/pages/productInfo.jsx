@@ -98,7 +98,6 @@ export default function productInfo() {
             <div className="">{productInfo.decs}</div>
             <div className="">{productInfo.cat_name}</div> */}
         </div>
-        {/* <Footer /> */}
         
     </div>
    

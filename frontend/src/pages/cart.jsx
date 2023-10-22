@@ -34,7 +34,7 @@ export default function cart() {
 
   return (
     <div className="grid justify-items-stretch">  
-        <div className="flex justify-self-center mt-10 w-4/6 space-x-3 ">
+        <div className="flex justify-self-center w-4/6 space-x-3 ">
             <div className="w-4/6 space-y-3">
                   <div className="flex w-full bg-white shadow-lg rounded p-3 pl-5 text-gray-700 font-bold font-xl">CART ITEM LIST</div>
 
@@ -77,9 +77,6 @@ export default function cart() {
 
 
 
-
-
-
                  {/* DISPLAY TOTAL AMOUNT HERE (ORDER SUMMARY)*/}
             <div className="w-2/6 max-h-[21rem] bg-white shadow-lg rounded p-5">
                   <div className="font-semibold pb-3 border-b-2">Order Summary</div>
@@ -98,7 +95,6 @@ export default function cart() {
             </div>
 
         </div>
-        {/* <Footer/> */}
     </div>
   )
 }

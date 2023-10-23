@@ -10,21 +10,26 @@ function signup() {
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPass] = useState('')
   const [isRegistered, setRegistered] = useState(false)
+  const [error, setError] = useState('')
+  const [isLoading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
   function handleSubmit(event){
       event.preventDefault()
-      
-      axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword}, {withCredentials: true })
+      setLoading(true)
+      console.log(firstName, lastName,email,password,repeatPassword)
+      axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword})
       // axios.post('https://demolive-api.vercel.app/signup', {firstName, lastName, email, password, repeatPassword})
       .then(res=>{
         
+        console.log(res)
         if(res.data.status == 200) { setRegistered(true) }
-        else { console.log(res.data.message)}
-
+        if(res.data.status == 400) { setError(res.data.message) }
+        setLoading(false)
       }).catch(err =>{
         console.log(err)
+        setLoading(false)
       })
 
       
@@ -49,7 +54,8 @@ function signup() {
                         <input type="password" name="password" placeholder="Password" className="Log-Input" onChange={e => setPassword(e.target.value)} />
                         <p className="mb-5 text-gray-500 ml-3">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
                         <input type="password" name="repeatPassword" placeholder="Confirm Password" className="Log-Input" onChange={e => setRepeatPass(e.target.value)} />
-                        <button className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>
+                        {error && <p>{error}</p>}
+                        <button disabled={isLoading} className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>
                     </form>
                 </div>
         </div> 

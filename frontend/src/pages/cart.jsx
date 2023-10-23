@@ -9,7 +9,7 @@ import { UserCartContext } from "../context/UserCartContext"
 export default function cart() {
   
   const {user} = useUserAuthContext()
-  const {carts, dispatch, total, isLoading} = useContext(UserCartContext)
+  const {carts, dispatch, total, isLoading, setIsLoading } = useContext(UserCartContext)
 
   // const [total, setTotal] = useState(0)
   const navigate = useNavigate()
@@ -39,7 +39,7 @@ export default function cart() {
 
   },[user])
   function checkout(){
-
+    setIsLoading(true)
     axios.post('http://127.0.0.1:3000/api/checkout/',{},{
       
       headers : {
@@ -49,11 +49,13 @@ export default function cart() {
     })
     .then((response) => {
         if(response.status == 200){
+          setIsLoading(false)
           console.log(response)  
           window.location.replace(response.data)
         }
 
     }).catch((error)=>{
+
       console.log(error)
     })
   }

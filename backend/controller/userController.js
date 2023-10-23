@@ -76,18 +76,18 @@ const signup = async (req, res) =>{
    
     if(password == repeatPassword){
         
+        const t = await DB.instance.transaction()
+        
         try {
-            console.log(req.body)
+            
             const hashpass = await bcrypt.hash(password, 10)
             
-            const t = await DB.instance.transaction()
             
             const user = await DB.User.create({password : hashpass, email: _email,  first_name : firstName, last_name: lastName}, { transaction : t})
-            
+        
             const emailToken = await jwt.sign({id : user.id }, 'secret', {expiresIn: '1d'})
-            
-
-            const verified = await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
+        
+            await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
             
             const link = `http://localhost:5173/signup/verify/${emailToken}`
 
@@ -99,10 +99,19 @@ const signup = async (req, res) =>{
             }
 
         } catch (error) {
+            await t.rollback()
+            if(error.original)
+            {
+                if(error.original.code == "ER_DUP_ENTRY") 
+                    return res.send({status : 400, message : 'Email already taken'})
+            }
+
             console.log(error)
-           res.send({status : 500})
+            res.send({status : 500, error : error})
         }
     
+    }else{
+        res.send({status : 400, message : 'Password not match'})
     }
 }
 

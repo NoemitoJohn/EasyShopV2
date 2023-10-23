@@ -40,7 +40,7 @@ export default function cart() {
   },[user])
   function checkout(){
     setIsLoading(true)
-    axios.post(`${process.env.BACK_END_API}/api/checkout/`,{},{
+    axios.post(`${import.meta.env.VITE_BACK_END_API}/api/checkout/`,{},{
       
       headers : {
         'Authorization': `Bearer ${user.token}`

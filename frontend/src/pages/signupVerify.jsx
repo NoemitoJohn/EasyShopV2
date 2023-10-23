@@ -13,7 +13,7 @@ function signupVerify() {
 
     useEffect(()=>{
         async function fetchData(){
-            const {data} = await axios.post(`${process.env.BACK_END_API}/api/user/verify/${token}`);
+            const {data} = await axios.post(`${import.meta.env.VITE_BACK_END_API}/api/user/verify/${token}`);
             
             if(data.status == 200) { 
                 setMessage('Email Verified Redirecting...')

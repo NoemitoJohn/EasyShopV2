@@ -19,7 +19,7 @@ function signup() {
       event.preventDefault()
       setLoading(true)
       console.log(firstName, lastName,email,password,repeatPassword)
-      axios.post(`${process.env.BACK_END_API}/api/user/signup`, {firstName, lastName, email, password, repeatPassword})
+      axios.post(`${import.meta.env.VITE_BACK_END_API}/api/user/signup`, {firstName, lastName, email, password, repeatPassword})
       // axios.post('https://demolive-api.vercel.app/signup', {firstName, lastName, email, password, repeatPassword})
       .then(res=>{
         

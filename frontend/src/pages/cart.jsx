@@ -18,7 +18,7 @@ export default function cart() {
     
     async function fecthData(){
       try {
-        const { data } = await axios.get(`${process.env.BACK_END_API}/api/cart/`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_BACK_END_API}/api/cart/`, {
             headers : {
               'Authorization': `Bearer ${user.token}`
             }

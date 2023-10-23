@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 
 function Home() {
-
+console.log(import.meta.env.VITE_BACK_END_API) 
   return (
     <>
         <div className="w-full flex flex-col justify-center items-center">

@@ -12,10 +12,9 @@ const app = express();
 const session = require('express-session');
 const cors = require('cors')
 
-
 app.use(cors({
     //this is the only line you will change the domain name
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     methods: ['POST', 'PATCH', 'GET', 'DELETE'],
     credentials: true,
     optionsSuccessStatus: 200,

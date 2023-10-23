@@ -123,8 +123,8 @@ router.post('/checkout', async (req, res) =>{
 
 router.get('/', getCart)
 router.post('/', postCart)
-router.delete('/', deleteCart)
 router.patch('/', updateCart)
+router.delete('/:id', deleteCart)
 
 module.exports = { cartRouter : router}
 

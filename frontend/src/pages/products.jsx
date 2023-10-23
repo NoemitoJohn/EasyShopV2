@@ -16,19 +16,9 @@ export default function products() {
               <div className="flex w-1/6 m-1 flex-col p-2 border-gray-300 border-1 shadow-lg hover:border-red bg-white" key={data.id}>
                   <Link to={`../product/${data.id}`}><div className="w-full h-[200px]"><img src={data.thumbnail} alt="" className="h-full  w-full" /></div></Link>
                   <div className="w-100 h-12 text-sm">{data.name}</div>
-                  <div className="w-100 text-sm">P {data.price}.00 </div>
+                  <div className="w-100 text-sm">P {new Intl.NumberFormat().format(data.price)}.00 </div>
                   <div className="w-100"><button className="w-full py-2 text-white font-semibold bg-red">Add to Cart</button></div>
               </div>
-
-
-
-
-              // <tr key={i} >
-              //     <td className="font-xl">{data.name}</td>
-              //     <td>P {data.price}.00 </td>
-              //     <td>&nbsp;</td>
-              //     <td> {data.rating}</td>
-              // </tr>
             ))
         }
         </div>

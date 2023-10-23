@@ -28,7 +28,7 @@ function signupVerify() {
     return (
         <div>
              {/* {check(verify)} */}
-            <p> {message} </p>  
+            <p className='text-center'> {message} </p>  
         </div>
     );
 }

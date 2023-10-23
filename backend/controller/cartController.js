@@ -1,5 +1,5 @@
 const DB = require('../models/DB')
-const {Op} = require('sequelize')
+const {Op, json} = require('sequelize')
 
 
 const postCart = async (req, res) => {
@@ -31,7 +31,7 @@ const postCart = async (req, res) => {
         
         const product = await DB.Product.findOne({where : { id : cart.product_id}})
         
-        if(created) return res.send(`${product.name} added to cart`)
+        if(created) return res.send(`${product.name}:  ${typeof req.user.id} added to cart`)
         
         res.send('already exist')
 
@@ -42,17 +42,23 @@ const postCart = async (req, res) => {
 }
 
 const getCart = async (req, res) =>{
-    console.log(req.session)
+    
     if(!req.user.id){
         return res.json({status: 400, message: 'Please Login'})
     }
     
-    const cart = await DB.Cart.findAll({
+    const cartQuery = await DB.Cart.findAll({
         include : [
             {
                 model : DB.Product,
                 require : true,
-                attributes : ['id', 'name', 'price']
+                attributes : ['id', 'name', 'price'],
+                include : [
+                {
+                    model : DB.ProductInfo,
+                    attributes : [['img_url', 'thumbnail']],
+                    require : true
+                }]
             }
         ], 
         attributes :[ ['id', 'cart_id'], 'quantity'], 
@@ -62,7 +68,20 @@ const getCart = async (req, res) =>{
         }
     })
     
+    const cart = []
 
+    for (const item of cartQuery) {
+        
+        const jsonString = JSON.stringify(item)
+        
+        const jsonParse = JSON.parse(jsonString)
+        
+        const thumbnail = getProductThumbnail(jsonParse.product.products_info.thumbnail)
+
+        jsonParse.product.products_info.thumbnail = thumbnail
+
+        cart.push(jsonParse)
+    }
     
     res.json(cart)
     
@@ -71,25 +90,27 @@ const getCart = async (req, res) =>{
 //delete
 const deleteCart = async (req, res) =>{
     
-    if(!req.session.user){
+    if(!req.user){
         return res.json({status: 400, message: 'Please Login'})
     }
+    try {
+        
+        const cart = await DB.Cart.destroy({where :{ id : Number(req.params.id)}}) 
     
+        if(cart == 1){
+            res.json({status: 200, cart_id : Number(req.params.id)})
+        }
+        
+    } catch (error) {
+        throw error
+    }
 
-    const {cart_id} = req.body
-    
-    // const db = req.app.get('DB')
-    
-    const cart = await DB.Cart.destroy({where :{ id : cart_id}}) 
-
-
-    res.json({status: 200})
 }
 
 //update
 const updateCart = async (req , res) =>{
     
-    if(!req.session.user){
+    if(!req.user){
         return res.json({status: 400, message: 'Please Login'})
     }
     
@@ -101,12 +122,20 @@ const updateCart = async (req , res) =>{
                     id : cart_id
                 }
             })
-        res.send(cart)
+        
+    res.send(cart)
+
     } catch (error) {
         throw error
     }
 
 }
+
+function getProductThumbnail(json){
+    const parse = JSON.parse(json)
+    return parse[0]
+}
+
 
 
 module.exports = {

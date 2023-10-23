@@ -38,7 +38,7 @@ export default function productInfo() {
     function handleAddCart(){
         
         if(!user) navigate('/login')
-
+        console.log('user', user)
         const addCart = async() => {
            const  {data}  = await axios.post('http://127.0.0.1:3000/api/cart/', {product_id: id, quantity : quantity},
            {
@@ -66,7 +66,7 @@ export default function productInfo() {
                 <div className="w-full text-2xl font-semibold">{productInfo.product.name} </div>
                 <div className="mt-2">Ratings: {productInfo.product.rating} </div>
                 <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.product.stocks} </div>
-                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {price}.00</div>
+                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {new Intl.NumberFormat().format(price)}.00</div>
 
                 <div className="flex w-full justify-between space-x-4">
                     {/* <input className="w-1/2 rounded border-2  pl-4 pr-2"  type="number"   value={quantity} max={productInfo.product.stocks} id="quantity" name="quantity" /> */}

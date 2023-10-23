@@ -16,7 +16,7 @@ const cors = require('cors')
 app.use(cors({
     //this is the only line you will change the domain name
     origin: "http://localhost:5173",
-    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    methods: ['POST', 'PATCH', 'GET', 'DELETE'],
     credentials: true,
     optionsSuccessStatus: 200,
 }

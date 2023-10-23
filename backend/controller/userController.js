@@ -84,7 +84,7 @@ const signup = async (req, res) =>{
             
             const user = await DB.User.create({password : hashpass, email: _email,  first_name : firstName, last_name: lastName}, { transaction : t})
             
-            const emailToken = await jwt.sign({id : user}, 'secret', {expiresIn: '1d'})
+            const emailToken = await jwt.sign({id : user.id }, 'secret', {expiresIn: '1d'})
             
 
             const verified = await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
@@ -112,7 +112,7 @@ const verifyUser = async (req, res) => {
         const {token} = req.params
         
         const decodeToken  = await jwt.verify(token, 'secret')
-        
+        console.log(decodeToken)
         const verifiedUser = await DB.Verified.findOne({where : { user_id : decodeToken.id}})
         
         if(verifiedUser.isVerified) return res.json({status : 400, message : 'This link already Verified'})

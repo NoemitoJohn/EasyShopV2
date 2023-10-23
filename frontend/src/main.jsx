@@ -10,9 +10,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 
   <React.StrictMode>
-    <UserAuthContextProvider>
+    {/* <UserAuthContextProvider> */}
         <App />
 
-    </UserAuthContextProvider>
+    {/* </UserAuthContextProvider> */}
   </React.StrictMode>,
 )

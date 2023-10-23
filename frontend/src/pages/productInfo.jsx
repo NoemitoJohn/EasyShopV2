@@ -40,7 +40,7 @@ export default function productInfo() {
         if(!user) navigate('/login')
         console.log('user', user)
         const addCart = async() => {
-           const  {data}  = await axios.post('http://127.0.0.1:3000/api/cart/', {product_id: id, quantity : quantity},
+           const  {data}  = await axios.post(`${process.env.BACK_END_API}/api/cart/`, {product_id: id, quantity : quantity},
            {
                 headers : {
                 'Authorization': `Bearer ${user.token}`

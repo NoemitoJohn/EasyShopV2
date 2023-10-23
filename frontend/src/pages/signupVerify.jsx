@@ -13,7 +13,7 @@ function signupVerify() {
 
     useEffect(()=>{
         async function fetchData(){
-            const {data} = await axios.post(`http://127.0.0.1:3000/api/user/verify/${token}`);
+            const {data} = await axios.post(`${process.env.BACK_END_API}/api/user/verify/${token}`);
             
             if(data.status == 200) { 
                 setMessage('Email Verified Redirecting...')

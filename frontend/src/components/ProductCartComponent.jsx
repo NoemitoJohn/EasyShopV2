@@ -16,7 +16,7 @@ export const ProductCartComponet = ({_id, name, price, qty, thumbnail}) =>{
   useEffect(()=>{
       setIsLoading(true)
       const timer = setTimeout(()=>{
-        axios.patch('http://127.0.0.1:3000/api/cart', {cart_id : id, quantity : quantity},
+        axios.patch(`${process.env.BACK_END_API}/api/cart`, {cart_id : id, quantity : quantity},
         {
           headers : {
             'Authorization': `Bearer ${user.token}`
@@ -37,7 +37,7 @@ export const ProductCartComponet = ({_id, name, price, qty, thumbnail}) =>{
   function handleRemove(){
     // DELETE request 
     setIsLoading(true)
-    axios.delete(`http://127.0.0.1:3000/api/cart/${id}`, {
+    axios.delete(`${process.env.BACK_END_API}/api/cart/${id}`, {
     headers : {
       'Authorization': `Bearer ${user.token}`
     }

@@ -18,7 +18,7 @@ export default function cart() {
     
     async function fecthData(){
       try {
-        const { data } = await axios.get('http://127.0.0.1:3000/api/cart/', {
+        const { data } = await axios.get(`${process.env.BACK_END_API}/api/cart/`, {
             headers : {
               'Authorization': `Bearer ${user.token}`
             }
@@ -40,7 +40,7 @@ export default function cart() {
   },[user])
   function checkout(){
     setIsLoading(true)
-    axios.post('http://127.0.0.1:3000/api/checkout/',{},{
+    axios.post(`${process.env.BACK_END_API}/api/checkout/`,{},{
       
       headers : {
         'Authorization': `Bearer ${user.token}`

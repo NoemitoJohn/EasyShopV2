@@ -2,30 +2,27 @@ require('dotenv').config()
 const {sendValidationEmail} = require('./service/EmailProvider')
 const express = require('express')
 const DB = require('./models/DB')
-
-
-
 const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
 const {checkoutRouter } = require('./routes/checkout')
-const searchRouter = require('./routes/search')
-
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const app = express();
 const session = require('express-session');
 const cors = require('cors')
 
+
 app.use(cors({
-   //this is the only line you will change the domain name
-     origin: "http://localhost:5173",
-    // origin: ["https://www.ecshopping.online"],
-    methods: ["POST", "GET"],
-    credentials: true    
+
+    origin: "http://localhost:5173",
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true,
+    optionsSuccessStatus: 200,
 }
 ))
+// app.use(cookieParser())
 // http://localhost:5173/products
-
 
 app.use(express.static('public'))
 app.use('/api/product/static', express.static('product_img'))
@@ -37,7 +34,10 @@ app.use(bodyParser.json())
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie : {
+        expires : 60 * 60 * 24,
+    }
 }))
 
 
@@ -115,7 +115,6 @@ app.get('/about', (req, res)=>{
 })
 
 app.use('/api/products', productRouter)
-app.use('/search', searchRouter.router)
 app.use('/api/user', userRouter )
 app.use('/api/cart', cartRouter)
 app.use('/api/checkout', checkoutRouter)

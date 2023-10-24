@@ -3,9 +3,6 @@ const DB = require('../models/DB')
 const jwt = require('jsonwebtoken')
 const { sendValidationEmail } = require('../service/EmailProvider') 
 
-const creteToken = async (_id, _email) =>{
-    return await jwt.sign({id : _id, email : _email }, 'secret', {expiresIn: '1d'})
-}
 
 const logout = function (req, res) {
     req.session.destroy(function(err){
@@ -46,8 +43,6 @@ const getUserInfo = function (req, res){
 
 const login =  async (req, res) => {
     
-    const db = req.app.get('DB')
-    
     const {email, password} = req.body
     
     
@@ -57,7 +52,7 @@ const login =  async (req, res) => {
         } 
     })
     
-    if(!user) return res.json({status : 400, message : 'Email is not Registered'})
+    if(!user) return res.json({status : 400, message : 'Email is not Register'})
     
     const validPassword = await bcrypt.compare(password, user.password)
     
@@ -65,19 +60,12 @@ const login =  async (req, res) => {
     
     const verified = await DB.Verified.findOne({where :{user_id : user.id}})
     
-    if(!verified.isVerified) return res.send('Please confirm the email verification link')
+    if(!verified.isVerified) return res.json({status : 400, message : 'Please confirm the email verification link we sent to your email'})
     
-    req.session.regenerate((error) =>{
-        if(error) throw error
-        
-        req.session.user = {id : user.id , email : user.email}
-        
-        req.session.save(function (err) {
-            if(err) throw err
-            res.json({status: 200, user : req.session.user })
-        });
-        
-    })
+    const userToken = await jwt.sign({id: user.id, email: user.email}, 'secret', {expiresIn: '1d'} )
+
+    res.json({status: 200, user : { email: user.email}, token : userToken })
+
     
 }
 
@@ -89,8 +77,6 @@ const signup = async (req, res) =>{
     if(password == repeatPassword){
         
         try {
-            
-
             console.log(req.body)
             const hashpass = await bcrypt.hash(password, 10)
             
@@ -98,19 +84,23 @@ const signup = async (req, res) =>{
             
             const user = await DB.User.create({password : hashpass, email: _email,  first_name : firstName, last_name: lastName}, { transaction : t})
             
-            const token = await creteToken(user.id, user.email)
+            const emailToken = await jwt.sign({id : user}, 'secret', {expiresIn: '1d'})
             
-            const verified = await DB.Verified.create({token : token, user_id : user.id}, { transaction : t})
-            
-            const link = `http://${req.hostname }:${req.socket.localPort}/api/user/verify/${token}`
 
-            console.log(link)
-            const email = await sendValidationEmail(user.first_name, user.email, link)
+            const verified = await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
             
-            await t.commit()
-            res.send(link)
+            const link = `http://localhost:5173/signup/verify/${emailToken}`
+
+            const email = await sendValidationEmail(user.first_name, user.email, link)
+
+            if(email){
+                await t.commit()
+                res.send({status: 200})
+            }
+
         } catch (error) {
-           res.send(error)
+            console.log(error)
+           res.send({status : 500})
         }
     
     }
@@ -125,14 +115,14 @@ const verifyUser = async (req, res) => {
         
         const verifiedUser = await DB.Verified.findOne({where : { user_id : decodeToken.id}})
         
-        if(verifiedUser.isVerified) return res.send('')
+        if(verifiedUser.isVerified) return res.json({status : 400, message : 'This link already Verified'})
 
         verifiedUser.isVerified = true;
 
-        await verifiedUser.save()
+        const isVerified = await verifiedUser.save()
 
-        res.json({status: 200, message: 'Account Verified'})
-
+        if(isVerified) return res.json({status : 200})
+        // res
     } catch(error) {
         res.send(error.name)
     }
@@ -143,6 +133,7 @@ const verifyUser = async (req, res) => {
 
 
 const getAddress = (req, res) =>{
+    
     if(!req.session.user){
         return res.json({status: 400, message: 'Please Login'})
     }

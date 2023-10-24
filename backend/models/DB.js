@@ -8,7 +8,7 @@ const User = require('./User')
 const UserInfo = require('./UserInfo')
 const Verified = require('./Verified')
 
-// // ### Production 
+// ### Production 
 const sequelize = new Sequelize(
     process.env.DB_DATABASE, // database
     process.env.DB_USERNAME, // username
@@ -17,19 +17,17 @@ const sequelize = new Sequelize(
         host :  process.env.DB_HOST,
         port : process.env.DB_PORT,
         dialect : 'mysql',
-        logging: false
+        // logging: 
     }
 )
 
-
-// Development
+// ### Development
 // const sequelize = new Sequelize(
 //     'easyshopv2', // database
 //     'root', // username
-//     '', // password 
+//     'root', // password 
 //     {
-//         // host : 'e-p.h.filess.io',
-//         // port : 3307,
+//  
 //         dialect : 'mysql',
 //         // logging: false
 //     }
@@ -53,7 +51,7 @@ DB.Cart = Cart(sequelize);
 // DB.UserInfo = UserInfo(sequelize);
 DB.Verified = Verified(sequelize);
 
-DB.Category.hasMany(DB.ProductInfo, {foreignKey: 'category_id'})
+DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
 DB.ProductInfo.belongsTo(DB.Category, {foreignKey: 'category_id'})
 
 DB.Product.hasOne(DB.ProductInfo, {foreignKey: 'product_id'})

@@ -3,28 +3,26 @@ const {Op} = require('sequelize')
 
 
 const postCart = async (req, res) => {
-    if(!req.session.user){
+    if(!req.user.id){
         return res.json({status: 400, message: 'Please Login'})
     }
     
     const productId = req.body.product_id
     const productQty = req.body.quantity
-
-    console.log('yawa', productQty)
     try {
         
         
         const [cart, created] = await DB.Cart.findOrCreate({
             where : {
                 [Op.and] : [
-                    {user_id : req.session.user.id},
+                    {user_id : req.user.id},
                     {product_id : productId}
                 ]   
             }, 
             defaults : {
                 product_id : productId,
                 quantity : productQty,
-                user_id : req.session.user.id
+                user_id : req.user.id
             }
             
         })
@@ -39,13 +37,13 @@ const postCart = async (req, res) => {
 
 
     } catch (error) {
-       res.json({status : 500, message: 'Server Error'})
+       res.json({status : 500, message: error})
     }
 }
 
 const getCart = async (req, res) =>{
-    
-    if(!req.session.user){
+    console.log(req.session)
+    if(!req.user.id){
         return res.json({status: 400, message: 'Please Login'})
     }
     
@@ -60,7 +58,7 @@ const getCart = async (req, res) =>{
         attributes :[ ['id', 'cart_id'], 'quantity'], 
         
         where : {
-            user_id : req.session.user.id
+            user_id : req.user.id
         }
     })
     

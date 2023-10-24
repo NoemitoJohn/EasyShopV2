@@ -53,12 +53,7 @@ export default function addProducts() {
 
                     </div>
 
-                    {/* PRODUCT STOCK INPUT*/}
-                    <div className="flex flex-col mb-2">
-                        <label htmlFor="" className="text-gray-500 mb-1 font-semibold">Stocks :</label>
-
-                        <input name="stock" type="number" min="0" oninput="this.value = Math.abs(this.value)" placeholder="0" className=" shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " />
-                    </div>
+              
 
                     {/* UPLOAD IMAGES START HERE ------------------------------IMAGES---------------------------- */}
                     <div className="flex flex-col mb-2">

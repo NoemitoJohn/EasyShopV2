@@ -22,11 +22,14 @@ import AdminRootLayout from "./layouts/AdminRootLayout"
 import AdminLogin from "./adminPages/adminLogin"
 import AdminDashboardRoot from "./layouts/AdminDashboardRoot"
 import AddProducts from "./adminPages/addProducts"
-import AddStocks from "./adminPages/addStocks"
+import ProductStocks from "./adminPages/productStocks"
 import ProductList from "./adminPages/productList"
 import Category from "./adminPages/category"
 import ViewUpdateProduct from "./adminPages/viewUpdateProduct"
 import { UserCartContextProvider } from './context/UserCartContext'
+import AddStocks from './adminPages/addStocks'
+
+
 import {createBrowserRouter, 
     BrowserRouter, 
     Route, 
@@ -72,12 +75,12 @@ const router = createBrowserRouter(
              <Route path="/admin" element={<AdminRootLayout />}>
                  <Route index element={<AdminLogin />} />
                  <Route path="dashboard" element={<AdminDashboardRoot />}> 
-                        <Route index path="product-list" element={<ProductList />} loader={productLoader} />
-
+                        <Route path="product-list" element={<ProductList />} loader={productLoader} />
                         <Route path="view/:id" element={<ViewUpdateProduct />} loader={productInfoLoader} />
-                   
+                        
                         <Route path="add-products" element={<AddProducts />} loader={categoriesLoader}/>
-                        <Route path="add-stocks" element={<AddStocks />}/>
+                        <Route path="product-stocks" element={<ProductStocks />}  loader={productLoader} />
+                        <Route path="add_stocks/:id" element={<AddStocks />} loader={productInfoLoader}  />
                         <Route path="category" element={<Category />}loader={categoriesLoader}/>
                  </Route>
 

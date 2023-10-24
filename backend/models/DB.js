@@ -5,8 +5,8 @@ const Category = require('./Category');
 const Address = require('./Address')
 const Cart = require('./Cart')
 const User = require('./User')
-const UserInfo = require('./UserInfo')
 const Verified = require('./Verified')
+const {Order, ORDER_STATUS} = require('./Order')
 
 // ### Production 
 const sequelize = new Sequelize(
@@ -48,7 +48,8 @@ DB.Product = Product(sequelize);
 DB.ProductInfo = ProductInfo(sequelize);
 DB.Address = Address(sequelize);
 DB.Cart = Cart(sequelize);
-// DB.UserInfo = UserInfo(sequelize);
+DB.Order = Order(sequelize)
+DB.Order.Status = ORDER_STATUS
 DB.Verified = Verified(sequelize);
 
 DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
@@ -69,14 +70,20 @@ DB.Cart.belongsTo(DB.User, {foreignKey: 'user_id'})
 DB.User.hasOne(DB.Verified, {foreignKey: 'user_id'})
 DB.Verified.belongsTo(DB.User, {foreignKey: 'user_id'})
 
+
+DB.User.hasMany(DB.Order, {foreignKey: 'user_id'})
+DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 // DB.Product.sync({force : true})
 // DB.ProductInfo.sync({force : true})
 // DB.Cart.sync({force : true})
 
 // DB.instance.sync({force: true})
+
+// User hasMany Order
 const init = async () => {
 
     try {
+       
         await DB.instance.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {

@@ -82,6 +82,8 @@ const router = createBrowserRouter(
                         <Route path="product-stocks" element={<ProductStocks />}  loader={productLoader} />
                         <Route path="add_stocks/:id" element={<AddStocks />} loader={productInfoLoader}  />
                         <Route path="category" element={<Category />}loader={categoriesLoader}/>
+                        <Route path="orders" element={<Orders />}/>
+                        <Route path="order-info/:id" element={<OrderInfo />}/>
                  </Route>
 
             </Route>

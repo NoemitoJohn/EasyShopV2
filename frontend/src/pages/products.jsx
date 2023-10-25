@@ -24,7 +24,7 @@ export default function products() {
                   <div className="w-100"><button className="w-full py-2 text-white font-semibold bg-red">Add to Cart</button></div>
               </div>
             ))
-        }
+            }
         </div>
      </div>
     </>

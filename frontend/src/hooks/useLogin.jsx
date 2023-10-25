@@ -14,9 +14,9 @@ export const useLogin = ()=>{
         
         setError(null)
         
-        const {data} = await axios.post('http://localhost:3000/api/user/login', {email, password})
-
-        if(data.status == 400){
+        // const {data} = await axios.post(`${import.meta.env.VITE_BACK_END_API}/api/user/login`, {email, password})
+        const {data} = await axios.post(`http://localhost:3000/api/user/login`, {email, password})
+           if(data.status == 400){
             setLoading(false)
             setError(data.message)
         }

@@ -84,6 +84,7 @@ DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 const init = async () => {
 
     try {
+       
         await DB.instance.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {

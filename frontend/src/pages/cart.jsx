@@ -88,10 +88,7 @@ export default function cart() {
                   <div className="font-semibold pb-3 border-b-2">Order Summary</div>
                   <div className="mt-5 flex">
                       <div className="w-1/2">Total items :</div>
-                  
                       <div className="text-right w-1/2">P {new Intl.NumberFormat().format(total)}.00</div>
-                      
-                      
                     </div>
                   <div className="mt-5 flex">
                        <div className="w-1/2">Subtotal :</div>

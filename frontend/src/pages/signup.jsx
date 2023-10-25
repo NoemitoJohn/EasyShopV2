@@ -56,6 +56,8 @@ function signup() {
                         <input type="password" name="repeatPassword" placeholder="Confirm Password" className="Log-Input" onChange={e => setRepeatPass(e.target.value)} />
                         {error && <p>{error}</p>}
                         <button disabled={isLoading} className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>
+                        {error && <p>{error}</p>}
+                        <button disabled={isLoading} className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>
                     </form>
                 </div>
         </div> 

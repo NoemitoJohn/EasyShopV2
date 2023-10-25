@@ -22,6 +22,7 @@ app.use(cors({
 }
 ))
 
+
 app.use(express.static('public'))
 app.use('/api/product/static', express.static('product_img'))
 
@@ -34,10 +35,7 @@ app.use(bodyParser.json())
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false,
-    cookie : {
-        expires : 60 * 60 * 24,
-    }
+    saveUninitialized: false
 }))
 
 app.get('/shipping', (req, res) => {

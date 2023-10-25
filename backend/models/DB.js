@@ -7,6 +7,7 @@ const Cart = require('./Cart')
 const User = require('./User')
 const Verified = require('./Verified')
 const {Order, ORDER_STATUS} = require('./Order')
+const Admin = require('./Admin')
 
 // ### Production 
 const sequelize = new Sequelize(
@@ -51,6 +52,7 @@ DB.Cart = Cart(sequelize);
 DB.Order = Order(sequelize)
 DB.Order.Status = ORDER_STATUS
 DB.Verified = Verified(sequelize);
+DB.Admin = Admin(sequelize);
 
 DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
 DB.ProductInfo.belongsTo(DB.Category, {foreignKey: 'category_id'})
@@ -70,7 +72,6 @@ DB.Cart.belongsTo(DB.User, {foreignKey: 'user_id'})
 DB.User.hasOne(DB.Verified, {foreignKey: 'user_id'})
 DB.Verified.belongsTo(DB.User, {foreignKey: 'user_id'})
 
-
 DB.User.hasMany(DB.Order, {foreignKey: 'user_id'})
 DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 // DB.Product.sync({force : true})
@@ -83,7 +84,6 @@ DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 const init = async () => {
 
     try {
-       
         await DB.instance.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {

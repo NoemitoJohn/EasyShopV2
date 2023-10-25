@@ -51,7 +51,7 @@ export default function cart() {
         if(response.status == 200){
           setIsLoading(false)
           console.log(response)  
-          window.location.replace(response.data)
+         window.location.replace(response.data)
         }
 
     }).catch((error)=>{

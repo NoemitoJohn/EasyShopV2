@@ -1,85 +1,80 @@
 const DB = require('../models/DB')
-const {Op , QueryTypes, json} = require('sequelize')
+const {Op , QueryTypes} = require('sequelize')
+const {handleUpload, createFolder} = require('../middleware/uploader')
+
+const getAllProducts = async (req, res) => {
+    const {count, rows} =  await DB.Product.findAndCountAll({
+        attributes : ['id', 'name', 'price', 'stocks'],
+        include : [
+            {
+                model : DB.ProductInfo,
+                attributes : ['description',[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'thumbnail'] ], 
+                include : [
+                    {
+                        model : DB.Category,
+                        attributes : ['id', 'name']
+                    }
+                ]
+            }
+        ]
+    })
+
+    res.json({total : count, products : rows})
+}
+
 
 
 const getProducts = async (req, res) => {
     
-    // let start = 0
-    // let limit = 20
-    
-    // //get how many products in the database count()
-    // // if the start query >= limit
-    // // set limit to count()
-    
-    // if(req.query){
-    //     if(req.query.start) start  = Number(req.query.start)
-    //     if(req.query.limit) limit  = Number(req.query.limit)
-    // }
-    
-    // const productsQuery =  await DB.instance.query('select p.id, p.name, p.price, p.rating, p_i.img_url as thumbnail from products as p ' +
-    // 'inner join products_info as p_i on p.id = p_i.product_id where p.id between ? and ?', {
-    //     replacements : [start, start + limit],
-    //     type: QueryTypes.SELECT,
-    //     raw : true 
-    // })
-
-    // const products = []
-    
-    // for (const item of productsQuery) {
-    //     const productJsonStr = JSON.stringify(item)
-    //     const productJsonParse = JSON.parse(productJsonStr)
-    //     const thumbnail = JSON.parse(productJsonParse.thumbnail)
-    //     productJsonParse.thumbnail = thumbnail[0]
-    //     products.push(productJsonParse)
-    // }
-
-
-    // res.json(products)
     let start = 0
-    let limit = 20
+    const limit = 20
     
-    //get how many products in the database count()
-    // if the start query >= limit
-    // set limit to count()
-
     if(req.query){
         if(req.query.start) start  = Number(req.query.start)
-        if(req.query.limit) limit  = Number(req.query.limit)
+        
     }
-
+    
+    console.log(start)
     
     const products = await DB.Product.findAll({
 
         where : {
             id : {
-                [Op.between] : [start, limit]
+                [Op.between] : [start, start + limit]
             }
         }, 
+
+        include : [{
+            model : DB.ProductInfo,
+            attributes : [[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'thumbnail']],
+            include : [{
+                model : DB.Category,
+                attributes : ['id', 'name']   
+            }]
+        }],
         attributes: { exclude : ['createdAt', 'updatedAt']}
 
     })
     
-    const product = []
+    // const product = []
     
-    for (const item of products) {
-        const productInfo = await DB.ProductInfo.findOne({
-            where :{
-                product_id: item.id
-            }   
-        })
+    // for (const item of products) {
+    //     const productInfo = await DB.ProductInfo.findOne({
+    //         where :{
+    //             product_id: item.id
+    //         }   
+    //     })
         
-        const p = JSON.stringify(item)
+        // const p = JSON.stringify(item)
         
-        const productJSON = JSON.parse(p)
+        // const productJSON = JSON.parse(p)
+    
+        // productJSON.thumbnail = img_url[0]
 
-        const imgs = JSON.parse(productInfo.img_url)
+        // product.push(productJSON)
+    // }
 
-        productJSON.thumbnail = imgs[0]
-
-        product.push(productJSON)
-    }
-
-    res.json(product)
+     res.json(products)
 }
 
 const getProduct = async (req, res) =>{
@@ -107,15 +102,7 @@ const getProduct = async (req, res) =>{
     })
     
     
-    const productString = JSON.stringify(product)
-    
-    const productJSON = JSON.parse(productString)
-    
-    const img_url =  JSON.parse(productJSON.img_url)
-    
-    productJSON.img_url = img_url
-    
-    res.json(productJSON)
+    res.json(product)
 }
 
 
@@ -148,15 +135,81 @@ const getProductByCategory = async (req, res) =>{
     
     
 const getCategories = async (req, res) => {
-        const categories = await DB.Category.findAll({
-            attributes : ['id', 'name']
-        })
-        res.json(categories)
+    const categories = await DB.Category.findAll({
+        attributes : ['id', 'name']
+    })
+    res.json(categories)
 }
     
-    module.exports = {
-        getProducts,
-        getProduct,
-        getProductByCategory,
-        getCategories
+
+const addProduct = async (req, res)=>{
+    //TODO: check if admin 
+    //TODO:  validate inputs
+
+    const t = await DB.instance.transaction()
+
+    //create product
+    let product;
+    
+    try {
+        product = await DB.Product.create({
+            name : req.body.name,
+            price : Number(req.body.price),
+            stocks : Number(req.body.stoks)
+        }, {transaction : t})
+        
+    } catch (error) {
+        t.rollback()
+        console.log('Failed to create product', error)
     }
+
+    try {
+        const imagesURL = []
+        const subFolder = await createFolder(product.id)
+        //subFolder.path
+        for (const image of req.files) {
+            const b64 = Buffer.from(image.buffer).toString('base64')
+            
+            let dataURI = "data:" + image.mimetype + ";base64," + b64;
+            
+            const file = await handleUpload(dataURI, subFolder.path)
+
+            imagesURL.push(file.secure_url)
+        }
+       
+        const imageURLStr = JSON.stringify(imagesURL)
+
+        const imageURLParse = JSON.parse(imageURLStr)
+
+        const productInfo = await DB.ProductInfo.create({
+            description : req.body.description,
+            img_url : imageURLParse,
+            product_id : product.id,
+            category_id : Number(req.body.cat_id)
+        }, {transaction : t})
+
+        if(productInfo){
+            t.commit()
+            res.json({product_id : product.id, product_name : product.name})
+        }
+
+
+    } catch (error) {
+        t.rollback()
+        console.log(error)
+    }
+
+}
+
+
+module.exports = {
+    getProducts,
+    getProduct,
+    getProductByCategory,
+    getCategories,
+    addProduct,
+    getAllProducts
+}
+
+
+

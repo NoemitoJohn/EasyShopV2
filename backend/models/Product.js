@@ -14,6 +14,7 @@ const Product = (sequelize) =>{
         },
         rating : {
             type : DataTypes.FLOAT,
+            defaultValue : 0
         },
         stocks : {
             type : DataTypes.INTEGER,

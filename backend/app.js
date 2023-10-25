@@ -6,7 +6,7 @@ const {userRouter} = require('./routes/users')
 const {productRouter} = require('./routes/product')
 const {cartRouter } = require('./routes/cart')
 const {checkoutRouter } = require('./routes/checkout')
-const cookieParser = require('cookie-parser')
+const {adminRouter} = require('./routes/admin')
 const bodyParser = require('body-parser')
 const app = express();
 const session = require('express-session');
@@ -61,7 +61,7 @@ app.get('/about', (req, res)=>{
 app.use('/api/products', productRouter)
 app.use('/api/user', userRouter )
 app.use('/api/cart', cartRouter)
-
+app.use('/api/admin', adminRouter)
 
 app.post('/logout', (req, res) => {
     req.session.destroy(function(err) {

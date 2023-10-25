@@ -1,6 +1,14 @@
+import { useState } from "react"
 import logo from "../logo2.png"
 
 export default function adminLogin() {
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+
+  function handleSubmit(){
+    
+  }
+
   return (
 
     <div className="BrickBackground flex flex-col  w-full h-screen items-center p-20">

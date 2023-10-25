@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 
 export default function productList() {
-  const products = useLoaderData()
+  const data = useLoaderData()
   return (
     <>
     <div className="container w-5/6 mx-auto px-4 sm:px-8 ">
@@ -31,12 +31,12 @@ export default function productList() {
 
           <tbody>
             {
-              products.map((data, key) => 
+              data.products.map((data, key) => 
                   <tr  key={data.id} className="h-[30px]">
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex">
                         <div className="flex-shrink-0 w-10 h-10">
-                          <img className="w-full h-full rounded-full" src={data.thumbnail}   alt=""/>
+                          <img className="w-full h-full rounded-full" src={data.products_info.thumbnail}   alt=""/>
                         </div>
 
                         <div className="ml-3">
@@ -51,7 +51,7 @@ export default function productList() {
                       <p className="text-gray-900 whitespace-no-wrap">P {data.price}.00</p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">Category name</p>
+                      <p className="text-gray-900 whitespace-no-wrap">{data.products_info.category.name}</p>
                     </td>
                     <td className="px-1 py-5 border-b border-gray-200 bg-white text-sm ">
                       <span className=" inline-block px-3 py-1 font-semibold bg-green-200 rounded-2xl text-green-900 leading-tight" key={data.id}>

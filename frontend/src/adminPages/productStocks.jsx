@@ -1,7 +1,7 @@
 import { Link,  useLoaderData  } from "react-router-dom"
 
 export default function addStocks() {
-  const products = useLoaderData()
+  const data = useLoaderData()
   return (
    <>
       <div className="container w-5/6 mx-auto px-4 sm:px-8 ">
@@ -28,12 +28,12 @@ export default function addStocks() {
 
                 <tbody>
                 {
-                       products.map((data, key) => 
-                        <tr   className="h-[30px]">
+                       data.products.map((data, key) => 
+                        <tr key={data.id}  className="h-[30px]">
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div className="flex">
                               <div className="flex-shrink-0 w-10 h-10">
-                                <img className="w-full h-full rounded-full" src=""   alt=""/>
+                                <img className="w-full h-full rounded-full" src={data.products_info.thumbnail} alt=""/>
                               </div>
 
                               <div className="ml-3">     

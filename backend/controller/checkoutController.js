@@ -7,16 +7,14 @@ const mapListItem = (array) =>{
     return array.map((item) =>{
         
         
-        const thumbnail = JSON.parse(item.product.products_info.img_url)
-        
-        console.log(thumbnail[0])
+        // const thumbnail = JSON.parse(item.product.products_info.img_url)
         
         return {
             price_data: {
                 currency : 'php',
                 product_data: {
                     name : item.product.name, 
-                    images : [thumbnail[0]],
+                    images : [item.product.products_info.img_url],
                 },
                 unit_amount: item.product.price * 100
             },
@@ -30,15 +28,14 @@ const createOrder = async (_cart, _total, _transaction_id, _user_id) =>{
     const t = await DB.instance.transaction()
     
     for (const item of _cart) {
-        const images = JSON.parse(item.product.products_info.img_url)
-        const thumbnail = images[0]
+        
         const productObject = {
             product : {
                 id : item.product.id,
                 name : item.product.name,
                 quantity : item.quantity,
                 price : item.product.price,
-                thumbnail : thumbnail,
+                thumbnail : item.product.products_info.img_url,
                 
             }
         }
@@ -95,17 +92,19 @@ const checkout = async (req, res) => {
             include : [
                 {
                     model : DB.Product, 
-                    require : true, 
                     attributes : ['id', 'name', 'price'],
                     include: [{
                         model : DB.ProductInfo,
-                        require: true,
-                        attributes: ['img_url']
+                        required : true,
+                        attributes: [[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'img_url'],]
                     }]
                 },
             ] 
         })
         
+        
+        
+         
         if(cart.length <= 0) return
         
         const strpSession = await stripe.checkout.sessions.create({
@@ -178,7 +177,7 @@ const webhook = async (req, res) => {
                         include: [{
                             model : DB.ProductInfo,
                             require: true,
-                            attributes: ['img_url']
+                            attributes: [[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'img_url']]
                         }]
                     },
                 ] 

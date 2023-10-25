@@ -26,10 +26,8 @@ import ProductStocks from "./adminPages/productStocks"
 import ProductList from "./adminPages/productList"
 import Category from "./adminPages/category"
 import ViewUpdateProduct from "./adminPages/viewUpdateProduct"
-import { UserCartContextProvider } from './context/UserCartContext'
-import AddStocks from './adminPages/addStocks'
-import Orders from './adminPages/orders'
-import OrderInfo from './adminPages/orderInfo'
+
+
 
 import {createBrowserRouter, 
     BrowserRouter, 
@@ -43,35 +41,16 @@ import axios, { Axios } from 'axios'
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            {/* <UserAuthContextProvider> */}
-                
-                <Route path="/" element={
-                <UserAuthContextProvider>
-                    <RootLayout />
-                </UserAuthContextProvider>
-                }>
-                    <Route index element={<Home/>}></Route>
-                    <Route path="products" 
-                    element={<Products/>}
-                    loader={productLoader} ></Route>
-                    <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
-                    <Route path="login" element={<Login/>}></Route>
-                    <Route path='signup'>
-                        <Route index element={<Signup/>}></Route>
-                        <Route path="verify/:token" 
-                        element={<SignupVerify/>}
-                        ></Route>
-                        
-                    </Route>
-                    <Route path="cart" element={
-                        <UserCartContextProvider>
-                            <Cart/>
-                        </UserCartContextProvider>
-                    }></Route>
+            <Route path="/" element={<RootLayout />} >
+                <Route index element={<Home/>}></Route>
+                <Route path="products" element={<Products/>} loader={productLoader} />
+                <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} />
+                <Route path="login" element={<Login/>} />
+                <Route path="signup" element={<Signup/>} />
+                <Route path="cart" element={<Cart/>} />
+                <Route path="*" element={<NotFound />} />
 
-                    <Route path="*" element={<NotFound />}></Route>
-                    
-                </Route>
+            </Route>
 
              <Route path="/admin" element={<AdminRootLayout />}>
                  <Route index element={<AdminLogin />} />
@@ -96,8 +75,7 @@ const router = createBrowserRouter(
 function App(){
   return(
 
-
-        <RouterProvider router={router}/>
+     <RouterProvider router={router}/>
   )
 }
 

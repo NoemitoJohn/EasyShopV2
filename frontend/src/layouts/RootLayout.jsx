@@ -19,89 +19,39 @@ export default function RootLayout() {
     <>
     
     {/* NAVIGATION BAR CONTAINER */}
-            <nav className="flex bg-black flex-col ">
-            <div className="flex bg-darkgray justify-center h-10 ">
-                <nav className="flex  justify-center w-[85%] item-center laptop:w-[80%]">
-                    <ul className="flex text-white basis-1/2 h-full items-center  ">
-                        <NavLink className="mr-4 Linkhover"  to='/'>Home</NavLink>
-                        <NavLink className="mr-4 Linkhover" to='/products'>All Products</NavLink>
-                    </ul>
-                    <ul>
-                    </ul>
-                    <ul className="flex text-white basis-1/2 justify-end h-full items-center  ">
-                        
-                       
-                        {user && (
-                            <div className="flex">
-                                <p className="text-white text-center">{user.email}</p>
-                                <button onClick={handleLogout} className="bg-red px-4 py-2 h-10 rounded-sm text-white ">Logout</button>
-                            </div>
-                        )}
-                        {!user && (
-                            <div>
-                                <NavLink className="mr-4 Linkhover" to='/signup'>Sign up</NavLink>
-                                <NavLink className="mr-4 Linkhover" to='/login'>Log in</NavLink>
-
-                            </div>
-                        )}
-                    </ul>
-            
-                </nav>
-            </div>
-            <div className="flex justify-center w-[100%]">
-                <div className="flex w-[85%] justify-between py-4 laptop:w-[80%]">
-                    <div className=""><img src={logo} alt="logo" className="w-[300px] "/></div>
-                    <div className="flex  basis-4/6 XSmobile:justify-end laptop:justify-start">
-                        <div className="hidden items-center w-full ml-10 laptop:flex">
-                            <form action="/search" method="POST" className="flex w-full h-10">
-                                <input type="text" className="h-10  w-[80%] shadow-sm p-2 rounded-tl-sm rounded-bl-sm pl-5" placeholder="SEARCH" />
-                                <button className="basis-1/6 flex text-white bg-red rounded-tr-sm rounded-br-sm px-5 font-semibold justify-center items-center "> SEARCH </button>
-                               
-                            </form>
-                            <Link to='/cart' className="bg-red px-3.5 p-2 h-10 ml-2 rounded-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-cart-fill" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                </svg>
-                            </Link>
-                        </div>
-                        
-                        <div className="flex justify-center items-center basis-1/4  text-white font-semibold text-[10px]   laptop:hidden">
-                           <div className="flex flex-col justify-center items-center ">
-                            <Link to='/cart' className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                                </svg>
-                                
-                                </Link>
-                                <p className="font-bold">CATEGORY</p>
-                            </div>
-                        
-                            <div className="flex flex-col justify-center items-center">
-                                <Link to='/cart' className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                                </Link>
-                                <p className="font-bold">SEARCH</p>
-                            </div>
-
-                            <div className="flex flex-col justify-center items-center">
-                                <Link to='/cart' className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart-fill" viewBox="0 0 16 16">
-                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                    </svg>
-                                </Link>
-                                <p className=" font-bold">CART</p>
-                            </div>
-                        </div>
+        <nav className="flex bg-black flex-col ">
+        <div className="flex bg-darkgray justify-center h-10 ">
+            <nav className="flex  justify-center basis-4/6 item-center">
+                <ul className="flex text-white basis-1/2 h-full items-center  ">
+                    <NavLink className="mr-4 Linkhover"  to='/'>Home</NavLink>
+                    <NavLink className="mr-4 Linkhover" to='/products'>All Products</NavLink>
+                </ul>
+          
+                <ul className="flex text-white basis-1/2 justify-end h-full items-center  ">
+                    <NavLink className="mr-4 Linkhover" to='/signup'>Sign up</NavLink>
+                    <NavLink className="mr-4 Linkhover" to='/login'>Log in</NavLink>
+                </ul>
+        
+            </nav>
+        </div>
+        <div className="flex justify-center">
+            <div className="flex basis-4/6 justify-center py-4">
+                <div className="basis-2/6 "><img src={logo} alt="logo" className="w-3/4 "></img></div>
+                <div className="flex justify-center basis-4/6">
+                    <div className="flex justify-center basis-3/4 items-center ">
+                        <form action="/search" method="POST" className="flex w-full h-10 ">
+                            <input type="text" className="h-10  basis-5/6 shadow-sm p-2 rounded-tl-3xl rounded-bl-3xl pl-5" placeholder="SEARCH" />
+                            <button className="basis-1/6 text-white bg-red rounded-tr-3xl rounded-br-3xl px-5 font-semibold ">SEARCH</button>
+                        </form>
+                    </div>
+                    <div className="flex justify-center items-center basis-1/4  text-white font-semibold  ">
+                        <Link to='/cart' className="bg-red px-4 py-2 h-10 rounded-sm">CART</Link>
                     </div>
                 </div>
             </div>
-        </nav>
-    
+        </div>
+    </nav>
 
-
-        
     {/* MAIN CONTENT CONTAINER */}
     <main className="mt-20">
         <Outlet/>

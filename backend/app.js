@@ -14,13 +14,24 @@ const cors = require('cors')
 
 
 app.use(cors({
+<<<<<<< HEAD
     //this is the only line you will change the domain name
     origin: "http://localhost:5173",
     methods: ['POST', 'PATCH', 'GET', 'DELETE'],
+=======
+
+    origin: "http://localhost:5173",
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
     credentials: true,
     optionsSuccessStatus: 200,
 }
 ))
+<<<<<<< HEAD
+=======
+// app.use(cookieParser())
+// http://localhost:5173/products
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
 
 app.use(express.static('public'))
 app.use('/api/product/static', express.static('product_img'))

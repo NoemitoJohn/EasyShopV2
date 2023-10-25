@@ -7,6 +7,56 @@ export default function productInfo() {
     // const { id } = useParams()
     
     const productInfo = useLoaderData()
+
+    const [id, setId] = useState(productInfo.product.id)
+    const [price, setPrice] = useState(productInfo.product.price)
+    const [quantity, setQuatity] = useState(1)
+    const navigate = useNavigate()
+    const {user} =  useUserAuthContext()
+
+
+    console.log('user', user)
+    useEffect(() =>{
+        const priceTemp = productInfo.product.price;
+        setPrice(priceTemp * quantity)
+        
+    },[quantity])
+    
+    
+    function handleIncrement (prev){
+        // console.log(e)
+        if(quantity < productInfo.product.stocks)
+        setQuatity(prev + 1)
+    }
+    
+    function handleDecrement (prev){
+        // console.log(e)
+        if(quantity > 1)
+        setQuatity(prev - 1)
+    }
+
+    function handleAddCart(){
+        
+        if(!user) navigate('/login')
+<<<<<<< HEAD
+        console.log('user', user)
+=======
+
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
+        const addCart = async() => {
+           const  {data}  = await axios.post('http://127.0.0.1:3000/api/cart/', {product_id: id, quantity : quantity},
+           {
+                headers : {
+                'Authorization': `Bearer ${user.token}`
+                }
+           })
+           console.log(data)
+        }
+        
+        addCart()
+        
+    }
+
     return (
     <div className="grid justify-items-stretch pt-10">
         <div className="flex justify-self-center space-x-4 w-4/6  p-5">
@@ -17,10 +67,14 @@ export default function productInfo() {
             
 
             <div className="flex flex-col w-1/2 bg-white rounded p-10 shadow-lg ">
-                <div className="w-full text-2xl font-semibold">{productInfo.name} </div>
-                <div className="mt-2">Ratings: {productInfo.rating} </div>
-                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.stocks} </div>
-                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {productInfo.price}.00</div>
+                <div className="w-full text-2xl font-semibold">{productInfo.product.name} </div>
+                <div className="mt-2">Ratings: {productInfo.product.rating} </div>
+                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.product.stocks} </div>
+<<<<<<< HEAD
+                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {new Intl.NumberFormat().format(price)}.00</div>
+=======
+                <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {price}.00</div>
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
 
                 <div className="flex w-full justify-between space-x-4">
                     {/* <input className="w-1/2 rounded border-2  pl-4 pr-2"  type="number"   value={quantity} max={productInfo.product.stocks} id="quantity" name="quantity" /> */}

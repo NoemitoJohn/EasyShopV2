@@ -79,20 +79,32 @@ const signup = async (req, res) =>{
         const t = await DB.instance.transaction()
         
         try {
+<<<<<<< HEAD
             
-
+=======
             console.log(req.body)
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
             const hashpass = await bcrypt.hash(password, 10)
             
             
             const user = await DB.User.create({password : hashpass, email: _email,  first_name : firstName, last_name: lastName}, { transaction : t})
+        
+            const emailToken = await jwt.sign({id : user.id }, 'secret', {expiresIn: '1d'})
+        
+            await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
             
-            const token = await creteToken(user.id, user.email)
+<<<<<<< HEAD
+            const link = `http://localhost:5173/signup/verify/${emailToken}`
+
+=======
+            const emailToken = await jwt.sign({id : user}, 'secret', {expiresIn: '1d'})
             
-            const verified = await DB.Verified.create({token : token, user_id : user.id}, { transaction : t})
+
+            const verified = await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
             
             const link = `http://localhost:5173/signup/verify/${emailToken}`
 
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
             const email = await sendValidationEmail(user.first_name, user.email, link)
 
             if(email){
@@ -101,7 +113,20 @@ const signup = async (req, res) =>{
             }
 
         } catch (error) {
-           res.send(error)
+<<<<<<< HEAD
+            await t.rollback()
+            if(error.original)
+            {
+                if(error.original.code == "ER_DUP_ENTRY") 
+                    return res.send({status : 400, message : 'Email already taken'})
+            }
+
+            console.log(error)
+            res.send({status : 500, error : error})
+=======
+            console.log(error)
+           res.send({status : 500})
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
         }
     
     }else{

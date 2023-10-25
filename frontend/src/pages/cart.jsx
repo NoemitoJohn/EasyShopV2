@@ -1,6 +1,101 @@
+<<<<<<< HEAD
+import { useContext, useEffect} from "react"
+=======
+import { useEffect } from "react"
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
 
+import axios from "axios"
+import { useUserAuthContext } from "../hooks/useUserAuthContext"
+import { useNavigate } from "react-router-dom"
+<<<<<<< HEAD
+import { ProductCartComponet } from "../components/ProductCartComponent"
+import { UserCartContext } from "../context/UserCartContext"
+=======
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
 
 export default function cart() {
+  
+  const {user} = useUserAuthContext()
+<<<<<<< HEAD
+  const {carts, dispatch, total, isLoading, setIsLoading } = useContext(UserCartContext)
+
+  // const [total, setTotal] = useState(0)
+  const navigate = useNavigate()
+  
+  useEffect(() => {  
+    
+    async function fecthData(){
+      try {
+        // const { data } = await axios.get(`${import.meta.env.VITE_BACK_END_API}/api/cart/`, {
+        const { data } = await axios.get(`http://localhost:3000/api/cart/`, {
+            headers : {
+              'Authorization': `Bearer ${user.token}`
+            }
+        })
+        dispatch({type: 'SET', payload : data})
+        
+      } catch (error) {
+        console.error('error get cart', error)
+      }
+    }
+    
+    if(user) 
+    {
+      fecthData()
+    }
+    else navigate('/login')
+
+
+  },[user])
+  function checkout(){
+    setIsLoading(true)
+    // axios.post(`${import.meta.env.VITE_BACK_END_API}/api/checkout/`,{},{
+      axios.post(`http://localhost:3000/api/cart/api/checkout/`,{},{
+      
+      headers : {
+        'Authorization': `Bearer ${user.token}`
+      }
+
+    })
+    .then((response) => {
+        if(response.status == 200){
+          setIsLoading(false)
+          console.log(response)  
+          window.location.replace(response.data)
+        }
+
+    }).catch((error)=>{
+
+      console.log(error)
+    })
+  }
+=======
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    
+    async function fecthData(){
+      
+      const { data } = await axios.get('http://127.0.0.1:3000/api/cart/', {
+          headers : {
+            'Authorization': `Bearer ${user.token}`
+          }
+      })
+      console.log(data)
+    }
+
+    if(user){
+      fecthData()
+    }else{
+      navigate('/login')
+    }
+
+
+  },[user])
+
+
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
+
   return (
     <div className="grid justify-items-stretch">  
         <div className="flex justify-self-center w-4/6 space-x-3 ">

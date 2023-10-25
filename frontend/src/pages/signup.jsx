@@ -9,16 +9,38 @@ function signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPass] = useState('')
+  const [isRegistered, setRegistered] = useState(false)
+<<<<<<< HEAD
+  const [error, setError] = useState('')
+  const [isLoading, setLoading] = useState(false)
+=======
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
 
   const navigate = useNavigate()
 
   function handleSubmit(event){
       event.preventDefault()
-      axios.post('http://localhost:3000/api/signup', {firstName, lastName, email, password, repeatPassword})
+<<<<<<< HEAD
+      setLoading(true)
+      console.log(firstName, lastName,email,password,repeatPassword)
+      // axios.post(`${import.meta.env.VITE_BACK_END_API}/api/user/signup`, {firstName, lastName, email, password, repeatPassword})
+      axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword})
+      .then(res=>{
+        
+        console.log(res)
+        if(res.data.status == 200) { setRegistered(true) }
+        if(res.data.status == 400) { setError(res.data.message) }
+        setLoading(false)
+=======
+      
+      axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword}, {withCredentials: true })
       // axios.post('https://demolive-api.vercel.app/signup', {firstName, lastName, email, password, repeatPassword})
       .then(res=>{
-        console.log(res)
-        navigate('/')
+        
+        if(res.data.status == 200) { setRegistered(true) }
+        else { console.log(res.data.message)}
+
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
       }).catch(err =>{
         console.log(err)
         setLoading(false)

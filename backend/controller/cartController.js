@@ -42,8 +42,12 @@ const postCart = async (req, res) => {
 }
 
 const getCart = async (req, res) =>{
+<<<<<<< HEAD
     
-    if(!req.session.user){
+=======
+    console.log(req.session)
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
+    if(!req.user.id){
         return res.json({status: 400, message: 'Please Login'})
     }
     

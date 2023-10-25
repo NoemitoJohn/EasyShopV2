@@ -32,8 +32,12 @@ export default function productList() {
           <tbody>
             {
               products.map((data, key) => 
-
+<<<<<<< HEAD
                   <tr  key={data.id} className="h-[30px]">
+=======
+
+                  <tr   className="h-[30px]">
+>>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex">
                         <div className="flex-shrink-0 w-10 h-10">

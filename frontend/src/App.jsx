@@ -28,7 +28,8 @@ import Category from "./adminPages/category"
 import ViewUpdateProduct from "./adminPages/viewUpdateProduct"
 import { UserCartContextProvider } from './context/UserCartContext'
 import AddStocks from './adminPages/addStocks'
-
+import OrderInfo from './adminPages/orderInfo'
+import Orders from './adminPages/orders'
 
 import {createBrowserRouter, 
     BrowserRouter, 

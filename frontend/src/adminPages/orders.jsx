@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default function orders() {
+export default function Orders() {
   return (
     <>
         <div className="w-full flex justify-center">

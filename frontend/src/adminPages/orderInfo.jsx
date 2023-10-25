@@ -1,5 +1,5 @@
 
-export default function orderInfo() {
+export default function OrderInfo() {
   return (
     <>
         <div className="w-full flex">

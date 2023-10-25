@@ -78,8 +78,6 @@ const signup = async (req, res) =>{
         
         const t = await DB.instance.transaction()
         
-        const t = await DB.instance.transaction()
-        
         try {
             
             const hashpass = await bcrypt.hash(password, 10)
@@ -93,7 +91,6 @@ const signup = async (req, res) =>{
             
             const link = `http://localhost:5173/signup/verify/${emailToken}`
 
->>>>>>> 152094a6925bfefeee58fd0d23445f62b060af6e
             const email = await sendValidationEmail(user.first_name, user.email, link)
 
             if(email){
@@ -113,8 +110,6 @@ const signup = async (req, res) =>{
             res.send({status : 500, error : error})
         }
     
-    }else{
-        res.send({status : 400, message : 'Password not match'})
     }else{
         res.send({status : 400, message : 'Password not match'})
     }

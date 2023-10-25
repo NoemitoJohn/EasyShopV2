@@ -10,7 +10,6 @@ const Category = (sequelize) =>{
         }
     },
     {
-        timestamps: false,
         freezeTableName: true
     }
     )

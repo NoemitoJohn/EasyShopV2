@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const {postCart, getCart, delCart} = require('../controler/cartController')
+const {postCart, getCart, deleteCart, updateCart} = require('../controller/cartController')
+const isAuth = require('../middleware/isAuth')
 
+
+router.use(isAuth)
 
 router.post('/checkout', async (req, res) =>{
     
@@ -120,7 +123,8 @@ router.post('/checkout', async (req, res) =>{
 
 router.get('/', getCart)
 router.post('/', postCart)
-router.delete('/', delCart)
+router.patch('/', updateCart)
+router.delete('/:id', deleteCart)
 
 module.exports = { cartRouter : router}
 

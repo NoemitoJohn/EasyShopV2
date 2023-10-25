@@ -14,7 +14,6 @@ const Verified = (sequelize) =>{
         }
     },
     {
-        timestamps: false,
         freezeTableName: true
     })
 

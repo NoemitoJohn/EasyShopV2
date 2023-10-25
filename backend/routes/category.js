@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router();
 const axios = require('axios')
 const {productsDataArrayToObject} = require('../routes/product')
+const isAuth = require('../middleware/isAuth')
+
+router.user(isAuth)
 
 router.get('/:catName', (req, res)=>{
     

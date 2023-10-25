@@ -9,7 +9,6 @@ const Cart = (sequelize) =>{
         }
     },
     {
-        timestamps: false,
         freezeTableName: true
     })
 

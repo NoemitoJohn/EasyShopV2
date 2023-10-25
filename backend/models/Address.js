@@ -29,7 +29,6 @@ const Address = (sequelize) =>{
         }
     },
     { 
-        timestamps: false ,
         freezeTableName: true
     }) 
     return Address

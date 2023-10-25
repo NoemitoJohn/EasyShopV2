@@ -27,7 +27,6 @@ const User = (sequelize) =>{
         },
     },
     {
-        timestamps: false,
         freezeTableName: true
     })
 

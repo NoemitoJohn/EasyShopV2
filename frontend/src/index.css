@@ -1,69 +1,58 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* @tailwind base;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  html {
+    @apply text-neutral-800;
   }
-  a:hover {
-    color: #747bff;
+  html.dark {
+    @apply text-neutral-50;
+    @apply bg-neutral-800;
   }
-  button {
-    background-color: #f9f9f9;
+  
+}
+*/
+@layer components{
+
+  .Linkhover{
+      @apply hover:text-red
   }
+  .Log-Input{
+      @apply   ring-gray-400 h-10 p-5 mb-5 bg-gray-100 border-b-4 
+  }
+  .XHover{
+      @apply   hover:scale-125 hover:border-red hover:border-1
+
+  }
+  .SideBarLink{
+      @apply flex flex-col w-full h-20 border-b-1 border-gray-500 items-center justify-center 
+  }
+  .SideBarLabel{
+      @apply font-sans text-xs mt-2
+  }
+} 
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+nav a.active{
+  color: gray;
+
+}
+body{
+  background-color: #f1f1f1;
+ }
+.BrickBackground {
+  background-color: #eaeaea;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 4 4'%3E%3Cpath fill='%23a2a2a2' fill-opacity='0.8' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

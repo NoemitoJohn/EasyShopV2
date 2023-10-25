@@ -2,9 +2,9 @@ const DB = require('../models/DB');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const createToken = async (_id, _email) => {
-    return await jwt.sign({ id: _id, email: _email }, 'adminSecret');
-}
+// const createToken = async (_id, _email) => {
+//     return await jwt.sign({ id: _id, email: _email }, 'adminSecret');
+// }
 
 const loginAdmin = async (req, res) => {
     const db = req.app.get('DB');

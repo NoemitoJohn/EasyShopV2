@@ -5,10 +5,10 @@ const Category = require('./Category');
 const Address = require('./Address')
 const Cart = require('./Cart')
 const User = require('./User')
-const UserInfo = require('./UserInfo')
 const Verified = require('./Verified')
+const {Order, ORDER_STATUS} = require('./Order')
 
-// // ### Production 
+// ### Production 
 const sequelize = new Sequelize(
     process.env.DB_DATABASE, // database
     process.env.DB_USERNAME, // username
@@ -17,19 +17,17 @@ const sequelize = new Sequelize(
         host :  process.env.DB_HOST,
         port : process.env.DB_PORT,
         dialect : 'mysql',
-        logging: false
+        // logging: 
     }
 )
 
-
-// Development
+// ### Development
 // const sequelize = new Sequelize(
 //     'easyshopv2', // database
 //     'root', // username
-//     '', // password 
+//     'root', // password 
 //     {
-//         // host : 'e-p.h.filess.io',
-//         // port : 3307,
+//  
 //         dialect : 'mysql',
 //         // logging: false
 //     }
@@ -50,10 +48,11 @@ DB.Product = Product(sequelize);
 DB.ProductInfo = ProductInfo(sequelize);
 DB.Address = Address(sequelize);
 DB.Cart = Cart(sequelize);
-// DB.UserInfo = UserInfo(sequelize);
+DB.Order = Order(sequelize)
+DB.Order.Status = ORDER_STATUS
 DB.Verified = Verified(sequelize);
 
-DB.Category.hasMany(DB.ProductInfo, {foreignKey: 'category_id'})
+DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
 DB.ProductInfo.belongsTo(DB.Category, {foreignKey: 'category_id'})
 
 DB.Product.hasOne(DB.ProductInfo, {foreignKey: 'product_id'})
@@ -71,14 +70,20 @@ DB.Cart.belongsTo(DB.User, {foreignKey: 'user_id'})
 DB.User.hasOne(DB.Verified, {foreignKey: 'user_id'})
 DB.Verified.belongsTo(DB.User, {foreignKey: 'user_id'})
 
+
+DB.User.hasMany(DB.Order, {foreignKey: 'user_id'})
+DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 // DB.Product.sync({force : true})
 // DB.ProductInfo.sync({force : true})
 // DB.Cart.sync({force : true})
 
 // DB.instance.sync({force: true})
+
+// User hasMany Order
 const init = async () => {
 
     try {
+       
         await DB.instance.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {

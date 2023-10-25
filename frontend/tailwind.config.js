@@ -1,8 +1,25 @@
 export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      
+      'XSmobile': '100px',
+      
+      'Smobile': '250px',
+       
+      'mobile': '445px',
+
+      'tablet': '640px',
+
+      'notebook': '840px',
+
+      'laptop': '1024px',
+
+      'desktop': '1280px',
+    },
     extend: {
       colors:{
         'red': '#AF1B3F',

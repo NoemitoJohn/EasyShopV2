@@ -21,6 +21,6 @@ router.get('/info',getUserInfo)
 
 router.get('/address', getAddress)
 router.post('/address', setAddress)
-router.get('/verify/:token', verifyUser)
+router.post('/verify/:token', verifyUser)
 
 module.exports  = { userRouter : router}

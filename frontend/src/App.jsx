@@ -2,6 +2,21 @@ import { useEffect, useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'\
+
+import './index.css'
+import RootLayout from './layouts/RootLayout'
+import { UserAuthContextProvider } from './context/UserAuthContext.jsx'
+
+//LOADERS
+import { 
+    productLoader, 
+    productInfoLoader, 
+    categoriesLoader,
+    productPerCategoryLoader
+}  from './loader/productloader'
+
+
+// CLIENT PAGES
 import Home from "./pages/home"
 import Products from "./pages/products"
 import Login from "./pages/login"
@@ -9,6 +24,8 @@ import Signup from "./pages/signup"
 import SignupVerify from './pages/signupVerify'
 import Cart from './pages/cart'
 import ProductInfo from './pages/productInfo'
+import ProductPerCategory from './pages/ProductPerCategory'
+
 
 import './index.css'
 import RootLayout from './layouts/RootLayout'
@@ -49,14 +66,15 @@ const router = createBrowserRouter(
                 
                 <Route path="/" element={
                 <UserAuthContextProvider>
-                    <RootLayout />
+                    <RootLayout/>
                 </UserAuthContextProvider>
-                }>
+                } loader={categoriesLoader}>
                     <Route index element={<Home/>}></Route>
                     <Route path="products" 
                     element={<Products/>}
                     loader={productLoader} ></Route>
                     <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
+                    <Route path='category/:name' element={<ProductPerCategory />} loader={productPerCategoryLoader} ></Route>
                     <Route path="login" element={<Login/>}></Route>
                     <Route path='signup'>
                         <Route index element={<Signup/>}></Route>

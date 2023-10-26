@@ -123,8 +123,8 @@ const getProductByCategory = async (req, res) =>{
         const product = []
         
         for (const item of products) {
-            const imgs = JSON.parse(item.thumbnail)
-            item.thumbnail = imgs[0]
+           
+            item.thumbnail = item.thumbnail[0]
             product.push(item)
         }
         

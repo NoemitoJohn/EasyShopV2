@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 // import './App.css'\
 
 import './index.css'
-import RootLayout from './layouts/RootLayout'
 import { UserAuthContextProvider } from './context/UserAuthContext.jsx'
 
 //LOADERS
@@ -29,12 +28,10 @@ import ProductPerCategory from './pages/ProductPerCategory'
 
 import './index.css'
 import RootLayout from './layouts/RootLayout'
-import { UserAuthContextProvider } from './context/UserAuthContext.jsx'
 import { UserCartContextProvider } from './context/UserCartContext'
 import { AdminAuthContextProvider } from './context/AdminAuthContext'
 
 //LOADERS
-import { productLoader, productInfoLoader, categoriesLoader}  from './loader/productloader'
 import { orderLoader } from './loader/orderLoader'
 // ADMIN PAGES IMPORT
 import AdminRootLayout from "./layouts/AdminRootLayout"

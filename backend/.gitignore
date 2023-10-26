@@ -3,3 +3,4 @@ db.json
 .vscode
 .env
 product_img/*
+parse.js

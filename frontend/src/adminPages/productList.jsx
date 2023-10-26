@@ -43,7 +43,7 @@ export default function productList() {
                               {/* PRODUCT NAME HERE */}         
                           <p className="text-gray-900 whitespace-no-wrap"> {data.name} </p>
                        
-
+                
                         </div>
                       </div>
                     </td>
@@ -55,7 +55,7 @@ export default function productList() {
                     </td>
                     <td className="px-1 py-5 border-b border-gray-200 bg-white text-sm ">
                       <span className=" inline-block px-3 py-1 font-semibold bg-green-200 rounded-2xl text-green-900 leading-tight" key={data.id}>
-                          <Link  to={`../view/${data.id}`} target="_blank" >View / Update Details</Link>
+                          <Link  to={`../view/${data.id}`}  >View / Update Details</Link>
                       </span>
                     </td>
                   </tr>
@@ -75,14 +75,14 @@ export default function productList() {
 }
 
 
-//loader function
-export const productLoader = async ()=>{
-  //dont change the api link even if the domain is replace
-//  const res = axios.get('https://demolive-api.vercel.app/products')
-  const res = await fetch('http://localhost:3000/products')
-  // const res = await fetch('https://demolive-api.vercel.app/products') 
-    return res.json()
-}
-// axios.get('http://localhost:3000/products')
-// .then(res => setProducts(res.data))
-// .catch(err => console.log(err))
+// //loader function
+// export const productLoader = async ()=>{
+//   //dont change the api link even if the domain is replace
+// //  const res = axios.get('https://demolive-api.vercel.app/products')
+//   const res = await fetch('http://localhost:3000/products')
+//   // const res = await fetch('https://demolive-api.vercel.app/products') 
+//     return res.json()
+// }
+// // axios.get('http://localhost:3000/products')
+// // .then(res => setProducts(res.data))
+// // .catch(err => console.log(err))

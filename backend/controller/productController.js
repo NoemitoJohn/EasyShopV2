@@ -209,6 +209,13 @@ const addProduct = async (req, res)=>{
     }
 
 }
+const updateProduct = (req, res) =>{
+    
+
+
+}
+
+
 
 
 module.exports = {

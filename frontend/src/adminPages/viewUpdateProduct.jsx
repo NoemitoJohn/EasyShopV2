@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useLoaderData, useParams } from "react-router-dom"
 
 
@@ -5,6 +6,8 @@ export default function productInfo() {
     //TODO: create udpate product end point  
     const { id } = useParams()
     const adminProductInfo = useLoaderData()
+    const [_id, setId] = useState(adminProductInfo.id)
+    
   return (
     <>
           
@@ -80,12 +83,12 @@ export default function productInfo() {
                     <div className="w-[90%] mt-8">
                          <div className="flex w-full justify-between mb-5">
                             <span className="flex w-[25%] justify-start font-bold text-gray-500 text-base mr-3">PRODUCT NAME : </span> 
-                            <span className="flex w-[60%] justify-end"><input name="productName" type="text" placeholder={adminProductInfo.product.name} required className="w-full h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " /></span>
+                            <span className="flex w-[60%] justify-end"><input  name="productName" type="text" placeholder={adminProductInfo.product.name} required className="w-full h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " /></span>
                           </div>
 
                           <div className="flex w-full justify-between mb-5">
                             <span className="flex w-[25%] justify-start font-bold text-gray-500 text-base mr-3">PRICE : </span> 
-                            <span className="flex w-[60%] justify-end"><input name="productName" type="text" placeholder={adminProductInfo.product.price} required className="w-full h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " /></span>
+                            <span className="flex w-[60%] justify-end"> <input name="productName" type="text" placeholder={adminProductInfo.product.price} required className="w-full h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " /></span>
                           </div>
 
                           <div className="flex flex-col w-full  mb-5">

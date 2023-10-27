@@ -7,11 +7,11 @@ function AdminRootPanel() {
   const {admin} =  useContext(AdminAuthContext)
   const navagate =  useNavigate()
   
-  useEffect(()=>{
-    if(!admin){
-      navagate('admin')
-    }
-  },[admin])
+  // useEffect(()=>{
+  //   if(!admin){
+  //     navagate('admin')
+  //   }
+  // },[admin])
 
   return (  
     <div className="w-full flex">

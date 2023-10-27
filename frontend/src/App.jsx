@@ -15,6 +15,10 @@ import {
 }  from './loader/productloader'
 
 
+import { orderLoader } from './loader/orderLoader'
+
+
+
 // CLIENT PAGES
 import Home from "./pages/home"
 import Products from "./pages/products"
@@ -24,6 +28,7 @@ import SignupVerify from './pages/signupVerify'
 import Cart from './pages/cart'
 import ProductInfo from './pages/productInfo'
 import ProductPerCategory from './pages/ProductPerCategory'
+import UserSettings from './pages/userSettings'
 
 
 import './index.css'
@@ -31,8 +36,6 @@ import RootLayout from './layouts/RootLayout'
 import { UserCartContextProvider } from './context/UserCartContext'
 import { AdminAuthContextProvider } from './context/AdminAuthContext'
 
-//LOADERS
-import { orderLoader } from './loader/orderLoader'
 // ADMIN PAGES IMPORT
 import AdminRootLayout from "./layouts/AdminRootLayout"
 import AdminLogin from "./adminPages/adminLogin"
@@ -70,6 +73,7 @@ const router = createBrowserRouter(
                     <Route path="products" 
                     element={<Products/>}
                     loader={productLoader} ></Route>
+                    <Route path='account-settings' element={<UserSettings />}></Route>
                     <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
                     <Route path='category/:name' element={<ProductPerCategory />} loader={productPerCategoryLoader} ></Route>
                     <Route path="login" element={<Login/>}></Route>
@@ -105,10 +109,7 @@ const router = createBrowserRouter(
                         <Route path="product-stocks" element={<ProductStocks />}  loader={productLoader} />
                         <Route path="add_stocks/:id" element={<AddStocks />} loader={productInfoLoader}  />
                         <Route path="category" element={<Category />}loader={categoriesLoader}/>
-                        <Route path="orders" 
-                        element={<Orders />}
-                        loader={orderLoader}
-                        />
+                        <Route path="orders" element={<Orders />} loader={orderLoader} />
                         <Route path="order-info/:id" element={<OrderInfo />}/>
                  </Route>
 

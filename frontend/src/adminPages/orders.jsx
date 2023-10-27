@@ -5,11 +5,11 @@ import axios from "axios"
 
 export default function Orders() {
     
-    const orders = useLoaderData()
-    // const [orders, setOrder] = useState(order)
+    const ordersloader = useLoaderData()
+    const [orders, setOrder] = useState(order)
 
 
-    //TODO change url to production
+    // TODO change url to production
     
     console.log(orders)
     
@@ -28,10 +28,10 @@ export default function Orders() {
 
 
                         <div id="orderContainer" className="w-full overflow-y-scroll h-[600px]">
-                            
+{/*                             
                             {orders.map(order =>{
                                 <p key={order.id}>{order.name}</p>
-                            })}
+                            })} */}
 
                             
                             <div className="flex w-full py-2 border-b-1 border-gray-300">

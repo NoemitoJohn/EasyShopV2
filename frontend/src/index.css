@@ -15,6 +15,28 @@
   
 }
 */
+
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #dfdfdf;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(185, 185, 185);
+  border: 3px solid var(--primary);
+}
+
+
 @layer components{
 
   .Linkhover{
@@ -42,8 +64,8 @@
 @tailwind utilities;
 
 nav a.active{
-  color: gray;
-
+  color:#AF1B3F;
+  font-weight: bold;
 }
 body{
   background-color: #f1f1f1;
@@ -112,7 +134,37 @@ body{
   transition: var(--speed) ease;
 }
 
+/* USERS DROPDOWN  */
 
+.dropdown-Usermenu{
+  width: 200px;
+  position: absolute;
+  margin-top: 0;
+  right: 10%;
+  border-radius: var(--border-radius);
+
+}
+
+.dropdown-Usermenu::before{
+  content: '';
+  position: absolute;
+  background: var(--secondary-bg);
+  transform: rotate(45deg);
+}
+
+.dropdown-Usermenu.active{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
+}
+
+.dropdown-Usermenu.inactive{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
+}
 
 /* IMAGE SLIDER PRODUCT INFO */
 

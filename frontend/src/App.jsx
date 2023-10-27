@@ -15,6 +15,10 @@ import {
 }  from './loader/productloader'
 
 
+import { orderLoader } from './loader/orderLoader'
+
+
+
 // CLIENT PAGES
 import Home from "./pages/home"
 import Products from "./pages/products"
@@ -24,6 +28,7 @@ import SignupVerify from './pages/signupVerify'
 import Cart from './pages/cart'
 import ProductInfo from './pages/productInfo'
 import ProductPerCategory from './pages/ProductPerCategory'
+import UserSettings from './pages/userSettings'
 
 
 import './index.css'
@@ -70,6 +75,7 @@ const router = createBrowserRouter(
                     <Route path="products" 
                     element={<Products/>}
                     loader={productLoader} ></Route>
+                    <Route path='account-settings' element={<UserSettings />}></Route>
                     <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
                     <Route path='category/:name' element={<ProductPerCategory />} loader={productPerCategoryLoader} ></Route>
                     <Route path="login" element={<Login/>}></Route>

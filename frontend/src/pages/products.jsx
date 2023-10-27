@@ -15,7 +15,7 @@ export default function products() {
     <div className="flex w-100 justify-center flex-col ">
      
     <h2 className="w-full flex justify-center text-lg text-gray-500 mb-5">All products</h2>
-        <div className="flex flex-wrap justify-center  mt-3 w-full  XSmobile:w-[100%] desktop:px-40" >
+        <div className="flex flex-wrap justify-center  mt-3 w-full  XSmobile:w-[100%] desktop:px-20" >
         {
             data.products.map( data =>(
               <div key={data.id} className="flex m-1 flex-col p-2 border-gray-300 border-1 shadow-lg hover:border-red bg-white 

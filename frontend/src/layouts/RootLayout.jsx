@@ -56,7 +56,7 @@ const categories = useLoaderData()
   useEffect(() => {
     let handler = (e)=>{
       if(!menuUserRef.current.contains(e.target)){
-        setOpenSearch(false);
+        setOpenUser(false);
         console.log(menuUserRef.current);
       }      
     };
@@ -99,7 +99,6 @@ const categories = useLoaderData()
                     </ul>
                    
                     <ul className="flex text-white basis-1/2 justify-end h-full items-center  ">
-
                         <div className="flex">
                                 <p className="text-white text-center"></p>
                                 
@@ -112,14 +111,15 @@ const categories = useLoaderData()
                 <div className='menu-trigger justify-center flex flex-col items-center' onClick={()=>{setOpenUser(!openUser)}}>                
                          <div className="px-3.5 p-2 h-10 rounded-sm mx-2 hover:animate-pulse">My Account &#x2B9F;</div>                              
                 </div>
-                <div className={`dropdown-menu ${openUser? 'active' : 'inactive'} bg-red`} >
+                <div className={`dropdown-Usermenu ${openUser? 'active' : 'inactive'} bg-white w-[300px] text-gray-700`} >
             
-                <ul className="flex flex-wrap w-full capitalize">
+                <ul className="flex flex-wrap w-full">
         
-                        <div className="">
-                        <Link to='' className="flex w-[160px] text-sm mb-1 ">{user.email}</Link>
-                        <Link to='' className="flex w-[160px] text-sm mb-1 ">User Settings</Link>
-                        <button onClick={handleLogout} className="flex w-[160px] text-sm mb-1">Logout</button>
+                        <div className="w-full">
+                          <div className="flex w-full text-sm mb-1 bg-red text-white p-2 pl-4  ">{user.email}</div>
+                          <NavLink to='/account-settings' className="flex w-full text-sm mb-1 p2 pl-4  hover:font-bold">User Settings</NavLink>
+                          <NavLink to='' className="flex w-full text-sm mb-1 p2 pl-4 hover:font-bold">Delivery Address</NavLink>
+                          <button onClick={handleLogout} className="flex w-full text-sm mb-1 py-2 pl-4 border-t-1 border-gray-500 hover:font-bold">Logout</button>
                         </div>
           
                  </ul>
@@ -254,9 +254,9 @@ const categories = useLoaderData()
 
     {/* FOOTER CONTAINER */}
     <div className='flex justify-center w-full p-100 bg-black mt-20'>
-            <div className='flex w-4/6 flex-col mt-4'>
+            <div className='flex w-4/6 flex-col mt-4 max-tablet:w-5/6 max-tablet:px-5'>
                 <div className='flex flex-row w-full'>
-                    <div className='flex flex-row w-1/2'>
+                    <div className='flex flex-row w-1/2 max-tablet:w-[30%]'>
                         <div className='flex flex-col w-12 items-center'>
                             <svg className="h-8 w-8 mb-2 mt-5 text-red"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                             <svg className="h-8 w-8 mb-2"  viewBox="0 0 24 24"  fill="#AF1B3F" stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>  
@@ -264,26 +264,26 @@ const categories = useLoaderData()
                             <svg className="h-8 w-8 mb-2 text-red"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />  <rect x="2" y="9" width="4" height="12" />  <circle cx="4" cy="4" r="2" /></svg>
                         </div>
                         <div className='flex flex-col'>
-                            <NavLink to="https://facebook.com" target="_blank"><p className='text-white mb-3 mt-5 ml-5 font-semibold text-xl'>Facebook</p></NavLink>
-                            <NavLink to="https://instagram.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl'>Instagram</p></NavLink>
-                            <NavLink to="https://youtube.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl'>Youtube</p></NavLink>
-                            <NavLink to="https://linkedin.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl'>LinkedIn</p></NavLink>
+                            <NavLink to="https://facebook.com" target="_blank"><p className='text-white mb-3 mt-5 ml-5 font-semibold text-xl max-notebook:text-sm max-notebook:mt-7 max-mobile:hidden'>Facebook</p></NavLink>
+                            <NavLink to="https://instagram.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl max-notebook:text-sm max-notebook:mt-2 max-mobile:hidden'>Instagram</p></NavLink>
+                            <NavLink to="https://youtube.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl max-notebook:text-sm max-notebook:mt-2 max-mobile:hidden'>Youtube</p></NavLink>
+                            <NavLink to="https://linkedin.com" target="_blank"><p className='text-white mb-3 ml-5 font-semibold text-xl max-notebook:text-sm max-notebook:mt-2 max-mobile:hidden'>LinkedIn</p></NavLink>
                         </div>
 
                     </div>
-                    <div className='flex w-1/2 justify-end mt-4'>
-                        <div className="flex flex-col w-3/6">
-                            <div className="text-white text-xl font-semibold mb-3">Contact Info</div>
-                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2">Example@gmail.com</div>
-                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2">0923-265-xxx</div>
-                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2">National highway Example Address</div>
+                    <div className='flex w-1/2 justify-end mt-4 max-tablet:w-[70%]'>
+                        <div className="flex flex-col w-4/6 max-tablet:w-4/6 max-mobile:w-full">
+                            <div className="text-white text-xl font-semibold mb-3  max-notebook:text-lg">Contact Info</div>
+                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">Example@gmail.com</div>
+                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">0923-265-xxx</div>
+                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">National highway Example Address</div>
                         </div>
                     </div>
                 </div>
                 <div className='flex justify-center w-full py-5'>
                         <div className='flex justify-center flex-col  w-4/6'>
-                            <div className='text-red font-extrabold italic text-5xl text-center '>EASYSHOP</div>
-                            <p className='text-white text-center italic'> @EASYSHOP2023</p>
+                            <div className='text-red font-extrabold italic text-5xl text-center max-tablet:text-3xl'>EASYSHOP</div>
+                            <p className='text-white text-center italic max-tablet:text-sm'> @EASYSHOP2023</p>
                         </div>
                 </div>
             </div>

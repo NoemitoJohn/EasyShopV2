@@ -16,7 +16,7 @@ export default {
 
       'notebook': '840px',
 
-      'laptop': '1024px',
+      'laptop': '1124px',
 
       'desktop': '1280px',
     },

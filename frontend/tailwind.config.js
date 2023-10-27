@@ -7,10 +7,15 @@ export default {
     screens: {
       
       'XSmobile': '100px',
+
       
       'Smobile': '250px',
+
+      'MDmobile': '385px',
        
       'mobile': '445px',
+
+      'minitab' : '550px',
 
       'tablet': '640px',
 

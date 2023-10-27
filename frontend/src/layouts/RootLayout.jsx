@@ -93,8 +93,8 @@ const categories = useLoaderData()
             <nav className="flex bg-black flex-col h-[160px] top-0 w-full fixed">
             <div className="flex bg-darkgray justify-center h-10 ">
                 <nav className="flex  justify-center w-[85%] item-center laptop:w-[80%]">
-                    <ul className="flex text-white basis-1/2 h-full items-center  ">
-                        <NavLink className="mr-4 Linkhover"  to='/'>Home</NavLink>
+                    <ul className="flex text-white basis-1/2 h-full items-center max-mobile:text-xs  ">
+                        <NavLink className="mr-4 Linkhover max-minitab:hidden "  to='/'>Home</NavLink>
                         <NavLink className="mr-4 Linkhover" to='/products'>All Products</NavLink>
                     </ul>
                    
@@ -109,16 +109,15 @@ const categories = useLoaderData()
                 
                 <div className='menu-container' ref={menuUserRef}>
                 <div className='menu-trigger justify-center flex flex-col items-center' onClick={()=>{setOpenUser(!openUser)}}>                
-                         <div className="px-3.5 p-2 h-10 rounded-sm mx-2 hover:animate-pulse">My Account &#x2B9F;</div>                              
+                         <div className="px-3.5 p-2 pt-3 h-10 rounded-sm mx-2 hover:animate-pulse max-mobile:text-xs max-minitab:w-full">My Account &#x2B9F;</div>                              
                 </div>
                 <div className={`dropdown-Usermenu ${openUser? 'active' : 'inactive'} bg-white w-[300px] text-gray-700`} >
             
-                <ul className="flex flex-wrap w-full">
-        
+                <ul className="flex flex-wrap w-full z-[50]">
                         <div className="w-full">
                           <div className="flex w-full text-sm mb-1 bg-red text-white p-2 pl-4  ">{user.email}</div>
                           <NavLink to='/account-settings' className="flex w-full text-sm mb-1 p2 pl-4  hover:font-bold">User Settings</NavLink>
-                          <NavLink to='' className="flex w-full text-sm mb-1 p2 pl-4 hover:font-bold">Delivery Address</NavLink>
+                          <NavLink to='/shipping-address' className="flex w-full text-sm mb-1 p2 pl-4 hover:font-bold">Delivery Address</NavLink>
                           <button onClick={handleLogout} className="flex w-full text-sm mb-1 py-2 pl-4 border-t-1 border-gray-500 hover:font-bold">Logout</button>
                         </div>
           
@@ -140,8 +139,8 @@ const categories = useLoaderData()
             </div>
             <div className="flex justify-center w-[100%]">
                 <div className="flex w-[85%] justify-between py-4 laptop:w-[80%]">
-                    <div className=""><img src={logo} alt="logo" className="w-[300px] "/></div>
-                    <div className="flex  basis-4/6 XSmobile:justify-end laptop:justify-start">
+                    <div className=" max-minitab:w-full max-minitab:flex max-minitab:justify-center "><img src={logo} alt="logo" className="w-[300px]"/></div>
+                    <div className="flex z-[-1] bg-black basis-4/6 max-minitab:justify-start  max-desktop:justify-end laptop:justify-start max-minitab:absolute max-minitab:top-[150px] max-minitab:w-full max-minitab:right-0">
 
                       {/*  FULL SEARCH BAR   */}
                         <div className="hidden items-center w-full ml-10 laptop:flex">
@@ -160,7 +159,17 @@ const categories = useLoaderData()
 
                         
                     {/* HIDDEN CATEGORY / VISIBLE WHEN CLICK   */}
-                        <div className="flex justify-center items-center basis-1/4  text-white font-semibold text-[10px]   laptop:hidden">
+                        <div className="flex justify-center items-center   max-minitab:w-full  text-white font-semibold text-[10px]  max-minitab:justify-evenly  laptop:hidden  max-minitab:top-[140px] max-minitab:pb-4">
+                            <div className="flex flex-col justify-center items-center minitab:hidden">
+                                <Link to='/' className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                      <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                                    </svg>
+                                </Link>
+                                <p className=" font-bold">HOME</p>
+                            </div>
+                           
+                           
                            <div className="flex flex-col justify-center items-center ">
         
                                
@@ -179,7 +188,7 @@ const categories = useLoaderData()
                                                 
                                                 
                                     </div>
-                                    <div className={`dropdown-menu ${open? 'active' : 'inactive'} bg-red`} >
+                                    <div className={`dropdown-menu  ${open? 'active' : 'inactive'} bg-red max-minitab:mt-[10px] max-laptop:mt-[30px]`} >
                                 
                                     <ul className="flex flex-wrap w-full capitalize">
                                     {
@@ -210,10 +219,10 @@ const categories = useLoaderData()
                                             <p className="font-bold">SEARCH</p>      
                                     </div>
 
-                                    <div className={`dropdown-menu ${openSearch? 'active' : 'inactive'} bg-red`} >
+                                    <div className={`dropdown-menu ${openSearch? 'active' : 'inactive'} bg-red max-minitab:mt-[10px] max-laptop:mt-[30px]`} >
                                 
-                                    <ul className="flex flex-wrap w-full capitalize">
-                                            <li className="flex w-full h-10 ">
+                                    <ul className="flex flex-wrap w-full capitalize ">
+                                            <li className="flex w-full h-8">
                                                 <input type="text" className="w-full rounded-bl-md rounded-tl-md pl-5 text-base" placeholder="Search Products" />
                                                 <button className="basis-1/6 flex text-red text-base border-l-3 border-red  bg-white rounded-tr-md rounded-br-md px-5 font-semibold justify-center items-center "> SEARCH </button>
                                
@@ -274,9 +283,9 @@ const categories = useLoaderData()
                     <div className='flex w-1/2 justify-end mt-4 max-tablet:w-[70%]'>
                         <div className="flex flex-col w-4/6 max-tablet:w-4/6 max-mobile:w-full">
                             <div className="text-white text-xl font-semibold mb-3  max-notebook:text-lg">Contact Info</div>
-                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">Example@gmail.com</div>
+                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">DemoEmail@gmail.com</div>
                             <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">0923-265-xxx</div>
-                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">National highway Example Address</div>
+                            <div className="text-white text-m font-semibold border-b-2 border-b-red pb-2 max-notebook:text-sm">National highway Demo Address</div>
                         </div>
                     </div>
                 </div>

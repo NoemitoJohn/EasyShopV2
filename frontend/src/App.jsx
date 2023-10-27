@@ -11,7 +11,8 @@ import {
     productLoader, 
     productInfoLoader, 
     categoriesLoader,
-    productPerCategoryLoader
+    productPerCategoryLoader,
+    productLimitLoader
 }  from './loader/productloader'
 
 // CLIENT PAGES
@@ -32,8 +33,12 @@ import RootLayout from './layouts/RootLayout'
 import { UserCartContextProvider } from './context/UserCartContext'
 import { AdminAuthContextProvider } from './context/AdminAuthContext'
 
+
 //LOADERS
 import { orderLoader, ordersLoader } from './loader/orderLoader'
+// import { Slider } from './components/carousel'
+
+
 // ADMIN PAGES IMPORT
 import AdminRootLayout from "./layouts/AdminRootLayout"
 import AdminLogin from "./adminPages/adminLogin"
@@ -67,7 +72,7 @@ const router = createBrowserRouter(
                     <RootLayout/>
                 </UserAuthContextProvider>
                 } loader={categoriesLoader} >
-                    <Route index element={<Home/>}></Route>
+                    <Route index element={<Home/>} loader={productLimitLoader}></Route>
                     <Route path="products" 
                     element={<Products/>}
                     loader={productLoader} ></Route>

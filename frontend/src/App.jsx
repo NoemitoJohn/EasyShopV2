@@ -14,11 +14,6 @@ import {
     productPerCategoryLoader
 }  from './loader/productloader'
 
-
-import { orderLoader } from './loader/orderLoader'
-
-
-
 // CLIENT PAGES
 import Home from "./pages/home"
 import Products from "./pages/products"

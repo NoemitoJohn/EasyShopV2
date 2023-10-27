@@ -4,3 +4,4 @@ db.json
 .env
 product_img/*
 vercel.json
+parse.js

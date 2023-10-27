@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const DB = require('../models/DB')
 
-const isAuth = async (req, res, next) => {
+const isUserAuth = async (req, res, next) => {
     
     const {authorization} = req.headers
 
@@ -32,4 +32,9 @@ const isAuth = async (req, res, next) => {
     }
 }
 
-module.exports = isAuth
+const isAdminAuth = async (req, res, next) => {
+    const {authorization} = req.headers
+}
+
+
+module.exports = {isUserAuth, isAdminAuth}

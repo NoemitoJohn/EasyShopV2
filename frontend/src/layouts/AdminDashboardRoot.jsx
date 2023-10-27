@@ -1,8 +1,18 @@
-import { NavLink, Outlet, Link } from "react-router-dom"
+import { NavLink, Outlet, Link, useNavigate } from "react-router-dom"
 import AdminSidebarComponents from "../adminComponents/adminSidebarComponents"
 import AdminNavComponents from "../adminComponents/adminNavComponents"
-
+import { useContext, useEffect } from "react"
+import { AdminAuthContext } from "../context/AdminAuthContext"
 function AdminRootPanel() {
+  const {admin} =  useContext(AdminAuthContext)
+  const navagate =  useNavigate()
+  
+  useEffect(()=>{
+    if(!admin){
+      navagate('/admin')
+    }
+  },[admin])
+
   return (  
     <div className="w-full flex">
       

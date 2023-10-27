@@ -9,6 +9,7 @@ export default function productInfo() {
     const productInfo = useLoaderData()
 
     const [id, setId] = useState(productInfo.product.id)
+    const [stocks, setStocks] = useState((productInfo.product.inventory.in - productInfo.product.inventory.out))
     const [price, setPrice] = useState(productInfo.product.price)
     const [quantity, setQuatity] = useState(1)
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ export default function productInfo() {
     
     function handleIncrement (prev){
         // console.log(e)
-        if(quantity < productInfo.product.stocks)
+        if(quantity < stocks)
         setQuatity(prev + 1)
     }
     
@@ -58,14 +59,39 @@ export default function productInfo() {
         <div className="flex justify-self-center space-x-4 w-4/6  p-5">
             <div className="flex justify-center items-center w-1/2 rounded bg-white shadow-lg p-2">
                
-                <div className="flex justify-center items-center w-full h-full bg-gray-300 rounded text-4xl text-gray-500 font-bold">Product Image</div>
+            <div class="slider">
+  
+                <a href="#slide-1">1</a>
+                <a href="#slide-2">2</a>
+                <a href="#slide-3">3</a>
+                <a href="#slide-4">4</a>
+                <a href="#slide-5">5</a>
+
+                <div class="slides">
+                    <div id="slide-1">
+                    1
+                    </div>
+                    <div id="slide-2">
+                    2
+                    </div>
+                    <div id="slide-3">
+                    3
+                    </div>
+                    <div id="slide-4">
+                    4
+                    </div>
+                    <div id="slide-5">
+                    5
+                    </div>
+                </div>
+                </div>
             </div>
             
 
             <div className="flex flex-col w-1/2 bg-white rounded p-10 shadow-lg ">
                 <div className="w-full text-2xl font-semibold">{productInfo.product.name} </div>
                 <div className="mt-2">Ratings: {productInfo.product.rating} </div>
-                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.product.stocks} </div>
+                <div className="mb-8 border-b-2 pb-3">Stocks : {stocks} </div>
                 <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {new Intl.NumberFormat().format(price)}.00</div>
 
                 <div className="flex w-full justify-between space-x-4">

@@ -17,7 +17,7 @@ function signupVerify() {
             
             if(data.status == 200) { 
                 setMessage('Email Verified Redirecting...')
-                setTimeout(() => { navigate('/') }, 3000 )
+                setTimeout(() => { navigate('/') }, 1500 )
                 }
             if(data.status == 400) {setMessage(data.message)}
         }

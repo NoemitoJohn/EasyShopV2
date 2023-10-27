@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 
 export default function productList() {
-  const products = useLoaderData()
+  const data = useLoaderData()
   return (
     <>
     <div className="container w-5/6 mx-auto px-4 sm:px-8 ">
   <div className="py-8">
     <div className="flex justify-between">
-      <h2 class="text-2xl font-semibold leading-tight">PRODUCT LIST</h2>
+      <h2 className="text-2xl font-semibold leading-tight">PRODUCT LIST</h2>
       <div className="flex w-[50%] justify-end ">
         <input name="category_name" type="text" placeholder="Search Prouct Here" required className="flex w-[60%] h-10 border-1 border-gray300 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded-tl rounded-bl " />
 
@@ -31,36 +31,37 @@ export default function productList() {
 
           <tbody>
             {
-              products.map((data, key) => 
+              data.products.map((data, key) => 
                   <tr  key={data.id} className="h-[30px]">
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <div className="flex">
                         <div className="flex-shrink-0 w-10 h-10">
-                          <img className="w-full h-full rounded-full" src={data.thumbnail}   alt=""/>
+                          <img className="w-full h-full rounded-full" src={data.products_info.thumbnail}   alt=""/>
                         </div>
 
                         <div className="ml-3">
                               {/* PRODUCT NAME HERE */}         
                           <p className="text-gray-900 whitespace-no-wrap"> {data.name} </p>
                        
-
+                
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">P {data.price}.00</p>
+                      <p className="text-gray-900 whitespace-no-wrap">&#8369; {data.price}.00</p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">Category name</p>
+                      <p className="text-gray-900 whitespace-no-wrap">{data.products_info.category.name}</p>
                     </td>
                     <td className="px-1 py-5 border-b border-gray-200 bg-white text-sm ">
-                      <span className=" inline-block px-3 py-1 font-semibold bg-green-200 rounded-2xl text-green-900 leading-tight" >
-                          <Link  to={`/admin/dashboard/view/${data.id}`} target="_blank" >View / Update Details</Link>
+                      <span className=" inline-block px-3 py-1 font-semibold bg-green-200 rounded-2xl text-green-900 leading-tight" key={data.id}>
+                          <Link  to={`../view/${data.id}`}  >View / Update Details</Link>
                       </span>
                     </td>
                   </tr>
               )
             }
+
 
           </tbody>
         </table>
@@ -74,14 +75,14 @@ export default function productList() {
 }
 
 
-//loader function
-export const productLoader = async ()=>{
-  //dont change the api link even if the domain is replace
-//  const res = axios.get('https://demolive-api.vercel.app/products')
-  const res = await fetch('http://localhost:3000/products')
-  // const res = await fetch('https://demolive-api.vercel.app/products') 
-    return res.json()
-}
-// axios.get('http://localhost:3000/products')
-// .then(res => setProducts(res.data))
-// .catch(err => console.log(err))
+// //loader function
+// export const productLoader = async ()=>{
+//   //dont change the api link even if the domain is replace
+// //  const res = axios.get('https://demolive-api.vercel.app/products')
+//   const res = await fetch('http://localhost:3000/products')
+//   // const res = await fetch('https://demolive-api.vercel.app/products') 
+//     return res.json()
+// }
+// // axios.get('http://localhost:3000/products')
+// // .then(res => setProducts(res.data))
+// // .catch(err => console.log(err))

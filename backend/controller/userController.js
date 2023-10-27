@@ -122,6 +122,7 @@ const verifyUser = async (req, res) => {
         
         const decodeToken  = await jwt.verify(token, 'secret')
         console.log(decodeToken)
+        console.log(decodeToken)
         const verifiedUser = await DB.Verified.findOne({where : { user_id : decodeToken.id}})
         
         if(verifiedUser.isVerified) return res.json({status : 400, message : 'This link already Verified'})

@@ -42,7 +42,7 @@ const postCart = async (req, res) => {
 }
 
 const getCart = async (req, res) =>{
-    
+
     if(!req.user.id){
         return res.json({status: 400, message: 'Please Login'})
     }
@@ -56,7 +56,7 @@ const getCart = async (req, res) =>{
                 include : [
                 {
                     model : DB.ProductInfo,
-                    attributes : [['img_url', 'thumbnail']],
+                    attributes : [[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'thumbnail']],
                     require : true
                 }]
             }
@@ -70,20 +70,7 @@ const getCart = async (req, res) =>{
     
     const cart = []
 
-    for (const item of cartQuery) {
-        
-        const jsonString = JSON.stringify(item)
-        
-        const jsonParse = JSON.parse(jsonString)
-        
-        const thumbnail = getProductThumbnail(jsonParse.product.products_info.thumbnail)
-
-        jsonParse.product.products_info.thumbnail = thumbnail
-
-        cart.push(jsonParse)
-    }
-    
-    res.json(cart)
+    res.json(cartQuery)
     
 }
 

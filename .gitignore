@@ -2,3 +2,6 @@
 sequelize
 data
 vercel.json
+package.json
+node_modules
+package-lock.json

@@ -10,11 +10,12 @@ export default function adminNavComponents() {
               <div className="flex justify-center h-6 px-5 items-center font-medium">
                   <NavLink to="add-products">Add Products</NavLink>
               </div>
-              <div className="flex justify-center h-6 px-5 items-center font-medium">
-                  <NavLink to="add-stocks">Add Stocks</NavLink>
-              </div>
+           
               <div className="flex justify-center h-6 px-5 items-center font-medium">
                   <NavLink to="category">Category</NavLink>
+              </div>
+              <div className="flex justify-center h-6 px-5 items-center font-medium">
+                  <NavLink to="product-stocks">Product Stocks</NavLink>
               </div>
           </div>
 

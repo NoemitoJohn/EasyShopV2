@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize')
 
 
-const Product = (sequelize) =>{
+const ProductTest = (sequelize) =>{
     
-    const Product = sequelize.define('product', {
+    const Product = sequelize.define('products_test', {
         name : {
             type : DataTypes.STRING,
             allowNull : false
@@ -17,9 +17,10 @@ const Product = (sequelize) =>{
             defaultValue : 0
         },
     },
+    { freezeTableName: true }
     );
     
     return Product;
 }
 
-module.exports = Product
+module.exports = ProductTest

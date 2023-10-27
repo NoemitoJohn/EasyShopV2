@@ -3,11 +3,31 @@ import logo from "../logo2.png"
 import { useUserAuthContext } from "../hooks/useUserAuthContext"
 import React, {useState, useEffect, useRef} from 'react';
 
-
 export default function RootLayout() {
 const categories = useLoaderData()
 
     
+  const [open1, setOpen1] = useState(false);
+
+  let menuRef1 = useRef();
+
+  useEffect(() => {
+    let handler = (e)=>{
+      if(!menuRef1.current.contains(e.target)){
+        setOpen1(false);
+        console.log(menuRef1.current);
+      }      
+    };
+
+    document.addEventListener("mousedown", handler);
+    
+
+    return() =>{
+      document.removeEventListener("mousedown", handler);
+    }
+
+  });
+  
   const [open, setOpen] = useState(false);
 
   let menuRef = useRef();
@@ -28,6 +48,8 @@ const categories = useLoaderData()
     }
 
   });
+
+
 
 
   let menuSearchRef = useRef();
@@ -90,7 +112,7 @@ const categories = useLoaderData()
     <>
     
     {/* NAVIGATION BAR CONTAINER */}
-            <nav className="flex bg-black flex-col h-[160px] top-0 w-full fixed">
+            <nav className="flex text-lg bg-black flex-col h-[160px] top-0 w-full fixed z-[2]">
             <div className="flex bg-darkgray justify-center h-10 ">
                 <nav className="flex  justify-center w-[85%] item-center laptop:w-[80%]">
                     <ul className="flex text-white basis-1/2 h-full items-center max-mobile:text-xs  ">
@@ -113,7 +135,7 @@ const categories = useLoaderData()
                 </div>
                 <div className={`dropdown-Usermenu ${openUser? 'active' : 'inactive'} bg-white w-[300px] text-gray-700`} >
             
-                <ul className="flex flex-wrap w-full z-[50]">
+                <ul className="flex flex-wrap w-full">
                         <div className="w-full">
                           <div className="flex w-full text-sm mb-1 bg-red text-white p-2 pl-4  ">{user.email}</div>
                           <NavLink to='/account-settings' className="flex w-full text-sm mb-1 p2 pl-4  hover:font-bold">User Settings</NavLink>
@@ -138,9 +160,9 @@ const categories = useLoaderData()
                 </nav>
             </div>
             <div className="flex justify-center w-[100%]">
-                <div className="flex w-[85%] justify-between py-4 laptop:w-[80%]">
+                <div className="flex w-[85%] justify-between py-4 laptop:w-[80%] ">
                     <div className=" max-minitab:w-full max-minitab:flex max-minitab:justify-center "><img src={logo} alt="logo" className="w-[300px]"/></div>
-                    <div className="flex bg-black basis-4/6 max-minitab:justify-start max-minitab:z-[-1]  max-desktop:justify-end laptop:justify-start max-minitab:absolute max-minitab:top-[150px] max-minitab:w-full max-minitab:right-0">
+                    <div className="flex  bg-black basis-4/6 max-minitab:justify-start  max-desktop:z-[60] max-desktop:justify-end laptop:justify-start max-minitab:absolute max-minitab:top-[150px] max-minitab:w-full max-minitab:right-0">
 
                       {/*  FULL SEARCH BAR   */}
                         <div className="hidden items-center w-full ml-10 laptop:flex">
@@ -149,11 +171,43 @@ const categories = useLoaderData()
                                 <button className="basis-1/6 flex text-white bg-red rounded-tr-sm rounded-br-sm px-5 font-semibold justify-center items-center "> SEARCH </button>
                                
                             </form>
-                            <Link to='/cart' className="bg-red px-3.5 p-2 h-10 ml-2 rounded-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-cart-fill" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                </svg>
-                            </Link>
+                            <div className="flex flex-col justify-center items-center ">
+                                <Link to='/cart' className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2 mt-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-cart-fill" viewBox="0 0 16 16">
+                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                    </svg>
+                                </Link>
+                                <p className="font-bold text-xs text-white">CART</p>
+                            </div>
+                            
+                                            
+                            
+                            <div className='menu-container ' ref={menuRef1}>
+                                    <div className='menu-trigger justify-center flex flex-col items-center mt-4 ' onClick={()=>{setOpen1(!open1)}}>
+                                            
+                                            <div className="bg-red px-3.5 p-2 h-10 rounded-sm mx-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="white" class="bi bi-list-ul" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                            </svg>
+                                            
+                                            </div>    
+                                            
+                                             <p className="font-bold text-xs text-white">CATEGORY</p>
+                                                
+                                                
+                                    </div>
+                                    <div className={`dropdown-menu  ${open1? 'active' : 'inactive'} bg-red mt-[20px] max-minitab:mt-[10px] max-laptop:mt-[28px]`} >
+                                
+                                    <ul className="flex flex-wrap w-full capitalize">
+                                    {
+                                        categories.map((data =>
+                                            <div className="" key={data.id}>
+                                            <Link to={`category/${data.name}`} key={data.id} className="flex w-[160px] text-lg mb-1 "><DropdownItem text = {data.name}/></Link>
+                                            </div>
+                                    ))}
+                                     </ul>
+                                    </div>
+                                </div>
                         </div>
                         
 
@@ -223,7 +277,7 @@ const categories = useLoaderData()
                                 
                                     <ul className="flex flex-wrap w-full capitalize ">
                                             <li className="flex w-full h-8">
-                                                <input type="text" className="w-full rounded-bl-md rounded-tl-md pl-5 text-base" placeholder="Search Products" />
+                                                <input type="text" className="w-full rounded-bl-md rounded-tl-md pl-5 text-base text-gray-600" placeholder="Search Products" />
                                                 <button className="basis-1/6 flex text-red text-base border-l-3 border-red  bg-white rounded-tr-md rounded-br-md px-5 font-semibold justify-center items-center "> SEARCH </button>
                                
                                             </li>
@@ -254,7 +308,7 @@ const categories = useLoaderData()
 
         
     {/* MAIN CONTENT CONTAINER */}
-    <main className="mt-[260px]">
+    <main className="mt-[260px] min-h-[700px]">
 
         <Outlet/>
        
@@ -302,26 +356,14 @@ const categories = useLoaderData()
 
     </>
   )
-  
+
+
 
 function DropdownItem(props){
-    return(
-      <li className = 'dropdownItem'>
-        <a> {props.text} </a>
-      </li>
-    );
-  }
-
-
-  function DropdownProfile(props){
-    return(
-      <li className = 'dropdownItem'>
-        <a> {props.text} </a>
-      </li>
-    );
-  }
-
-
-
-
+  return(
+    <li className = 'dropdownItem'>
+      <a> {props.text} </a>
+    </li>
+  );
+}
 }

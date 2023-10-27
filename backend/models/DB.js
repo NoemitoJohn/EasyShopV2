@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
         host :  process.env.DB_HOST,
         port : process.env.DB_PORT,
         dialect : 'mysql',
-        // logging: 
+        logging: false,
     }
 )
 
@@ -89,7 +89,12 @@ DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 
 // User hasMany Order
 const init = async () => {
-    await DB.instance.authenticate();
+    try{
+        await DB.instance.authenticate();
+
+    }catch(error){
+        console.log(error)
+    }
 
 }
 

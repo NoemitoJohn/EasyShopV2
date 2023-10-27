@@ -142,60 +142,82 @@ const verifyUser = async (req, res) => {
 }
 
 
-const getAddress = (req, res) =>{
+const getAddress = async (req, res) =>{
+    //
+    if(!req.user) res.status(403).send()
+    console.log(req.body)
     
-    if(!req.session.user){
-        return res.json({status: 400, message: 'Please Login'})
-    }
-    const db = req.app.get('DB');
-    
-    db.query('select * from users_address where user_id = ?', [req.session.user.id], function(err, result){
-        if(err) {
-            console.log(err)
-            return res.json({status: 500, message: 'Server Error'})
-        }
-        
-        res.json(result)
+    const address = await DB.Address.findOne(
+    {
+        where : 
+        {
+            user_id : req.user.id
+        },
+        attributes: { exclude: ['createdAt', "updatedAt"] }
     })
+    res.json(address)
 }
 
-const setAddress = (req, res) =>{
-    if(!req.session.user){
-        return res.json({status: 400, message: 'Please Login'})
-    }
-    
-    
-    const {address_line_1, address_line_2, city, country, zipcode} = req.body
-    const db = req.app.get('DB');
-    
-    db.beginTransaction(function(err){
-        if(err) return res.json({status: 500, message: 'Server Error'})
-        
-        db.query('insert into users_address(user_id, address_line_1, address_line_2, city, country, zipcode) values (?, ?, ?, ?, ?, ? )', 
-        [
-            req.session.user.id,
-            address_line_1,
-            address_line_2,
-            city,
-            country,
-            zipcode
-        ], 
-        function(err, result){
-            if(err) return res.json({status: 500, message: 'Server Error'})
-            
-            const insertId = result.insertId
-            
-            db.query('update users_info set user_address_id = ? where user_id = ?', [insertId, req.session.user.id], function(err, result){
-                if(err) return res.json({status: 500, message: 'Server Error'})
-                
-                db.commit(err =>{
-                    res.json({status: 200})
-                })
-            })
+const setAddress = async (req, res) => {
+    if(!req.user) return res.status(403).send()
+
+    try {
+        const [address, created] = await DB.Address.findOrCreate({
+            where : {
+                user_id : req.user.id
+            },
+            defaults : {
+                address_line_1 : req.body.add1,
+                address_line_2 : req.body.add2,
+                city : req.body.city, 
+                country : req.body.country,
+                zipcode : Number(req.body.zip)
+            }
         })
+        if(created){
+            res.status(200).json(address)
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }   
+
+
+
+
+
+    
+    // const {address_line_1, address_line_2, city, country, zipcode} = req.body
+    // const db = req.app.get('DB');
+    
+    // db.beginTransaction(function(err){
+    //     if(err) return res.json({status: 500, message: 'Server Error'})
+        
+    //     db.query('insert into users_address(user_id, address_line_1, address_line_2, city, country, zipcode) values (?, ?, ?, ?, ?, ? )', 
+    //     [
+    //         req.session.user.id,
+    //         address_line_1,
+    //         address_line_2,
+    //         city,
+    //         country,
+    //         zipcode
+    //     ], 
+    //     function(err, result){
+    //         if(err) return res.json({status: 500, message: 'Server Error'})
+            
+    //         const insertId = result.insertId
+            
+    //         db.query('update users_info set user_address_id = ? where user_id = ?', [insertId, req.session.user.id], function(err, result){
+    //             if(err) return res.json({status: 500, message: 'Server Error'})
+                
+    //             db.commit(err =>{
+    //                 res.json({status: 200})
+    //             })
+    //         })
+    //     })
         
         
-    })
+    // })
     
 }
 

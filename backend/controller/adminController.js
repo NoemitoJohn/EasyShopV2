@@ -9,7 +9,7 @@ const logIn = async (req, res) =>{
     
     const {email, password} = req.body
     
-    if(validator.default.isEmpty(email) || validator.default.isEmpty(password)){
+    if(validator.default.isEmpty(email, {ignore_whitespace: true}) || validator.default.isEmpty(password, {ignore_whitespace: true})){
         return res.status(400).json({error : 'all fields cannot be empty'})
     }
     if(!validator.default.isEmail(email)){
@@ -73,7 +73,13 @@ const getOrder = async (req, res) =>{
             include : [
                 {
                     model : DB.User,
-                    attributes: ['first_name', 'last_name']
+                    attributes: ['first_name', 'last_name'],
+                    include : [
+                        {
+                            model : DB.Address,
+                            required: true,
+                            attributes : {exclude : ['updatedAt', 'createdAt']}
+                        }],
     
                 }
             ]

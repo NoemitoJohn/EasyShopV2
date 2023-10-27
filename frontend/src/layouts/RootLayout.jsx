@@ -140,7 +140,7 @@ const categories = useLoaderData()
             <div className="flex justify-center w-[100%]">
                 <div className="flex w-[85%] justify-between py-4 laptop:w-[80%]">
                     <div className=" max-minitab:w-full max-minitab:flex max-minitab:justify-center "><img src={logo} alt="logo" className="w-[300px]"/></div>
-                    <div className="flex z-[-1] bg-black basis-4/6 max-minitab:justify-start  max-desktop:justify-end laptop:justify-start max-minitab:absolute max-minitab:top-[150px] max-minitab:w-full max-minitab:right-0">
+                    <div className="flex bg-black basis-4/6 max-minitab:justify-start max-minitab:z-[-1]  max-desktop:justify-end laptop:justify-start max-minitab:absolute max-minitab:top-[150px] max-minitab:w-full max-minitab:right-0">
 
                       {/*  FULL SEARCH BAR   */}
                         <div className="hidden items-center w-full ml-10 laptop:flex">

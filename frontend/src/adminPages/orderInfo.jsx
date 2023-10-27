@@ -11,13 +11,19 @@ export default function OrderInfo() {
     async function handleSubmit(e){
         e.preventDefault();
         //TODO: change url to production and header 
-        const {data} = await axios.patch(`http://127.0.0.1:3000/api/admin/order`,
-        {id : orderId, status : status})
-
-        setStatusCurrent(data)
+        try {
+            const {data} = await axios.patch(`http://127.0.0.1:3000/api/admin/order`,
+            {id : orderId, status : status})
+    
+            setStatusCurrent(data)
+            
+        } catch (error) {
+            console.log(error)
+        }
 
     }
-    console.log(status)
+    console.log('order', order)
+
     return (
         <>
             <div className="w-full flex">
@@ -71,7 +77,7 @@ export default function OrderInfo() {
                         <div className="flex justify-center w-full bg-red text-white font-bold py-2 rounded-t-md">SHIPPING INFORMATION</div>
                         <div className="flex flex-col w-full bg-white rounded-b-md p-5">
                             <span className="w-full">Shipping Address :</span>
-                            <span className="w-full pl-5 font-bold italic text-gray-600">B5 L2 Ph1 BAGONG SUBD. Brgy. Tibay, Tigbak City, Manila</span>
+                            <span className="w-full pl-5 font-bold italic text-gray-600">{`${order.user.users_address.address_line_1}, ${order.user.users_address.address_line_2}, ${order.user.users_address.city}, ${order.user.users_address.country}, (${order.user.users_address.zipcode}) `}</span>
                         </div>
                     </div>
                     <div className="flex flex-col w-full shadow-md mb-5">

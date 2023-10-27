@@ -1,35 +1,32 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import axios from "axios"
 import { useLogin } from "../hooks/useLogin"
+import { UserAuthContext } from "../context/UserAuthContext"
 
 function login() {
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const {login, error, isLoading} = useLogin()
+  const {user} =  useContext(UserAuthContext)
   // const [error, setError] = useState('')
   const navigate = useNavigate()
+
+  
+  useEffect(()=>{
+    if(user){
+      navigate('/')
+    }
+  })
+
+
 
   async function handleSubmit(event){
     
     event.preventDefault()
     
     await login(email,password)
-
-
-    // axios.post('http://localhost:3000/api/user/login', {email, password}, { 
-    //   headers: {
-    //   'Content-Type': 'application/json'
-    //   }
-    // , withCredentials : true})
-    // // axios.post('https://demolive-api.vercel.app/login', {email, password}) 
-    // .then(res=>{
-    //   if(res.data.status == 200) { navigate('/') } 
-    //   if(res.data.status == 400) { setError(res.data.message) }
-    // }).catch(err =>{
-    //     console.log(err)
-    // })
+    navigate('/')
   }
 
   return (

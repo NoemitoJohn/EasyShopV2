@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const {isUserAuth} = require('../middleware/isAuth')
+
 const {
     login, 
     signup,
@@ -19,8 +21,8 @@ router.post('/logout', logout)
 router.get('/auth', isAuth)
 router.get('/info',getUserInfo)
 
-router.get('/address', getAddress)
-router.post('/address', setAddress)
+router.get('/address', isUserAuth, getAddress)
+router.post('/address', isUserAuth , setAddress)
 router.post('/verify/:token', verifyUser)
 
 module.exports  = { userRouter : router}

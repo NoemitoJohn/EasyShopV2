@@ -21,9 +21,7 @@ async function handleUpload(_file, _folder){
         })
         return res 
     } catch (error) {
-        
        console.log(error.message)
-       throw error
     }
 } 
 

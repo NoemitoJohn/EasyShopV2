@@ -1,27 +1,44 @@
 
 
+import axios from "axios";
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 
 
 export default function category() {
   const categories = useLoaderData()
-
-  function handleSubmit(event){
-    event.preventDefault()
-
-    axios.post('http://localhost:3000/api/admin/category', {category_name})
-    // axios.post('https://demolive-api.vercel.app/login', {email, password}) 
-    .then(res=>{
-      console.log(res)
-      navigate('/')
-    }).catch(err =>{
-        console.log(err)
-    })
+  const [catAdd, setCatAdd] = useState('')
+  const [catId, setCatId] = useState()
+  const [catUpdate, setCatUpdate] = useState('')
+  //TODO: add context provider for dynamic updates
+  const clean = () =>{
+    setCatAdd('')
+    setCatUpdate('')
+  }
+  
+  async function handleAddSubmit(e){
+    e.preventDefault()
+    try {
+      const {data} = await axios.post('http://127.0.0.1:3000/api/admin/category', { cat : catAdd })
+    
+      clean()
+    } catch (error) {
+        console.log(error.response.data)
+    }
+    
   }
 
-  
+  async function handleUdpateSubmit(e){
+    e.preventDefault()
+    try {
+      //TODO: change url to production
+      const {data} = await axios.patch('http://127.0.0.1:3000/api/admin/category', { id : catId,  cat : catUpdate })
+      clean()  
+    } catch (error) {
+        console.log(error.response.data)
+    }
 
-
+  }
 
   return (
    <> 
@@ -46,10 +63,10 @@ export default function category() {
 
                    
                    {/* ADD NEW CATEGORY FORM START HERE */} 
-                     <form onSubmit={handleSubmit} className="flex flex-col mb-2 ">
+                     <form onSubmit={handleAddSubmit} className="flex flex-col mb-2 ">
                         <label htmlFor="" className="text-gray-500 mb-3 font-semibold">CATEGORY NAME :</label>
 
-                        <input name="category_name" type="text" placeholder="Enter category name" required className="h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " />
+                        <input name="category_name" onChange={(e) => setCatAdd(e.target.value)} value={catAdd} type="text" placeholder="Enter category name" required className="h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " />
 
                         <button className="w-full bg-gray-500 text-white font-bold py-2 rounded mt-5">Add Category</button>
                       </form>
@@ -83,14 +100,14 @@ export default function category() {
                   <div className="w-[90%] mt-8">
                     
                    {/* UPDATE CATEGORY FORM START HERE */} 
-                     <form  className="flex flex-col mb-2 ">
+                     <form onSubmit={handleUdpateSubmit} className="flex flex-col mb-2 ">
 
                         <label htmlFor="" className="text-gray-500 mb-3 font-semibold">SELECT CATEGORY :</label>
                         
                         <fieldset>
                             <div className="relative text-gray-800 bg-white shadow-sm">
 
-                                <select name="whatever" id="frm-whatever" className="appearance-none w-full bg-gray-100  shadow-md font-semibold py-2 px-4 rounded inline-flex justify-stat items-center" >
+                                <select onChange={(e) => setCatId(e.target.value)} name="whatever" id="frm-whatever" className="appearance-none w-full bg-gray-100  shadow-md font-semibold py-2 px-4 rounded inline-flex justify-stat items-center" >
                                     <option value="" className="hidden">Please choose&hellip;</option>
                               
                               
@@ -111,7 +128,7 @@ export default function category() {
                       </fieldset>
                         
                         <label htmlFor="" className="text-gray-500 mb-3 font-semibold mt-5">INPUT NEW CATEGORY NAME :</label>
-                        <input name="stock" type="text" placeholder="Enter category name" required className=" h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " />
+                        <input onChange={(e) => setCatUpdate(e.target.value)} value={catUpdate} type="text" placeholder="Enter category name" required className=" h-10 shadow-md p-2 pl-3 border-gray-300 bg-gray-100 rounded " />
                         <button className="w-full bg-gray-500 text-white font-bold py-2 rounded mt-8">Update Category</button>
                       </form>
                     </div>

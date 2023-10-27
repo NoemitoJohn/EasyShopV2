@@ -35,8 +35,8 @@ function login() {
   return (
     
     <>
-        <div className="flex justify-center w-full mt-20 ">    
-                <div className="flex w-1/3  py-5 px-10 bg-white shadow-lg">
+        <div className="flex justify-center w-full mt-20 p-5">    
+                <div className="flex w-[60%] max-w-[500px] min-w-[300px]  py-5 px-10 bg-white shadow-lg">
                     <form  onSubmit={handleSubmit} className="flex flex-col  w-full ">
                         <span className=" w-full text-center text-2xl font-medium mb-7"><p>LOG IN ACCOUNT HERE</p></span>
                         <input type="text" name="username" placeholder="example@gmail.com" className="Log-Input" onChange={ e=> setEmail(e.target.value)} />

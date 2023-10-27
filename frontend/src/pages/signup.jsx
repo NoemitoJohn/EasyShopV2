@@ -44,15 +44,15 @@ function signup() {
           
           </div>
         ) : (
-        <div className="flex justify-center w-full mt-20 ">    
-                <div className="flex w-1/3  py-5 px-10 bg-white shadow-lg">
+        <div className="flex justify-center w-full p-2">    
+                <div className="flex  w-[60%] max-w-[500px] min-w-[300px]  py-5 px-10 bg-white shadow-lg">
                     <form onSubmit={handleSubmit} className="flex flex-col  w-full ">
                         <span className=" w-full text-center text-2xl font-medium mb-7"><p>SIGN UP ACCOUNT HERE</p></span>
                         <input type="text" name="firstName" placeholder="First Name" className="Log-Input" onChange={e => setFirstName(e.target.value)} />
                         <input type="text" name="lastName" placeholder="Last Name" className="Log-Input" onChange={e => setLastName(e.target.value)} />
                         <input type="email" name="email" placeholder="example@gmail.com" className="Log-Input" onChange={e => setEmail(e.target.value)} />
                         <input type="password" name="password" placeholder="Password" className="Log-Input" onChange={e => setPassword(e.target.value)} />
-                        <p className="mb-5 text-gray-500 ml-3">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
+                        <p className="mb-5 text-gray-500 ml-3 max-notebook:text-xs">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
                         <input type="password" name="repeatPassword" placeholder="Confirm Password" className="Log-Input" onChange={e => setRepeatPass(e.target.value)} />
                         {error && <p>{error}</p>}
                         <button disabled={isLoading} className="w-100 bg-red text-white font-semibold mt-5 mb-5 py-2 hover:bg-gray-500"> SIGN UP</button>

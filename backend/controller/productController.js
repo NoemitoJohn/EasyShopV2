@@ -121,7 +121,7 @@ const getProductByCategory = async (req, res) =>{
     const {name} = req.params;
 
 
-    const products = await DB.instance.query('SELECT p.id, p.name, p.price, p.stocks, p.rating, p_i.img_url as thumbnail from products_info as p_i ' +
+    const products = await DB.instance.query('SELECT p.id, p.name, p.price, p.rating, p_i.img_url as thumbnail from products_info as p_i ' +
     'inner join categories as cat on p_i.category_id = cat.id ' + 
     'inner join products as p on p.id = p_i.product_id ' +
     'where cat.name = ?', {

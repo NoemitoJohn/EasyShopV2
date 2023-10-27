@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom"
 
-
 function Home() {
 
   return (
     <>
         <div className="w-full flex flex-col justify-center items-center">
             <div className="w-4/6 flex flex-col">
-                <div className="w-full h-[400px] bg-white shadow-lg border-gray-600 p-2 rounded">
-                    <div className="w-full h-full bg-gray-300 rounded justify-center items-center flex text-gray-500 font-bold font-xl">CAROUSEL SLIDER</div>
-                </div>
-
+               
+                
 
                 <div className="w-full mt-5">
                     <h2 className="mt-5 pl-6 mb-2">SMARTPHONE</h2>

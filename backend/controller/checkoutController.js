@@ -162,7 +162,7 @@ const checkout = async (req, res) => {
 }
         
 const webhook = async (req, res) => {
-    const endpointSecret = "whsec_6afb0d281c9bad3ec7ab1267a13b333576d2db499e638e0e8adc7225e21ab6cd";
+    const endpointSecret = process.env.STRIPE_KEY_SECRET;
     
     const sig = req.headers['stripe-signature'];
     let event;
@@ -216,8 +216,12 @@ const webhook = async (req, res) => {
         
 
         
-
-        const order = await createOrder(cart, checkoutCompleted.amount_total, checkoutCompleted.id, data.user_id)
+        try {
+            
+            const order = await createOrder(cart, checkoutCompleted.amount_total, checkoutCompleted.id, data.user_id)
+        } catch (error) {
+            console.log('ERR:ORDER:CREATE')
+        }
         
         if(order){
            

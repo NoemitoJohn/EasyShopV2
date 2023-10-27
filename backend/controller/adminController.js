@@ -59,5 +59,60 @@ const getOrders = async (req, res) =>{
 }
 
 
+const getOrder = async (req, res) =>{
+    const {id} = req.params
+    
+    const order = await DB.Order.findOne({
+        where :{
+            id : Number(id)
+        },
+        include : [
+            {
+                model : DB.User,
+                attributes: ['first_name', 'last_name']
 
-module.exports = {logIn, signUp, getOrders }
+            }
+        ]
+
+    })
+    res.json(order)
+}
+
+const upateOrder = async (req, res) =>{
+    
+    const {id, status} = req.body;
+    const statusCode = DB.Order.Status
+    
+    let _status;
+    
+    switch(status){
+
+        case statusCode.SHIPPING : 
+            _status = statusCode.SHIPPING;
+            break;
+        case statusCode.RECEIVED : 
+            _status = statusCode.RECEIVED;
+            break;
+        default :
+            _status = statusCode.PENDING;
+            break;
+
+    }
+
+    // return console.log(status == statusCode.RECEIVED)
+    const success = await DB.Order.update({status : _status},
+        {
+            where : {
+                id: id
+            }
+        })
+
+    if(success == 1){
+        res.json(_status)
+    }
+}
+
+
+
+
+module.exports = {logIn, signUp, getOrders, getOrder, upateOrder }

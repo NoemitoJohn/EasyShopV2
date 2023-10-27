@@ -4,7 +4,7 @@ const {handleUpload, createFolder} = require('../middleware/uploader')
 
 const getAllProducts = async (req, res) => {
     const {count, rows} =  await DB.Product.findAndCountAll({
-        attributes : ['id', 'name', 'price', 'stocks'],
+        attributes : ['id', 'name', 'price'],
         include : [
             {
                 model : DB.ProductInfo,
@@ -15,6 +15,10 @@ const getAllProducts = async (req, res) => {
                         attributes : ['id', 'name']
                     }
                 ]
+            },
+            {
+                model : DB.Inventory,
+                attributes: ['in', 'out']
             }
         ]
     })
@@ -83,7 +87,7 @@ const getProduct = async (req, res) =>{
     if(req.params) id = Number(req.params.id);
     
     const product = await DB.ProductInfo.findOne({
-        attributes : ['description', 'img_url'], 
+        attributes : ['description', 'img_url',], 
         
         where : {
             product_id : id
@@ -92,12 +96,18 @@ const getProduct = async (req, res) =>{
         include : [
             {
                 model : DB.Product, 
-                attributes : {exclude : ['updatedAt', 'createdAt']}
+                attributes : {exclude : ['updatedAt', 'createdAt', 'inventory_id']},
+                include : [
+                    {
+                        model : DB.Inventory,
+                        attributes : ['in', 'out']
+                    }]
             },
             {
                 model : DB.Category,
                 attributes : ['name']
-            }
+            },
+            
         ]
     })
     

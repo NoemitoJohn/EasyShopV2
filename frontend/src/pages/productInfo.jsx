@@ -9,6 +9,7 @@ export default function productInfo() {
     const productInfo = useLoaderData()
 
     const [id, setId] = useState(productInfo.product.id)
+    const [stocks, setStocks] = useState((productInfo.product.inventory.in - productInfo.product.inventory.out))
     const [price, setPrice] = useState(productInfo.product.price)
     const [quantity, setQuatity] = useState(1)
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ export default function productInfo() {
     
     function handleIncrement (prev){
         // console.log(e)
-        if(quantity < productInfo.product.stocks)
+        if(quantity < stocks)
         setQuatity(prev + 1)
     }
     
@@ -90,7 +91,7 @@ export default function productInfo() {
             <div className="flex flex-col w-1/2 bg-white rounded p-10 shadow-lg ">
                 <div className="w-full text-2xl font-semibold">{productInfo.product.name} </div>
                 <div className="mt-2">Ratings: {productInfo.product.rating} </div>
-                <div className="mb-8 border-b-2 pb-3">Stocks : {productInfo.product.stocks} </div>
+                <div className="mb-8 border-b-2 pb-3">Stocks : {stocks} </div>
                 <div className="mb-8 w-full text-4xl font-bold"> &#x20B1; {new Intl.NumberFormat().format(price)}.00</div>
 
                 <div className="flex w-full justify-between space-x-4">

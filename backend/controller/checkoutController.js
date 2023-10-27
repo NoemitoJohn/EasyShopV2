@@ -39,7 +39,33 @@ const createOrder = async (_cart, _total, _transaction_id, _user_id) =>{
                 
             }
         }
+        const product = await DB.Product.findOne({
+            where : {
+                id : item.product.id
+            },
+            attributes : [],
+            include : [
+                {
+                    model : DB.Inventory,
+                    required : true,
+                    // attributes : ['id']
+                }
+            ]
+        })
+
+        const updateInventory = await DB.Inventory.update({out : (product.inventory.out + item.quantity)}, {
+            where: {
+                id : product.inventory.id,
+            } ,
+            transaction : t
+        })
+
+        if(updateInventory == 1){
+            console.log('Update')
+        }
+
         product_items.push(productObject)
+        
         try {
             await DB.Cart.destroy({
                 where : {
@@ -139,7 +165,6 @@ const webhook = async (req, res) => {
     const endpointSecret = "whsec_6afb0d281c9bad3ec7ab1267a13b333576d2db499e638e0e8adc7225e21ab6cd";
     
     const sig = req.headers['stripe-signature'];
-
     let event;
     
     try {
@@ -152,6 +177,7 @@ const webhook = async (req, res) => {
     
     if (event.type == 'checkout.session.completed' ) {
         
+        console.log('Webhoookkk')
         
         const checkoutCompleted = event.data.object;
         
@@ -159,7 +185,7 @@ const webhook = async (req, res) => {
         
         
         const data = checkoutCompleted.metadata
-        
+        console.log(data)
         let cart;
         
         try {
@@ -188,10 +214,13 @@ const webhook = async (req, res) => {
                 console.error(error)
         }
         
+
+        
+
         const order = await createOrder(cart, checkoutCompleted.amount_total, checkoutCompleted.id, data.user_id)
         
         if(order){
-            console.log('Success!')
+           
         }
         
         //        4242 4242 4242 4242

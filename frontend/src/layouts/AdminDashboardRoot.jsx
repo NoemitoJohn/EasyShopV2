@@ -9,7 +9,7 @@ function AdminRootPanel() {
   
   useEffect(()=>{
     if(!admin){
-      navagate('admin')
+      navagate('/admin')
     }
   },[admin])
 

@@ -29,7 +29,7 @@ export default function addStocks() {
                        <div className="w-full flex">
                          
                          <span className="border-1  w-1/2 flex justify-center  italic font-bold text-gray-700 py-1">{adminProductInfo.product.name} </span>
-                         <span className="border-1  w-1/2 flex justify-center  italic font-bold text-sky-600 py-1 test-xl">{adminProductInfo.product.stocks} </span>  
+                         <span className="border-1  w-1/2 flex justify-center  italic font-bold text-sky-600 py-1 test-xl">{adminProductInfo.product.inventory.in - adminProductInfo.product.inventory.out } </span>  
                        </div> 
 
                     {/* PRODUCT STOCK INPUT*/}

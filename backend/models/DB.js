@@ -8,6 +8,8 @@ const User = require('./User')
 const Verified = require('./Verified')
 const {Order, ORDER_STATUS} = require('./Order')
 const Admin = require('./Admin')
+const ProductTest = require('./ProductTemp')
+const Inventory = require('./Inventory')
 
 // ### Production 
 const sequelize = new Sequelize(
@@ -53,6 +55,11 @@ DB.Order = Order(sequelize)
 DB.Order.Status = ORDER_STATUS
 DB.Verified = Verified(sequelize);
 DB.Admin = Admin(sequelize);
+DB.Inventory = Inventory(sequelize);
+
+
+DB.Inventory.hasOne(DB.Product, {foreignKey: 'inventory_id'})
+DB.Product.belongsTo(DB.Inventory, {foreignKey: 'inventory_id'})
 
 DB.Category.hasMany(DB.ProductInfo, { foreignKey: 'category_id'})
 DB.ProductInfo.belongsTo(DB.Category, {foreignKey: 'category_id'})
@@ -82,14 +89,7 @@ DB.Order.belongsTo(DB.User, {foreignKey: 'user_id'})
 
 // User hasMany Order
 const init = async () => {
-
-    try {
-       
-        await DB.instance.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+    await DB.instance.authenticate();
 
 }
 

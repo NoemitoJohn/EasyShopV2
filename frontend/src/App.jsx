@@ -32,7 +32,7 @@ import { UserCartContextProvider } from './context/UserCartContext'
 import { AdminAuthContextProvider } from './context/AdminAuthContext'
 
 //LOADERS
-import { orderLoader } from './loader/orderLoader'
+import { orderLoader, ordersLoader } from './loader/orderLoader'
 // ADMIN PAGES IMPORT
 import AdminRootLayout from "./layouts/AdminRootLayout"
 import AdminLogin from "./adminPages/adminLogin"
@@ -107,9 +107,12 @@ const router = createBrowserRouter(
                         <Route path="category" element={<Category />}loader={categoriesLoader}/>
                         <Route path="orders" 
                         element={<Orders />}
+                        loader={ordersLoader}
+                        />
+                        <Route path="order-info/:id" 
+                        element={<OrderInfo />}
                         loader={orderLoader}
                         />
-                        <Route path="order-info/:id" element={<OrderInfo />}/>
                  </Route>
 
             </Route>

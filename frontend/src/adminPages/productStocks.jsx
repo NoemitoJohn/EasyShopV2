@@ -44,15 +44,15 @@ export default function addStocks() {
                             </div>
                           </td>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-center ">
-                            <p className="flex w-full p-1  text-red text-xl underline font-bold animate-pulse justify-center ">{data.stocks}</p>
+                            <p className="flex w-full p-1  text-red text-xl underline font-bold animate-pulse justify-center ">{(data.inventory.in - data.inventory.out)}</p>
                           </td>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p className="flex w-full text-gray-700 text-xl font-bold justify-center ">5</p>
+                            <p className="flex w-full text-gray-700 text-xl font-bold justify-center ">{data.inventory.out}</p>
                           </td>
                           <td className="px-1 py-5 border-b border-gray-200 bg-white text-sm justify-center">
                              <div className="flex w-full justify-center">
                                   <span className=" px-3 py-1 font-semibold bg-green-200 rounded-2xl text-green-900 leading-tight" >
-                                    <Link  to={`../add_stocks/${data.id}`} target="_blank" >Add stocks</Link>
+                                    <Link  to={`../add_stocks/${data.id}`} >Add stocks</Link>
                                   </span>
                               </div>
                           </td>

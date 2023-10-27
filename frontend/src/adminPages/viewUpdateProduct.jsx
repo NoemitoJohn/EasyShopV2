@@ -2,9 +2,9 @@ import { useLoaderData, useParams } from "react-router-dom"
 
 
 export default function productInfo() {
+    //TODO: create udpate product end point  
     const { id } = useParams()
     const adminProductInfo = useLoaderData()
-
   return (
     <>
           
@@ -34,7 +34,7 @@ export default function productInfo() {
 
                           <div className="">
                             <span className="font-bold text-gray-500 text-base mr-3">STOCKS : </span>
-                            <span className="italic font-bold text-gray-700">{adminProductInfo.product.stocks} </span>  
+                            <span className="italic font-bold text-gray-700">{adminProductInfo.product.inventory.in - adminProductInfo.product.inventory.out} </span>  
                           </div>
 
                           <div className="">
@@ -98,27 +98,6 @@ export default function productInfo() {
                                 defaultValue={''}
                             />
                           </div>
-
-                          <div className="flex flex-col mb-2">
-                              <label htmlFor="" className="text-gray-500 mb-1 font-semibold">Images 1 :</label>
-                              <input id="file_input" type="file" class="block w-full p-2 text-sm text-gray-900 rounded-md shadow-md cursor-pointer bg-gray-100 " />
-                          </div>
-
-                          <div className="flex flex-col mb-2">
-                              <label htmlFor="" className="text-gray-500 mb-1 font-semibold">Images 2 :</label>
-                              <input id="file_input" type="file" class="block w-full p-2 text-sm text-gray-900 rounded-md shadow-md cursor-pointer bg-gray-100 " />
-                          </div>
-
-                          <div className="flex flex-col mb-2">
-                              <label htmlFor="" className="text-gray-500 mb-1 font-semibold">Images 3 :</label>
-                              <input id="file_input" type="file" class="block w-full p-2 text-sm text-gray-900 rounded-md shadow-md cursor-pointer bg-gray-100 " />
-                          </div>
-
-                          <div className="flex flex-col mb-2">
-                              <label htmlFor="" className="text-gray-500 mb-1 font-semibold">Images 4 :</label>
-                              <input id="file_input" type="file" class="block w-full p-2 text-sm text-gray-900 rounded-md shadow-md cursor-pointer bg-gray-100 " />
-                          </div>
-                      
                           <div className="flex flex-col justify-center items-center mt-5">
                               <button className="w-[50%] bg-gray-500 text-white font-bold py-2 rounded-md mt-5">UPDATE PRODUCT</button>
                           </div>

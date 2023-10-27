@@ -21,6 +21,7 @@ const logIn = async (req, res) =>{
         where : {email : email},
         attributes : ['id', 'email', 'role', 'password']
     })
+    
     if(!admin) return res.status(400).json('Incorrect email')
     
     const validPassword = await bcrypt.compare(password, admin.password)

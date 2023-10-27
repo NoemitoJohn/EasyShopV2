@@ -44,7 +44,7 @@ export default function addProducts() {
                 fdata.append('my_file', file)
             }
 
-            const {data} = await axios.post('http://127.0.0.1:3000/api/products', fdata)
+            const {data} = await axios.post(`${import.meta.env.VITE_BACK_END_API}/api/products`, fdata)
             
             setSProductId(data.product_id)
             setSProductName(data.product_name)

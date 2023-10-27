@@ -9,7 +9,7 @@ export default function category() {
   function handleSubmit(event){
     event.preventDefault()
 
-    axios.post('http://localhost:3000/api/admin/category', {category_name})
+    axios.post(`${import.meta.env.VITE_BACK_END_API}/api/admin/category`, {category_name})
     // axios.post('https://demolive-api.vercel.app/login', {email, password}) 
     .then(res=>{
       console.log(res)

@@ -10,8 +10,8 @@ export default function OrderInfo() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        //TODO: change url to production and header 
-        const {data} = await axios.patch(`http://127.0.0.1:3000/api/admin/order`,
+        //TODO: header 
+        const {data} = await axios.patch(`${import.meta.env.VITE_BACK_END_API}/api/admin/order`,
         {id : orderId, status : status})
 
         setStatusCurrent(data)

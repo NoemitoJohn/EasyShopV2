@@ -148,7 +148,7 @@ const checkout = async (req, res) => {
                 
             line_items : mapListItem(cart),
             
-            success_url: 'http://localhost:5173',
+            success_url: process.env.CLIENT_URL2,
             cancel_url: 'https://example.com',
             
         })

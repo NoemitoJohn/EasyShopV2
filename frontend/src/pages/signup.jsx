@@ -18,7 +18,6 @@ function signup() {
   function handleSubmit(event){
       event.preventDefault()
       setLoading(true)
-      console.log(firstName, lastName,email,password,repeatPassword)
       axios.post('http://localhost:3000/api/user/signup', {firstName, lastName, email, password, repeatPassword})
       // axios.post('https://demolive-api.vercel.app/signup', {firstName, lastName, email, password, repeatPassword})
       .then(res=>{

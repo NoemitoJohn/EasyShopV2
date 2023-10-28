@@ -11,9 +11,9 @@ import {
     productLoader, 
     productInfoLoader, 
     categoriesLoader,
-    productPerCategoryLoader
+    productPerCategoryLoader,
+    productLimitLoader
 }  from './loader/productloader'
-
 
 // CLIENT PAGES
 import Home from "./pages/home"
@@ -24,6 +24,8 @@ import SignupVerify from './pages/signupVerify'
 import Cart from './pages/cart'
 import ProductInfo from './pages/productInfo'
 import ProductPerCategory from './pages/ProductPerCategory'
+import UserSettings from './pages/userSettings'
+import ShippingAddress from './pages/shippingAddress'
 
 
 import './index.css'
@@ -31,8 +33,12 @@ import RootLayout from './layouts/RootLayout'
 import { UserCartContextProvider } from './context/UserCartContext'
 import { AdminAuthContextProvider } from './context/AdminAuthContext'
 
+
 //LOADERS
 import { orderLoader, ordersLoader } from './loader/orderLoader'
+// import { Slider } from './components/carousel'
+
+
 // ADMIN PAGES IMPORT
 import AdminRootLayout from "./layouts/AdminRootLayout"
 import AdminLogin from "./adminPages/adminLogin"
@@ -65,11 +71,13 @@ const router = createBrowserRouter(
                 <UserAuthContextProvider>
                     <RootLayout/>
                 </UserAuthContextProvider>
-                } loader={categoriesLoader}>
-                    <Route index element={<Home/>}></Route>
+                } loader={categoriesLoader} >
+                    <Route index element={<Home/>} loader={productLimitLoader}></Route>
                     <Route path="products" 
                     element={<Products/>}
                     loader={productLoader} ></Route>
+                    <Route path='account-settings' element={<UserSettings />}></Route>
+                    <Route path='shipping-address' element={<ShippingAddress />}></Route>
                     <Route path='product/:id' element={<ProductInfo />} loader={productInfoLoader} ></Route>
                     <Route path='category/:name' element={<ProductPerCategory />} loader={productPerCategoryLoader} ></Route>
                     <Route path="login" element={<Login/>}></Route>

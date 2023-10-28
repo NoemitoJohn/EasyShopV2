@@ -5,32 +5,35 @@ const jwt = require('jsonwebtoken')
 
 
 const logIn = async (req, res) =>{
-    //TODO: add validation 
+    
     
     const {email, password} = req.body
     
-    if(validator.default.isEmpty(email) || validator.default.isEmpty(password)){
+    if(validator.default.isEmpty(email, {ignore_whitespace: true}) || validator.default.isEmpty(password, {ignore_whitespace: true})){
         return res.status(400).json({error : 'all fields cannot be empty'})
     }
     if(!validator.default.isEmail(email)){
         return res.status(400).json({error : 'Not a valid email'})
     }
     
+    try {
+        const admin = await DB.Admin.findOne({
+            where : {email : email},
+            attributes : ['id', 'email', 'role', 'password']
+        })
+        if(!admin) return res.status(400).json('Incorrect email')
+        
+        const validPassword = await bcrypt.compare(password, admin.password)
     
-    const admin = await DB.Admin.findOne({
-        where : {email : email},
-        attributes : ['id', 'email', 'role', 'password']
-    })
+        if(!validPassword) return res.json('Incorrect password')
     
-    if(!admin) return res.status(400).json('Incorrect email')
+        const adminToken = await jwt.sign({id : admin.id, email : admin.email, role : admin.role}, 'secret', {expiresIn: '1d'})
     
-    const validPassword = await bcrypt.compare(password, admin.password)
-
-    if(!validPassword) return res.json('Incorrect password')
-
-    const adminToken = await jwt.sign({id : admin.id, email : admin.email, role : admin.role}, 'secret', {expiresIn: '1d'})
-
-    res.status(200).json({email : admin.email, token : adminToken})
+        res.status(200).json({email : admin.email, token : adminToken})
+        
+    } catch (error) {
+        console.log(error)    
+    }
 
 }
 
@@ -62,21 +65,31 @@ const getOrders = async (req, res) =>{
 
 const getOrder = async (req, res) =>{
     const {id} = req.params
+    try{
+        const order = await DB.Order.findOne({
+            where :{
+                id : Number(id)
+            },
+            include : [
+                {
+                    model : DB.User,
+                    attributes: ['first_name', 'last_name'],
+                    include : [
+                        {
+                            model : DB.Address,
+                            required: true,
+                            attributes : {exclude : ['updatedAt', 'createdAt']}
+                        }],
     
-    const order = await DB.Order.findOne({
-        where :{
-            id : Number(id)
-        },
-        include : [
-            {
-                model : DB.User,
-                attributes: ['first_name', 'last_name']
+                }
+            ]
+    
+        })
+        res.json(order)
 
-            }
-        ]
-
-    })
-    res.json(order)
+    }catch(error){
+        console.log(error)
+    }
 }
 
 const upateOrder = async (req, res) =>{
@@ -99,17 +112,20 @@ const upateOrder = async (req, res) =>{
             break;
 
     }
-
-    // return console.log(status == statusCode.RECEIVED)
-    const success = await DB.Order.update({status : _status},
-        {
-            where : {
-                id: id
-            }
-        })
-
-    if(success == 1){
-        res.json(_status)
+    try {
+        const success = await DB.Order.update({status : _status},
+            {
+                where : {
+                    id: id
+                }
+            })
+    
+        if(success == 1){
+            res.json(_status)
+        }
+        
+    } catch (error) {
+        console.log(error)
     }
 }
 

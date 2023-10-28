@@ -1,29 +1,35 @@
 const DB = require('../models/DB')
 const {Op , QueryTypes} = require('sequelize')
 const {handleUpload, createFolder} = require('../middleware/uploader')
+const validator = require('validator').default
 
 const getAllProducts = async (req, res) => {
-    const {count, rows} =  await DB.Product.findAndCountAll({
-        attributes : ['id', 'name', 'price'],
-        include : [
-            {
-                model : DB.ProductInfo,
-                attributes : ['description',[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'thumbnail'] ], 
-                include : [
-                    {
-                        model : DB.Category,
-                        attributes : ['id', 'name']
-                    }
-                ]
-            },
-            {
-                model : DB.Inventory,
-                attributes: ['in', 'out']
-            }
-        ]
-    })
-
-    res.json({total : count, products : rows})
+    try {
+        const {count, rows} =  await DB.Product.findAndCountAll({
+            attributes : ['id', 'name', 'price'],
+            include : [
+                {
+                    model : DB.ProductInfo,
+                    attributes : ['description',[DB.instance.fn('JSON_EXTRACT', DB.instance.col('img_url'), DB.instance.literal('"$[0]"')), 'thumbnail'] ], 
+                    include : [
+                        {
+                            model : DB.Category,
+                            attributes : ['id', 'name']
+                        }
+                    ]
+                },
+                {
+                    model : DB.Inventory,
+                    attributes: ['in', 'out']
+                }
+            ]
+        })
+    
+        res.status(200).json({total : count, products : rows})
+    } catch (error) {
+        res.status(500).send()
+    }
+    
 }
 
 
@@ -35,7 +41,6 @@ const getProducts = async (req, res) => {
     
     if(req.query){
         if(req.query.start) start  = Number(req.query.start)
-        
     }
     
     console.log(start)
@@ -59,60 +64,45 @@ const getProducts = async (req, res) => {
         attributes: { exclude : ['createdAt', 'updatedAt']}
 
     })
-    
-    // const product = []
-    
-    // for (const item of products) {
-    //     const productInfo = await DB.ProductInfo.findOne({
-    //         where :{
-    //             product_id: item.id
-    //         }   
-    //     })
-        
-        // const p = JSON.stringify(item)
-        
-        // const productJSON = JSON.parse(p)
-    
-        // productJSON.thumbnail = img_url[0]
 
-        // product.push(productJSON)
-    // }
-
-     res.json(products)
+    res.json(products)
 }
 
 const getProduct = async (req, res) =>{
     let id;
     
     if(req.params) id = Number(req.params.id);
-    
-    const product = await DB.ProductInfo.findOne({
-        attributes : ['description', 'img_url',], 
+
+    try {
+        const product = await DB.ProductInfo.findOne({
+            attributes : ['description', 'img_url',], 
+            where : {
+                product_id : id
+            }, 
+            include : [
+                {
+                    model : DB.Product, 
+                    attributes : {exclude : ['updatedAt', 'createdAt', 'inventory_id']},
+                    include : [
+                        {
+                            model : DB.Inventory, 
+                            attributes : ['in', 'out']
+                        }]
+                },
+                {
+                    model : DB.Category,
+                    attributes : ['name'] 
+                },
+            ]
+        })
         
-        where : {
-            product_id : id
-        }, 
+        res.status(200).json(product)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send()
         
-        include : [
-            {
-                model : DB.Product, 
-                attributes : {exclude : ['updatedAt', 'createdAt', 'inventory_id']},
-                include : [
-                    {
-                        model : DB.Inventory,
-                        attributes : ['in', 'out']
-                    }]
-            },
-            {
-                model : DB.Category,
-                attributes : ['name']
-            },
-            
-        ]
-    })
+    }
     
-    
-    res.json(product)
 }
 
 
@@ -121,7 +111,7 @@ const getProductByCategory = async (req, res) =>{
     const {name} = req.params;
 
 
-    const products = await DB.instance.query('SELECT p.id, p.name, p.price, p.stocks, p.rating, p_i.img_url as thumbnail from products_info as p_i ' +
+    const products = await DB.instance.query('SELECT p.id, p.name, p.price, p.rating, p_i.img_url as thumbnail from products_info as p_i ' +
     'inner join categories as cat on p_i.category_id = cat.id ' + 
     'inner join products as p on p.id = p_i.product_id ' +
     'where cat.name = ?', {
@@ -209,15 +199,152 @@ const addProduct = async (req, res)=>{
     }
 
 }
+const updateProduct = async (req, res) =>{
+    // TODO: check if admin
+    console.log(req.admin)
+    if(!req.admin) return req.status(403).send('Restricted')
+    // TODO: validation 
+    console.log(req.body)
+    const t = await DB.instance.transaction()
+    
+    try {
+        
+        await DB.Product.update({
+            name : req.body.name,
+            price : req.body.price,
+        },{
+            where: {id : req.body.id},
+            transaction : t
+        })
+
+        await DB.ProductInfo.update({
+            description :  req.body.description
+        },{
+            where : { product_id : req.body.id},
+            transaction : t
+        })
+
+        t.commit()
+
+        const product = await DB.ProductInfo.findOne({
+            
+            attributes : ['description', 'img_url',], 
+            
+            where : {
+                product_id : req.body.id
+            }, 
+            
+            include : [
+                {
+                    model : DB.Product, 
+                    attributes : {exclude : ['updatedAt', 'createdAt', 'inventory_id']},
+                    include : [
+                        {
+                            model : DB.Inventory,
+                            attributes : ['in', 'out']
+                        }]
+                },
+                {
+                    model : DB.Category,
+                    attributes : ['name']
+                },
+                
+            ]
+        })
+
+        if(product) res.status(200).json(product)
+        
+    } catch (error) {
+        console.log(error)
+        t.rollback()
+        res.status(500).send()
+    }
+}
+
+const updateCategory = async (req, res) => {
+    //TODO: if admin only
+    if(!req.body.cat || !req.body.id || validator.isEmpty(req.body.cat, {ignore_whitespace: true})) return res.status(400).send('Fields cannot be empty')
+    try{
+        const update = await DB.Category.update({name: req.body.cat}, {where : { id : req.body.id}})
+        if(update)
+            res.status(200).send()
+    }catch(error) {
+        console.log(error)
+    }
+
+
+
+}
+
+const addCategory = async (req, res) => {
+    //TODO: if admin only
+    // return console.log(req.body.cat)
+
+    if(!req.body.cat || validator.isEmpty(req.body.cat, {ignore_whitespace: true})) return res.status(400).send('Fields cannot be empty')
+
+    try {
+        const [cat, created] = await DB.Category.findOrCreate({
+            where : {
+                name: {
+                    [Op.like] : req.body.cat
+                }
+            },
+            defaults : {
+                name : req.body.cat
+            }
+
+        })
+        if(created){
+            return res.status(200).send(cat)
+        }else {
+
+            return res.status(400).send(`${req.body.cat} already exist`)
+        }
+        
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const updateStocks = async (req, res) =>{
+    //TODO: if admin only
+    if(!req.body.id || req.body.quantity <= 0) return res.status(400).send()
+    
+    try {
+        const product = await DB.Product.findOne({
+            where : { id : req.body.id },
+            attributes: [],
+            include: [{
+                model : DB.Inventory
+            }]
+        })
+        const val = (product.inventory.in + Number(req.body.quantity))
+        await DB.Inventory.update({in : val},
+            {
+                where : {
+                    id : product.inventory.id
+                }
+            })
+
+        res.status(200).json({current : val - product.inventory.out})
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 module.exports = {
+    addCategory,
     getProducts,
     getProduct,
     getProductByCategory,
     getCategories,
     addProduct,
-    getAllProducts
+    getAllProducts,
+    updateProduct,
+    updateCategory,
+    updateStocks,
 }
 
 

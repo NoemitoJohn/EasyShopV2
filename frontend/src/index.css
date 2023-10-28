@@ -15,6 +15,28 @@
   
 }
 */
+
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(185, 185, 185);
+  border: 3px solid var(--primary);
+}
+
+
 @layer components{
 
   .Linkhover{
@@ -42,8 +64,8 @@
 @tailwind utilities;
 
 nav a.active{
-  color: gray;
-
+  color:#AF1B3F;
+  font-weight: bold;
 }
 body{
   background-color: #f1f1f1;
@@ -83,11 +105,11 @@ body{
 .dropdown-menu{
   width: 100%;
   position: absolute;
-  margin-top: 32px;
   right: 0px;
   border-radius: var(--border-radius);
   padding: 10px 20px;
   color: white;
+  z-index: 40 !important;
   
 }
 
@@ -112,91 +134,103 @@ body{
   transition: var(--speed) ease;
 }
 
+/* USERS DROPDOWN  */
 
+.dropdown-Usermenu{
+  width: 200px;
+  position: absolute;
+  margin-top: 0;
+  right: 10%;
+  border-radius: var(--border-radius);
+
+}
+
+.dropdown-Usermenu::before{
+  content: '';
+  position: absolute;
+  background: var(--secondary-bg);
+  transform: rotate(45deg);
+}
+
+.dropdown-Usermenu.active{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
+}
+
+.dropdown-Usermenu.inactive{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
+}
 
 /* IMAGE SLIDER PRODUCT INFO */
 
-.slider {
-  width: 300px;
-  text-align: center;
-  overflow: hidden;
-}
 
-.slides {
-  display: flex;
-  
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  
-  
-  
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  
-
- 
-}
-.slides::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-.slides::-webkit-scrollbar-thumb {
-  background: black;
-  border-radius: 10px;
-}
-.slides::-webkit-scrollbar-track {
-  background: transparent;
-}
-.slides > div {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  width: 300px;
-  height: 300px;
-  margin-right: 50px;
-  border-radius: 10px;
-  background: #eee;
-  transform-origin: center center;
-  transform: scale(1);
-  transition: transform 0.5s;
+/* IMAGE SLIDER INDEX */
+.carousel {
   position: relative;
-  
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 100px;
 }
-.slides > div:target {
-  transform: scale(0.8);
-}
-.author-info {
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
-  padding: 0.75rem;
-  text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+
+.slide {
+  box-shadow: 0px 0px 7px #666;
   width: 100%;
-  margin: 0;
+  height: 100%;
 }
-.author-info a {
+
+.slide-hidden {
+  display: none;
+}
+
+.arrow {
+  position: absolute;
+  filter: drop-shadow(0px 0px 5px #555);
+  width: 1.7rem;
+  height: 1.7rem;
   color: white;
 }
-.slider > a {
-  display: inline-flex;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: white;
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  margin: 0 0 0.5rem 0;
-  position: relative;
+
+.arrow:hover {
+  cursor: pointer;
 }
-.slider > a:active {
-  top: 1px;
+
+.arrow-left {
+  left: 1rem;
 }
-.slider > a:focus {
-  background: #000;
+
+.arrow-right {
+  right: 1rem;
 }
+
+.indicators {
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+}
+
+.indicator {
+  background-color: white;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  box-shadow: 0px 0px 5px #555;
+  margin: 0 0.2rem;
+  cursor: pointer;
+}
+
+.indicator-inactive {
+  background-color: grey;
+}
+
+
+
+
+
+/* card  SLIDER INDEX */

@@ -177,7 +177,6 @@ const webhook = async (req, res) => {
     
     if (event.type == 'checkout.session.completed' ) {
         
-        console.log('Webhoookkk')
         
         const checkoutCompleted = event.data.object;
         

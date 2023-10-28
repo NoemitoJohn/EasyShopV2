@@ -11,7 +11,8 @@ function AdminRootPanel() {
     if(!admin){
       navagate('/admin')
     }
-  },[admin])
+    console.log(admin)
+  })
 
   return (  
     <div className="w-full flex">

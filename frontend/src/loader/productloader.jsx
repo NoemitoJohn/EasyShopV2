@@ -7,6 +7,13 @@ export const productLoader = async ()=>{
       return res.json()
   }
 
+export const productLimitLoader = async ()=>{
+  //dont change the api link even if the domain is replace
+  const res = await fetch(`${import.meta.env.VITE_BACK_END_API}/api/products`)
+  // const res = await fetch('https://demolive-api.vercel.app/api/products') 
+    return res.json()
+}
+
 
 export const productInfoLoader = async ({params}) =>{
   const { id } = params
@@ -37,3 +44,11 @@ export const categoriesLoader = async ()=>{
 
 
 
+
+
+export const categoriesAndProductsLoader = async ()=>{
+     const res =  Promise.all([
+        await fetch(`${import.meta.env.VITE_BACK_END_API}/api/products/categories`),
+        await fetch(`${import.meta.env.VITE_BACK_END_API}/api/products/all`)])
+      return res.json()
+}

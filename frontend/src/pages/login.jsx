@@ -17,7 +17,7 @@ function login() {
     if(user){
       navigate('/')
     }
-  })
+  },[])
 
 
 

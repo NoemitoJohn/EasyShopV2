@@ -15,7 +15,6 @@ const categories = useLoaderData()
     let handler = (e)=>{
       if(!menuRef1.current.contains(e.target)){
         setOpen1(false);
-        console.log(menuRef1.current);
       }      
     };
 
@@ -36,7 +35,6 @@ const categories = useLoaderData()
     let handler = (e)=>{
       if(!menuRef.current.contains(e.target)){
         setOpen(false);
-        console.log(menuRef.current);
       }      
     };
 
@@ -58,7 +56,6 @@ const categories = useLoaderData()
     let handler = (e)=>{
       if(!menuSearchRef.current.contains(e.target)){
         setOpenSearch(false);
-        console.log(menuSearchRef.current);
       }      
     };
 
@@ -79,10 +76,9 @@ const categories = useLoaderData()
     let handler = (e)=>{
       if(!menuUserRef.current.contains(e.target)){
         setOpenUser(false);
-        console.log(menuUserRef.current);
+
       }      
     };
-
     document.addEventListener("mousedown", handler);
     
 

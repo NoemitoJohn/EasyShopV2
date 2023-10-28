@@ -201,10 +201,9 @@ const addProduct = async (req, res)=>{
 }
 const updateProduct = async (req, res) =>{
     // TODO: check if admin
-    console.log(req.admin)
     if(!req.admin) return req.status(403).send('Restricted')
     // TODO: validation 
-    console.log(req.body)
+
     const t = await DB.instance.transaction()
     
     try {

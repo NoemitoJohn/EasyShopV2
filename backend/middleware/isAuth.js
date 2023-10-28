@@ -12,7 +12,6 @@ const isUserAuth = async (req, res, next) => {
     try {
 
         const decode = jwt.verify(token, 'secret')
-        console.log(decode)
         
         req.user = await DB.User.findOne(
         {
@@ -42,7 +41,6 @@ const isAdminAuth = async (req, res, next) => {
     try {
 
         const decode = jwt.verify(token, 'secret')
-        console.log(decode)
         
         if(!decode.role) throw new Error('Restricted')
 

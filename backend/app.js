@@ -14,7 +14,8 @@ const cors = require('cors')
 
 app.use(cors({
     //this is the only line you will change the domain name
-    origin: [process.env.CLIENT_URL1, process.env.CLIENT_URL2],
+   // origin: [process.env.CLIENT_URL1, process.env.CLIENT_URL2],
+    origin: ['*'],
     methods: ['POST', 'PATCH', 'GET', 'DELETE'],
     credentials: true,
     optionsSuccessStatus: 200,

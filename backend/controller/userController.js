@@ -89,7 +89,7 @@ const signup = async (req, res) =>{
         
             await DB.Verified.create({token : emailToken, user_id : user.id}, { transaction : t})
             
-            const link = `${process.env.CLIENT_URL}/signup/verify/${emailToken}`
+            const link = `${process.env.CLIENT_URL2}/signup/verify/${emailToken}`
 
             const email = await sendValidationEmail(user.first_name, user.email, link)
 

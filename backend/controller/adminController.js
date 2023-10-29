@@ -65,6 +65,7 @@ const getOrders = async (req, res) =>{
 
 const getOrder = async (req, res) =>{
     const {id} = req.params
+    
     try{
         const order = await DB.Order.findOne({
             where :{
@@ -88,7 +89,8 @@ const getOrder = async (req, res) =>{
         res.json(order)
 
     }catch(error){
-        console.log(error)
+
+        console.log('adminController ::', error)
     }
 }
 
